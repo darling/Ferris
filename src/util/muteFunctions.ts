@@ -15,7 +15,9 @@ async function unmuteUserFromGuild(guild: string, user_id: string, roles: string
     });
 
     member.roles.set(old_roles).catch((err: Error) => {
-        console.error(err);});
+        console.error(err);
+    });
+
     console.log(guild, user_id, old_roles);
 }
 
