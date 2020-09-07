@@ -1,4 +1,4 @@
-import { Message, GuildMember, MessageEmbed } from 'discord.js';
+import { Message, GuildMember, MessageEmbed, Guild, Collection } from 'discord.js';
 import { FerrisClient, firestore, admin } from '../app';
 
 import moment from 'moment';
@@ -7,22 +7,39 @@ import { RunCommand } from './util/commandinterface';
 import ms from 'ms';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    if (!msg.mentions.members) {
+    const member: GuildMember | null = msg.member;
+    if ( member === null ) {
+        return;
+    }
+
+    const guild: Guild | null = msg.guild;
+    if (guild === null) {
+        return
+    }
+
+    const guildClient: GuildMember | null = guild.me;
+    if (guildClient === null) {
+        msg.reply('am I even in this server?');
+        return;
+    }
+
+    if (!member.hasPermission('BAN_MEMBERS')) {
+        msg.reply('You do not have permission to ban members.');
+        return;
+    }
+
+    if (!guildClient.hasPermission('BAN_MEMBERS')) {
+        msg.reply('You do not have permission to ban members.');
+        return;
+    }
+
+    const mentions: Collection<string, GuildMember> | null = msg.mentions.members;
+    if (mentions === null) {
         msg.reply('please mention a user to ban.');
         return;
     }
 
-    if (!msg.member?.hasPermission('BAN_MEMBERS')) {
-        msg.reply('You do not have permission to ban members.');
-        return;
-    }
-
-    if (!msg.guild?.me!.hasPermission('BAN_MEMBERS')) {
-        msg.reply('You do not have permission to ban members.');
-        return;
-    }
-
-    let bannedMember: GuildMember | undefined = msg.mentions.members.first();
+    let bannedMember: GuildMember | undefined = mentions.first();
 
     if (!bannedMember?.bannable) {
         msg.reply('I can not ban this member.');
@@ -34,7 +51,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     if (!hasProperDateTime) return;
 
     bannedMember.ban({ days: 3, reason: args.join(' ') }).then((member) => {
-        let embed = new MessageEmbed();
+        const embed = new MessageEmbed();
         embed.setColor(16646143);
         embed.setTitle(member.user.username + ' has been temp-banned!');
         embed.setDescription(
@@ -45,20 +62,23 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         msg.channel.send(embed);
     });
 
-    let time = admin.firestore.Timestamp.fromMillis(Date.now() + ms(args[1]));
+    const time = admin.firestore.Timestamp.fromMillis(Date.now() + ms(args[1]));
+    const timeGiven = admin.firestore.Timestamp.now();
 
-    let docData = {
-        guild: msg.guild.id,
+    const docData = {
+        guild: guild.id,
         channel: msg.channel.id,
         completed: false,
-        desc: '',
-        type: 'ban',
+        desc: args.join(' '),
+        type: 'mute',
+        timeGiven: timeGiven,
+        author: member.id,
         time: time,
     };
 
-    let document = firestore
+    const document = firestore
         .collection('guilds')
-        .doc(msg.guild.id)
+        .doc(guild.id)
         .collection('punishments')
         .doc(bannedMember.id);
 
