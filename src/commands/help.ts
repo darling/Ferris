@@ -13,7 +13,9 @@ const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     embed.addField('Patreon', 'https://www.patreon.com/FerrisBot', false);
     embed.setThumbnail(`https://i.imgur.com/owBJxsP.png`);
     embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
-    msg.channel.send(embed);
+    msg.channel.send(embed).catch((err: Error) => {
+        console.error(err);
+    });
 };
 
 const aliases = ['h'];
