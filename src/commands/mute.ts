@@ -1,16 +1,24 @@
-import { Message, GuildMember, MessageEmbed } from 'discord.js';
+import { Message, GuildMember, Guild } from 'discord.js';
 import { FerrisClient, firestore, admin } from '../app';
 
-import moment from 'moment';
-
 import { RunCommand } from './util/commandinterface';
-import ms from 'ms';
+import { parseIfTime } from './util/parse';
+import { muteDialog } from '../util/muteFunctions';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    const role = msg.guild?.roles.cache.find((role) => role.name === 'muted');
-
-    if (role === undefined) {
+    const muteRole = msg.guild?.roles.cache.find((role) => role.name === 'muted');
+    if (muteRole === undefined) {
         msg.reply("This server doesn't have a `muted` role");
+        return;
+    }
+
+    const member: GuildMember | null = msg.member;
+    if(member === null) {
+        return;
+    }
+
+    const guild: Guild | null = msg.guild;
+    if(guild === null) {
         return;
     }
 
@@ -19,45 +27,41 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         return;
     }
 
-    if (!msg.member?.hasPermission('MUTE_MEMBERS')) {
-        msg.reply('You do not have permission to mute members.');
+    if (!member.hasPermission('MANAGE_ROLES')) {
+        msg.reply('you do not have permission to mute members.');
         return;
     }
 
-    if (!msg.guild?.me!.hasPermission('MUTE_MEMBERS')) {
-        msg.reply('You do not have permission to mute members.');
+    if (!guild.me!.hasPermission('MANAGE_ROLES')) {
+        msg.reply('I do not have permission to mute members.');
         return;
     }
 
     let mutedMember: GuildMember | undefined = msg.mentions.members.first();
+    if (mutedMember === undefined) {
+        return;
+    }
 
-    let hasProperDateTime = /^\d{1,3}[sdmwh]{1}$/.test(args[1]);
+    const timeSpecified = parseIfTime(args[1]);
+    if (timeSpecified === undefined) {
+        msg.reply('Please specify a correct time.')
+        return;
+    }
 
-    if (!hasProperDateTime) return;
-
-    // mutedMember?.roles.add(role);
-    let currentRoles = mutedMember?.roles.cache
+    let currentRoles = mutedMember.roles.cache
         .array()
         .map((role) => role.id)
         .toString();
 
-    mutedMember?.roles.set([role]);
+    mutedMember.roles.set([muteRole]);
 
-    let embed = new MessageEmbed();
-    embed.setColor(16646143);
-    embed.setTitle(mutedMember!.user.username + ' has been muted!');
-    embed.setDescription(
-        `${mutedMember!.user.tag} will be unmuted *${moment(Date.now() + ms(args[1])).fromNow()}*.`
-    );
-    embed.setThumbnail('https://i.imgur.com/NG469Iv.png');
-    embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
-    msg.channel.send(embed);
+    muteDialog(mutedMember, timeSpecified, msg);
 
-    let time = admin.firestore.Timestamp.fromMillis(Date.now() + ms(args[1]));
-    let timeGiven = admin.firestore.Timestamp.fromMillis(Date.now());
+    let time = admin.firestore.Timestamp.fromMillis(Date.now() + timeSpecified);
+    let timeGiven = admin.firestore.Timestamp.now();
 
     let docData = {
-        guild: msg.guild.id,
+        guild: guild.id,
         channel: msg.channel.id,
         completed: false,
         desc: '',
@@ -69,9 +73,9 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
 
     let document = firestore
         .collection('guilds')
-        .doc(msg.guild.id)
+        .doc(guild.id)
         .collection('punishments')
-        .doc(mutedMember!.id);
+        .doc(mutedMember.id);
 
     document.set(docData);
 };

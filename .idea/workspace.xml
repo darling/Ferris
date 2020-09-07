@@ -20,7 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/Mute.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/util/parse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/mute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/mute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/debug.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/debug.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/muteFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/muteFunctions.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +46,44 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last.edited.regexp" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="C:\Users\Ca\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\202.6948.73\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ca\Documents\GitHub\Ferris\src\assets\img" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -55,7 +93,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599438346814</updated>
-      <workItem from="1599438348254" duration="1103000" />
+      <workItem from="1599438348254" duration="1432000" />
+      <workItem from="1599439787963" duration="93000" />
+      <workItem from="1599439887129" duration="4422000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -106,7 +146,21 @@
       <option name="project" value="LOCAL" />
       <updated>1599439288522</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fix typos">
+      <created>1599439476309</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1599439476309</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Ignore ignored promise resolves">
+      <created>1599439497498</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1599439497498</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +176,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -129,16 +184,38 @@
     <MESSAGE value="Remove cache related files" />
     <MESSAGE value="Cleaning up" />
     <MESSAGE value="Complete promise before return" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete promise before return" />
+    <MESSAGE value="Fix typos" />
+    <MESSAGE value="Ignore ignored promise resolves" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ignore ignored promise resolves" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="691" y="252" key="SettingsEditor" timestamp="1599439105889">
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1599440502711">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="691" y="252" key="SettingsEditor/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439105889" />
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
+    <state width="1900" height="285" key="GridCell.Tab.0.center" timestamp="1599440502711">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
+    <state width="1900" height="285" key="GridCell.Tab.0.left" timestamp="1599440502710">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502710" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right" timestamp="1599440502711">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
+    <state x="320" y="232" key="SettingsEditor" timestamp="1599439879960">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="320" y="232" key="SettingsEditor/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439879960" />
     <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1599438908099">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599438908099" />
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1599439986252">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439986252" />
   </component>
 </project>
