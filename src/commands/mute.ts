@@ -6,7 +6,12 @@ import { parseIfTime } from './util/parse';
 import { muteDialog } from '../util/muteFunctions';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    const muteRole = msg.guild?.roles.cache.find((role) => role.name === 'muted');
+    const guild: Guild | null = msg.guild;
+    if(guild === null) {
+        return;
+    }
+
+    const muteRole = guild.roles.cache.find((role) => role.name === 'muted');
     if (muteRole === undefined) {
         msg.reply("This server doesn't have a `muted` role");
         return;
@@ -17,11 +22,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         return;
     }
 
-    const guild: Guild | null = msg.guild;
-    if(guild === null) {
-        return;
-    }
-
+    // TODO: Add permissions through map
     if (!msg.mentions.members) {
         msg.reply('please mention a user to mute.');
         return;
@@ -68,6 +69,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         type: 'mute',
         roles: currentRoles,
         timeGiven: timeGiven,
+        author: msg.author.id,
         time: time,
     };
 

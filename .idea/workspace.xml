@@ -19,14 +19,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/Mute.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/util/parse.ts" afterDir="false" />
+    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Cleaned up caching and watching of data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/commands/mute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/mute.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/events/debug.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/debug.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/muteFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/muteFunctions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/guildCreate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildCreate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/guildDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildDelete.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/serverinfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/serverinfo.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +98,7 @@
       <updated>1599438346814</updated>
       <workItem from="1599438348254" duration="1432000" />
       <workItem from="1599439787963" duration="93000" />
-      <workItem from="1599439887129" duration="4422000" />
+      <workItem from="1599439887129" duration="15348000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -160,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599439497498</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updated and cleaned mute">
+      <created>1599444628353</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1599444628353</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,9 +196,15 @@
     <MESSAGE value="Complete promise before return" />
     <MESSAGE value="Fix typos" />
     <MESSAGE value="Ignore ignored promise resolves" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ignore ignored promise resolves" />
+    <MESSAGE value="Updated and cleaned mute" />
+    <MESSAGE value="Cleaned up caching and watching of data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up caching and watching of data" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="183" width="816" height="725" key="#Intentions" timestamp="1599462415467">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="183" width="816" height="725" key="#Intentions/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599462415467" />
     <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1599440502711">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -209,10 +225,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="320" y="232" key="SettingsEditor/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439879960" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1599438908099">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1599444967988">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599438908099" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599444967988" />
     <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1599439986252">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

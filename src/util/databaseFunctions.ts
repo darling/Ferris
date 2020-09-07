@@ -1,5 +1,6 @@
 import { Guild } from 'discord.js';
 import { db } from '../app';
+import { serverConfigs } from './serverinfo';
 
 function ensureGuild(guild: Guild) {
     let reference = db.ref(`guilds/${guild.id}`);
@@ -28,6 +29,26 @@ function ensureGuild(guild: Guild) {
     });
 }
 
+function watchGuild(guild: Guild) {
+    const ref = db.ref(`guilds/${guild.id}`);
+
+    return new Promise((resolve) => {
+        let callback = ref.on('value', (snapshot) => {
+            if(snapshot.exists()) {
+                serverConfigs.set(guild.id, snapshot.val());
+                return resolve();
+            }
+
+            ensureGuild(guild)
+            return resolve();
+        }, (err) => {
+            console.error(err);
+        })
+
+        serverConfigs.set(guild.id, callback, 'close')
+    })
+}
+
 function updateUserCount(guild: Guild) {
     let reference = db.ref(`guilds/${guild.id}`);
 
@@ -36,4 +57,4 @@ function updateUserCount(guild: Guild) {
     });
 }
 
-export { ensureGuild, updateUserCount };
+export { ensureGuild, updateUserCount, watchGuild };
