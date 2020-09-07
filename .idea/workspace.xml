@@ -20,50 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Ferris.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/enmap.sqlite" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/enmap.sqlite-shm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/enmap.sqlite-wal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/config/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/config/ferrisbot-6e0f1-e66d0bfcc2aa.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/Ban.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/img/Help.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/ban.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/echo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/getunbans.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/help.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/info.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/kick.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/mute.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/ping.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/setprefix.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/tempban.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/unban.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/util/commandinterface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/util/users.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/whois.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/debug.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/guildCreate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/guildDelete.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/guildMemberAdd.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/guildMemberRemove.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/guildUpdate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/ready.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/banFunctions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/muteFunctions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/scheduleHandler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/serverinfo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,8 +54,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599438346814</updated>
-      <workItem from="1599438348254" duration="393000" />
+      <workItem from="1599438348254" duration="491000" />
     </task>
+    <task id="LOCAL-00001" summary="Init">
+      <created>1599438743595</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1599438743595</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
