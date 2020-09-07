@@ -9,7 +9,9 @@ const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     db.ref(`guilds/${msg.guild.id}/prefix`)
         .once('value')
         .then((snapshot) => {
-            msg.channel.send(`PREFIX IS ${snapshot.val()}`);
+            msg.channel.send(`PREFIX IS ${snapshot.val()}`).catch((err: Error) => {
+                console.error(err);
+            });
         });
 };
 

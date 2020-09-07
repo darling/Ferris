@@ -20,7 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/commands/ping.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/ping.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/info.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/info.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599438346814</updated>
-      <workItem from="1599438348254" duration="871000" />
+      <workItem from="1599438348254" duration="903000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -85,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599439205148</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Cleaning up">
+      <created>1599439226940</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1599439226940</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
