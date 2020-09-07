@@ -2,9 +2,9 @@ import { Guild } from 'discord.js';
 import { db } from '../app';
 
 function ensureGuild(guild: Guild) {
-    let refrence = db.ref(`guilds/${guild.id}`);
+    let reference = db.ref(`guilds/${guild.id}`);
 
-    refrence.once('value', (snapshot) => {
+    reference.once('value', (snapshot) => {
         if (!snapshot.exists()) {
             let channels: any = {};
 
@@ -17,7 +17,7 @@ function ensureGuild(guild: Guild) {
                 };
             });
 
-            refrence.set({
+            reference.set({
                 prefix: ';',
                 owner: guild.ownerID,
                 name: guild.name,
@@ -29,9 +29,9 @@ function ensureGuild(guild: Guild) {
 }
 
 function updateUserCount(guild: Guild) {
-    let refrence = db.ref(`guilds/${guild.id}`);
+    let reference = db.ref(`guilds/${guild.id}`);
 
-    refrence.update({
+    reference.update({
         member_count: guild.memberCount,
     });
 }

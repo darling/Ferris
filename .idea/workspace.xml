@@ -20,7 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/commands/help.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/help.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599438346814</updated>
-      <workItem from="1599438348254" duration="936000" />
+      <workItem from="1599438348254" duration="1103000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -99,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599439265171</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Complete promise before return">
+      <created>1599439288522</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1599439288522</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
