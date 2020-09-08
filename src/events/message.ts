@@ -11,7 +11,6 @@ client.on('message', async (msg: Message) => {
 
     // Loads the prefix and listens for any changes in the future
     if (!serverConfigs.has(guild.id)) {
-        // TODO: Make sure this works without awaiting variable
         await watchGuild(guild);
     }
 
