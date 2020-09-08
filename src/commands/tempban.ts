@@ -29,7 +29,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     }
 
     if (!guildClient.hasPermission('BAN_MEMBERS')) {
-        msg.reply('You do not have permission to ban members.');
+        msg.reply('I do not have permission to ban members.');
         return;
     }
 
@@ -40,14 +40,14 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     }
 
     let bannedMember: GuildMember | undefined = mentions.first();
+    if(!bannedMember) return;
 
-    if (!bannedMember?.bannable) {
+    if (!bannedMember.bannable) {
         msg.reply('I can not ban this member.');
         return;
     }
 
     let hasProperDateTime = /^\d{1,3}[sdmwh]{1}$/.test(args[1]);
-
     if (!hasProperDateTime) return;
 
     bannedMember.ban({ days: 3, reason: args.join(' ') }).then((member) => {
@@ -70,7 +70,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         channel: msg.channel.id,
         completed: false,
         desc: args.join(' '),
-        type: 'mute',
+        type: 'ban',
         timeGiven: timeGiven,
         author: member.id,
         time: time,
@@ -84,5 +84,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
 
     document.set(docData);
 };
+
+const aliases = ['tb', 'tban'];
 
 export { run };
