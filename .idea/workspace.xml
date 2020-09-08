@@ -19,15 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Changed cache">
-      <change afterPath="$PROJECT_DIR$/src/events/roleCreate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/roleDelete.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events/roleUpdate.ts" afterDir="false" />
+    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Safe banning">
+      <change beforePath="$PROJECT_DIR$/.idea/Ferris.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Ferris.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/ban.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/ban.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/tempban.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/tempban.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/guildUpdate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildUpdate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +94,7 @@
       <workItem from="1599439787963" duration="93000" />
       <workItem from="1599439887129" duration="15348000" />
       <workItem from="1599509031930" duration="7285000" />
-      <workItem from="1599527469803" duration="2832000" />
+      <workItem from="1599527469803" duration="4291000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -178,7 +173,21 @@
       <option name="project" value="LOCAL" />
       <updated>1599522424742</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Changed cache">
+      <created>1599544877494</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1599544877494</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Safe banning">
+      <created>1599544899191</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1599544899191</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,7 +217,8 @@
     <MESSAGE value="Cleaned up caching and watching of data" />
     <MESSAGE value="Cleaned up tempban" />
     <MESSAGE value="Changed cache" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed cache" />
+    <MESSAGE value="Safe banning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Safe banning" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="183" width="816" height="725" key="#Intentions" timestamp="1599462415467">
@@ -239,10 +249,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="320" y="232" key="SettingsEditor/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439879960" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1599522412068">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1599544902951">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599522412068" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599544902951" />
     <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1599439986252">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
