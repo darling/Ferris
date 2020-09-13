@@ -105,3 +105,4 @@ dist
 
 # cache
 data/
+src/assets/config/*
