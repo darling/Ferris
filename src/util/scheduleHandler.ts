@@ -19,8 +19,8 @@ function getFirestoreData(): () => void {
                     }
 
                     if (data.time.toDate() <= Date.now()) {
-                        // Delete records that haven't been compelted while the bot was down
-                        // These entries will still be compelted below, but the records need to be cleaned out.
+                        // Delete records that haven't been completed while the bot was down
+                        // These entries will still be completed below, but the records need to be cleaned out.
                         update.doc.ref.delete();
                     }
 

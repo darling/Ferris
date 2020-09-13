@@ -37,11 +37,9 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
 
     let roles = member?.roles.cache.array();
 
-    roles?.pop();
+    embed.addField('Roles', roles ? roles : "No  roles", true);
 
-    embed.addField('Roles', roles);
-
-    embed.addField('Current Punishments', `None.`);
+    embed.addField('Current Punishments', `None.`, true);
 
     embed.setFooter(`ID: ${user.id}  •  UTC`);
 
@@ -50,7 +48,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         `${moment(member?.joinedTimestamp).utc().format('LLLL')}, about ${moment(
             member?.joinedTimestamp
         ).fromNow()}.`,
-        true
+
     );
 
     embed.addField(
@@ -58,7 +56,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         `${moment(user.createdTimestamp).utc().format('LLLL')}, about ${moment(
             user.createdTimestamp
         ).fromNow()}.`,
-        true
+
     );
 
     msg.channel.send(embed);

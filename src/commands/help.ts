@@ -12,7 +12,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     embed.addField('Github', 'https://github.com/darling/Ferris', false);
     embed.addField('Patreon', 'https://www.patreon.com/FerrisBot', false);
     embed.setThumbnail(`https://i.imgur.com/owBJxsP.png`);
-    embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
+    embed.setAuthor(msg.author.tag, msg.author.avatarURL()!).setTimestamp();
     msg.channel.send(embed).catch((err: Error) => {
         console.error(err);
     });

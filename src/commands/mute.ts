@@ -54,9 +54,9 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         .map((role) => role.id)
         .toString();
 
-    mutedMember.roles.set([muteRole]);
-
-    muteDialog(mutedMember, timeSpecified, msg);
+    mutedMember.roles.set([muteRole]).then((mutedMember) => {
+        muteDialog(mutedMember, timeSpecified, msg);
+    });
 
     let time = admin.firestore.Timestamp.fromMillis(Date.now() + timeSpecified);
     let timeGiven = admin.firestore.Timestamp.now();
