@@ -8,9 +8,7 @@ async function unbanUserFromGuild(guild: Guild | string, user_id: string, reason
         if (resolvedGuild != null) targetGuild = resolvedGuild;
     }
 
-    targetGuild.members.unban(user_id, reason).catch((err: Error) => {
-        console.log(err);
-    });
+    targetGuild.members.unban(user_id, reason).catch((err: Error) => {});
 }
 
 export { unbanUserFromGuild };

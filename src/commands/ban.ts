@@ -37,7 +37,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     }
 
     let bannedMember: GuildMember | undefined = mentions.first();
-    if(!bannedMember) return;
+    if(bannedMember === undefined) return;
 
     if (!bannedMember.bannable) {
         msg.reply('I can not ban this member.');
