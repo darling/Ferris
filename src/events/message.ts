@@ -15,6 +15,17 @@ client.on('message', async (msg: Message) => {
     }
 
     let prefix = serverConfigs.get(guild.id, "prefix");
+    let modRoles: any = serverConfigs.get(guild.id, "modroles");
+
+    // if(modRoles) {
+    //     let hits = 0;
+    //     for (let roleId in modRoles) {
+    //         if (msg.member?.roles.cache.has(roleId)) hits++;
+    //     }
+    //     if (hits === 0) {
+    //         return;
+    //     }
+    // }
 
     if (!msg.content.startsWith(prefix)) return;
 
