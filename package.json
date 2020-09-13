@@ -4,7 +4,8 @@
   "description": "A moderation Discord bot",
   "main": "app.js",
   "scripts": {
-    "test": "node dist/app.js"
+    "test": "node dist/app.js",
+    "start": "tsc --watch && nodemon dist/app.js -d 1"
   },
   "repository": {
     "type": "git",
@@ -19,13 +20,15 @@
   "dependencies": {
     "@types/ms": "^0.7.31",
     "better-sqlite3": "^7.1.0",
+    "bufferutil": "^4.0.1",
     "discord.js": "^12.2.0",
     "enmap": "^5.7.1",
     "firebase-admin": "^9.0.0",
     "fs": "0.0.1-security",
     "moment": "^2.27.0",
     "ms": "^2.1.2",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^14.0.27"
