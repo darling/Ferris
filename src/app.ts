@@ -4,7 +4,7 @@ import { Client } from 'discord.js';
 import * as admin from 'firebase-admin';
 
 admin.initializeApp({
-    credential: admin.credential.cert(require('./assets/config/ferrisbot-6e0f1-e66d0bfcc2aa.json')),
+    credential: admin.credential.cert(require('./assets/config/ferrisbot-6e0f1-firebase-adminsdk-gi47c-79a7d90ec8.json')),
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
@@ -53,7 +53,7 @@ readdir(__dirname + '/commands', (err, files) => {
     });
 });
 
-// Schedule Handler (I.e unbans, unmutes)
+// Schedule Handler (I.e unbans, unmute)
 import runSchedule from './util/scheduleHandler';
 
 export { client, FerrisClient, db, firestore, admin };
