@@ -8,36 +8,7 @@ function ensureGuild(guild: Guild) {
 
     reference.once('value', (snapshot) => {
         if (!snapshot.exists()) {
-            let channels: any = {};
-            let roles: any = {};
-
-            guild.channels.cache.forEach((channel) => {
-                channels[channel.id] = {
-                    type: channel.type,
-                    name: channel.name,
-                    manageable: channel.manageable,
-                    position: channel.position
-                };
-            });
-
-            guild.roles.cache.forEach((role) => {
-                roles[role.id] = {
-                    name: role.name,
-                    perms: role.permissions.bitfield,
-                    color: role.hexColor,
-                    hoisted: role.hoist,
-                    position: role.position
-                };
-            });
-
-            reference.set({
-                prefix: ';',
-                owner: guild.ownerID,
-                name: guild.name,
-                channels: channels,
-                roles: roles,
-                member_count: guild.memberCount,
-            });
+            updateGuild(guild);
         }
     });
 }
