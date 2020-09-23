@@ -8,4 +8,11 @@ function parseIfTime(input: string): undefined | number {
     return;
 }
 
-export { parseIfTime };
+function parseChannelId(input: string): undefined | string {
+    const isChannel = /^(<#|)\d{18}(>|)$/.test(input);
+
+    if(isChannel) return input.replace("<#", "").replace(">", "");
+    return;
+}
+
+export { parseIfTime, parseChannelId };

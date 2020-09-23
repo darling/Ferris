@@ -2,13 +2,25 @@ import { Guild } from 'discord.js';
 import { db } from '../app';
 import { serverConfigs } from './serverinfo';
 
+interface IDatabaseSchema
+{
+    prefix: string,
+    owner: string,
+    name: string,
+    channels: any[],
+    roles: any[],
+    member_count: number,
+    loggingChannel: string | null,
+    logTypes: number
+}
+
 function ensureGuild(guild: Guild) {
     let reference = db.ref(`guilds/${guild.id}`);
     console.log('Ensuring ' + guild.name);
 
     reference.once('value', (snapshot) => {
         if (!snapshot.exists()) {
-            updateGuild(guild);
+            newGuild(guild);
         }
     });
 }
@@ -34,7 +46,7 @@ function watchGuild(guild: Guild) {
     })
 }
 
-function updateGuild(guild: Guild) {
+function newGuild(guild: Guild) {
     // TODO: Minimize sent data
     let reference = db.ref(`guilds/${guild.id}`);
     console.log('Ensuring ' + guild.name);
@@ -55,6 +67,7 @@ function updateGuild(guild: Guild) {
         roles[role.id] = {
             name: role.name,
             perms: role.permissions.bitfield,
+            isManaged: role.managed,
             color: role.hexColor,
             hoisted: role.hoist,
             position: role.position
@@ -68,6 +81,8 @@ function updateGuild(guild: Guild) {
         channels: channels,
         roles: roles,
         member_count: guild.memberCount,
+        loggingChannel: '',
+        logTypes: 0
     })
 }
 
@@ -79,4 +94,4 @@ function updateUserCount(guild: Guild) {
     });
 }
 
-export { ensureGuild, updateUserCount, watchGuild, updateGuild };
+export { ensureGuild, updateUserCount, watchGuild, newGuild, IDatabaseSchema };

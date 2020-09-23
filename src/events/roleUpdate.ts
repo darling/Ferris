@@ -1,7 +1,7 @@
 import { client } from '../app';
 import { Role } from 'discord.js';
-import { updateGuild } from '../util/databaseFunctions';
+import { newGuild } from '../util/databaseFunctions';
 
 client.on('roleUpdate', (role: Role, newRole: Role) => {
-    updateGuild(newRole.guild);
+    newGuild(newRole.guild);
 });

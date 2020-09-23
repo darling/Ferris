@@ -3,6 +3,12 @@ import { Client } from 'discord.js';
 // Database
 import * as admin from 'firebase-admin';
 
+// Util
+import { readdir } from 'fs';
+
+import runSchedule from './util/scheduleHandler';
+import { token } from './assets/config/config.json';
+
 admin.initializeApp({
     credential: admin.credential.cert(require('./assets/config/ferrisbot-6e0f1-firebase-adminsdk-gi47c-79a7d90ec8.json')),
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
@@ -10,9 +16,6 @@ admin.initializeApp({
 
 const db = admin.database();
 const firestore = admin.firestore();
-
-// Other libs
-import { readdir } from 'fs';
 
 // Extending Client to hold some extra data
 interface FerrisClient extends Client {
@@ -54,13 +57,10 @@ readdir(__dirname + '/commands', (err, files) => {
 });
 
 // Schedule Handler (I.e unbans, unmute)
-import runSchedule from './util/scheduleHandler';
 
 export { client, FerrisClient, db, firestore, admin };
 
 // Let's start!
-import { token } from './assets/config/config.json';
-
 client.login(token).then(() => {
     client.user?.setActivity('commands', {
         type: 'LISTENING',

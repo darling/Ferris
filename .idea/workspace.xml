@@ -20,9 +20,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Safe banning">
-      <change beforePath="$PROJECT_DIR$/.idea/Ferris.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Ferris.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/purge.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/setlogchannel.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/events/guildBanAdd.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/events/messageDelete.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/events/messageUpdate.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/getunbans.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/info.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/util/parse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/util/parse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/guildUpdate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildUpdate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/ready.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/ready.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/roleCreate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/roleCreate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/roleDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/roleDelete.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/roleUpdate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/roleUpdate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +61,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript" />
     <property name="last.edited.regexp" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -65,7 +80,17 @@
       <recent name="C:\Users\Ca\Documents\GitHub\Ferris\src\assets\img" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -78,6 +103,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.test" />
       </list>
     </recent_temporary>
@@ -95,6 +121,9 @@
       <workItem from="1599439887129" duration="15348000" />
       <workItem from="1599509031930" duration="7285000" />
       <workItem from="1599527469803" duration="4291000" />
+      <workItem from="1600294654517" duration="7911000" />
+      <workItem from="1600463973420" duration="2847000" />
+      <workItem from="1600722776176" duration="6809000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -229,22 +258,22 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="280" key="FileChooserDialogImpl/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599527442956" />
-    <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1599440502711">
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1600733064998">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
-    <state width="1900" height="285" key="GridCell.Tab.0.center" timestamp="1599440502711">
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600733064998" />
+    <state width="1900" height="285" key="GridCell.Tab.0.center" timestamp="1600733064998">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
-    <state width="1900" height="285" key="GridCell.Tab.0.left" timestamp="1599440502710">
+    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600733064998" />
+    <state width="1900" height="285" key="GridCell.Tab.0.left" timestamp="1600733064998">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502710" />
-    <state width="1900" height="285" key="GridCell.Tab.0.right" timestamp="1599440502711">
+    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600733064998" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right" timestamp="1600733064998">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599440502711" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600733064998" />
     <state x="320" y="232" key="SettingsEditor" timestamp="1599439879960">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -257,9 +286,9 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="616" y="243" width="672" height="677" key="run.anything.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439986252" />
-    <state x="623" y="227" key="search.everywhere.popup" timestamp="1599529723127">
+    <state x="623" y="227" key="search.everywhere.popup" timestamp="1600299452536">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" key="search.everywhere.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599529723127" />
+    <state x="623" y="227" key="search.everywhere.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600299452536" />
   </component>
 </project>
