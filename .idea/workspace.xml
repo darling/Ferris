@@ -19,18 +19,34 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Safe banning">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Cleaning">
+      <change afterPath="$PROJECT_DIR$/src/util/webhookLogging.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/commands/setlogchannel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/setlogchannel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/unban.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/unban.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/guildBanAdd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildBanAdd.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/guildDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildDelete.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/events/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/events/messageDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/messageDelete.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/messageUpdate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/messageUpdate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/ready.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/ready.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/scheduleHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/scheduleHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/serverinfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/serverInfo.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,7 +64,6 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript" />
     <property name="last.edited.regexp" value="" />
@@ -69,7 +84,7 @@
       <recent name="C:\Users\Ca\Documents\GitHub\Ferris\src\assets\img" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.Dockerfile">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -106,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="npm.dev" />
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="npm.test" />
       </list>
     </recent_temporary>
@@ -129,7 +144,10 @@
       <workItem from="1600463973420" duration="2847000" />
       <workItem from="1600722776176" duration="6809000" />
       <workItem from="1600829783360" duration="3288000" />
-      <workItem from="1600898458756" duration="1058000" />
+      <workItem from="1600898458756" duration="3645000" />
+      <workItem from="1601065534667" duration="15004000" />
+      <workItem from="1601268683954" duration="123000" />
+      <workItem from="1601497179581" duration="56000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -222,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599544899191</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Docker Compatibility">
+      <created>1600899809363</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600899809363</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,37 +278,43 @@
     <MESSAGE value="Cleaned up tempban" />
     <MESSAGE value="Changed cache" />
     <MESSAGE value="Safe banning" />
-    <option name="LAST_COMMIT_MESSAGE" value="Safe banning" />
+    <MESSAGE value="Docker Compatibility" />
+    <MESSAGE value="Cleaning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaning" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="183" width="816" height="725" key="#Intentions" timestamp="1599462415467">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="183" width="816" height="725" key="#Intentions/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599462415467" />
+    <state x="2685" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1601078561559">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2685" y="241" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601078561559" />
     <state x="740" y="280" key="FileChooserDialogImpl" timestamp="1600898999006">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="280" key="FileChooserDialogImpl/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600898999006" />
-    <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1600899227505">
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom" timestamp="1601081407254">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899227505" />
-    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1600846085373" />
-    <state width="1900" height="285" key="GridCell.Tab.0.center" timestamp="1600899227505">
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1601081407254" />
+    <state width="1900" height="285" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601078597183" />
+    <state width="1900" height="285" key="GridCell.Tab.0.center" timestamp="1601081407253">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899227505" />
-    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1600846085373" />
-    <state width="1900" height="285" key="GridCell.Tab.0.left" timestamp="1600899227505">
+    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1601081407253" />
+    <state width="1900" height="285" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601078597183" />
+    <state width="1900" height="285" key="GridCell.Tab.0.left" timestamp="1601081407253">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899227505" />
-    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1600846085373" />
-    <state width="1900" height="285" key="GridCell.Tab.0.right" timestamp="1600899227505">
+    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1601081407253" />
+    <state width="1900" height="285" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601078597183" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right" timestamp="1601081407254">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899227505" />
-    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1600846085373" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1601081407254" />
+    <state width="1900" height="285" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601078597183" />
     <state x="320" y="232" key="SettingsEditor" timestamp="1599439879960">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -292,6 +323,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="258" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599544902951" />
+    <state x="742" y="440" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600899743509">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="742" y="440" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899743509" />
     <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1599439986252">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

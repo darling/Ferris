@@ -1,6 +1,6 @@
-import { Guild } from 'discord.js';
-import { db } from '../app';
-import { serverConfigs } from './serverinfo';
+import { Guild, Webhook } from 'discord.js';
+import { client, db } from '../app';
+import { loggingHooks, serverConfigs } from './serverInfo';
 
 interface IDatabaseSchema
 {
@@ -10,8 +10,15 @@ interface IDatabaseSchema
     channels: any[],
     roles: any[],
     member_count: number,
-    loggingChannel: string | null,
-    logTypes: number
+    logging?: ILoggingProps,
+    webhook?: Webhook
+}
+
+interface ILoggingProps {
+    channel: string,
+    enabled: boolean,
+    subs: number,
+    webhookID: string
 }
 
 function ensureGuild(guild: Guild) {
@@ -29,14 +36,21 @@ function watchGuild(guild: Guild) {
     const ref = db.ref(`guilds/${guild.id}`);
 
     return new Promise((resolve) => {
-        let callback = ref.on('value', (snapshot) => {
+        let callback = ref.on('value', async (snapshot) => {
             console.log('Received Database update for server ' + guild.name);
             if(snapshot.exists()) {
                 serverConfigs.set(guild.id, snapshot.val());
-                return resolve();
+
+                const loggingInfo: ILoggingProps | undefined = snapshot.val().logging;
+
+                if(!loggingInfo) return;
+
+                const webhook = await client.fetchWebhook(loggingInfo.webhookID);
+                loggingHooks.set(guild.id, webhook);
+            } else {
+                ensureGuild(guild)
             }
 
-            ensureGuild(guild)
             return resolve();
         }, (err) => {
             console.error(err);
@@ -80,10 +94,8 @@ function newGuild(guild: Guild) {
         name: guild.name,
         channels: channels,
         roles: roles,
-        member_count: guild.memberCount,
-        loggingChannel: '',
-        logTypes: 0
-    })
+        member_count: guild.memberCount
+    });
 }
 
 function updateUserCount(guild: Guild) {
@@ -94,4 +106,4 @@ function updateUserCount(guild: Guild) {
     });
 }
 
-export { ensureGuild, updateUserCount, watchGuild, newGuild, IDatabaseSchema };
+export { ensureGuild, updateUserCount, watchGuild, newGuild, IDatabaseSchema, ILoggingProps };

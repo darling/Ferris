@@ -1,5 +1,5 @@
 import { firestore, client, admin } from '../app';
-import { pendingUnpunishments } from './serverinfo';
+import { pendingUnpunishments } from './serverInfo';
 import ms from 'ms';
 import { unbanUserFromGuild } from './banFunctions';
 import { TextChannel } from 'discord.js';

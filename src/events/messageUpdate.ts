@@ -1,11 +1,11 @@
 import { client } from '../app';
 
 // Instead of grabbing the prefix each time, we can store the current prefix of any server this shard looks at, and update it when the database updates.
-import { serverConfigs } from '../util/serverinfo';
+import { serverConfigs } from '../util/serverInfo';
 import { Guild, TextChannel } from 'discord.js';
 import { IDatabaseSchema } from '../util/databaseFunctions';
 
-client.on('messageUpdate', (msg, newMsg) => {
+client.on('messageUpdate', (msg) => {
     if(msg.author?.bot) return;
 
     if(msg.channel.type === "dm" || msg.channel.type === "news") return;
@@ -14,12 +14,13 @@ client.on('messageUpdate', (msg, newMsg) => {
     if (guild === null) return;
 
     let guildConfig: IDatabaseSchema = serverConfigs.get(guild.id);
+    if ( !guildConfig.logging ) return;
 
-    if((guildConfig.logTypes & 2)) {
-        console.log("CONFIG", guildConfig.logTypes);
+    if((guildConfig.logging.subs & 2)) {
+        console.log("CONFIG", guildConfig.logging.subs);
     }
 
-    const logChannelId: string | null = guildConfig.loggingChannel
+    const logChannelId: string | null = guildConfig.logging.channel
 
     if (logChannelId === null) return;
 

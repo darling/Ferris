@@ -1,22 +1,60 @@
-import { Message } from 'discord.js';
-import { FerrisClient, db } from '../app';
-
+import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { FerrisClient, db, client } from '../app';
 import { RunCommand } from './util/commandinterface';
-import { parseChannelId } from './util/parse';
+import { loggingHooks, serverConfigs } from '../util/serverInfo';
 
-const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
+const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     if (!msg.guild) return;
 
-    const channelId = parseChannelId(args[0]);
+    const channel: TextChannel = msg.channel as TextChannel;
 
-    db.ref(`guilds/${msg.guild.id}/loggingChannel`).set(channelId ? channelId : '');
+    const guild: Guild = msg.guild;
 
-    if (channelId === undefined) {
-        msg.reply('Logging channel removed.');
-        return;
+    if(!serverConfigs.has(guild.id, 'logging')) {
+        newWebhookLog(channel, guild);
+    } else {
+        changeWebhookLogChannel(channel, guild);
     }
-
-    msg.reply(`Logging channel is now <#${channelId}>`);
 };
+
+function getNewChannelEmbeds() {
+    const embed = new MessageEmbed();
+    embed.setTitle('New Logging Channel!')
+    embed.setDescription('All logging including website updates, user updates, and such that are enabled will be logged here.');
+
+    return embed;
+}
+
+async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
+    const webhookID: string = await serverConfigs.get(guild.id, 'logging.webhookID');
+    const webhook = await client.fetchWebhook(webhookID);
+
+    await webhook.edit({ channel: channel }).then((webhook) => {
+        webhook.send(getNewChannelEmbeds())
+        loggingHooks.set(guild.id, webhook)
+    })
+
+    await db.ref(`guilds/${guild.id}/logging`).update({
+        channel: channel.id
+    });
+}
+
+async function newWebhookLog(channel: TextChannel, guild: Guild) {
+    const webhook = await channel.createWebhook('Ferris Logging', {
+        avatar: 'https://i.imgur.com/KLCVmAA.png',
+        reason: 'To log items in this discord server.'
+    })
+
+    await db.ref(`guilds/${guild.id}/logging`).update({
+        channel: channel.id,
+        enabled: true,
+        subs: 0,
+        webhookID: webhook.id
+    });
+
+    loggingHooks.set(guild.id, webhook)
+
+    await webhook.send(getNewChannelEmbeds())
+}
 
 export { run };

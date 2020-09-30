@@ -1,5 +1,5 @@
 import { client } from '../app';
-import { serverConfigs } from '../util/serverinfo';
+import { serverConfigs } from '../util/serverInfo';
 import { watchGuild } from '../util/databaseFunctions';
 
 client.on('ready', () => {

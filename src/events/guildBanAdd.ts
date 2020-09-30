@@ -1,19 +1,21 @@
 import { client } from '../app';
-import { IDatabaseSchema, updateUserCount } from '../util/databaseFunctions';
-import { Guild, TextChannel } from 'discord.js';
-import { serverConfigs } from '../util/serverinfo';
+import { IDatabaseSchema } from '../util/databaseFunctions';
+import { TextChannel } from 'discord.js';
+import { serverConfigs } from '../util/serverInfo';
 
-client.on('guildBanAdd', (guild, member) => {
+client.on('guildBanAdd', (guild) => {
     let guildConfig: IDatabaseSchema = serverConfigs.get(guild.id);
+    if ( !guildConfig.logging ) return;
 
-    if((guildConfig.logTypes & 3)) {
-        console.log("CONFIG", guildConfig.logTypes);
+    if((guildConfig.logging.subs & 3)) {
+        console.log("CONFIG", guildConfig.logging.subs);
     }
 
-    const logChannelId: string | null = guildConfig.loggingChannel
+    const logChannelId: string | null = guildConfig.logging.channel
 
     if (logChannelId === null) return;
 
     const logChannel = client.channels.cache.get(logChannelId);
-    if (logChannel) (logChannel as TextChannel).send('Member banned');
+    if (logChannel)
+        (logChannel as TextChannel).send('Member banned');
 });
