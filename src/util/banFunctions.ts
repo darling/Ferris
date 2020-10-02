@@ -1,5 +1,9 @@
-import { Guild} from 'discord.js';
+import { Guild } from 'discord.js';
 import { client } from '../app';
+
+async function banUserFromGuild() {
+    console.log('bruh');
+}
 
 async function unbanUserFromGuild(guild: Guild | string, user_id: string, reason?: string) {
     let targetGuild: any = guild;
@@ -11,4 +15,4 @@ async function unbanUserFromGuild(guild: Guild | string, user_id: string, reason
     targetGuild.members.unban(user_id, reason).catch((err: Error) => {});
 }
 
-export { unbanUserFromGuild };
+export { unbanUserFromGuild, banUserFromGuild };
