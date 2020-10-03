@@ -2,63 +2,73 @@ import { firestore, client, admin } from '../app';
 import { pendingUnpunishments } from './serverInfo';
 import ms from 'ms';
 import { unbanUserFromGuild } from './banFunctions';
-import { TextChannel } from 'discord.js';
 import { unmuteUserFromGuild } from './muteFunctions';
+import { INewPunishmentData } from './punishment';
+
+const config = {
+    /*
+        The window for which the database looks for the next few bans is whatever this is set to.
+
+        If the number of calls gets past something I can handle, I will lower this number.
+    */
+    windowMs: ms('1d'),
+};
 
 function getFirestoreData(): () => void {
     return firestore
         .collectionGroup('punishments')
-        .where('time', '<=', admin.firestore.Timestamp.fromMillis(Date.now() + ms('1d')))
-        .where('time', '>=', admin.firestore.Timestamp.fromMillis(Date.now() + ms('-1d')))
+        .where('time', '<=', admin.firestore.Timestamp.fromMillis(Date.now() + config.windowMs))
+        .where(
+            'time',
+            '>=',
+            admin.firestore.Timestamp.fromMillis(Date.now() + -1 * config.windowMs)
+        )
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((update) => {
-                let data = update.doc.data();
+                let doc = update.doc;
+                let data = doc.data();
 
                 switch (update.type) {
                     case 'added':
-                        console.log('ADDED ENTRY');
-
                         if (data.completed || data.time.toDate() <= Date.now()) {
-                            update.doc.ref.delete();
+                            doc.ref.delete();
                         }
 
                         const event = setTimeout(() => {
                             switch (data.type) {
                                 case 'ban':
-                                    console.log(`Unbanning ${update.doc.id} from ${data.guild}`);
-                                    unbanUserFromGuild(data.guild, update.doc.id);
+                                    console.log(`Unbanning ${doc.id} from ${data.guild}`);
+                                    unbanUserFromGuild(data.guild, doc.id);
                                     break;
 
                                 case 'mute':
-                                    console.log(`Unmute ${update.doc.id} from ${data.guild}`);
-                                    unmuteUserFromGuild(data.guild, update.doc.id, data.roles);
+                                    console.log(`Unmute ${doc.id} from ${data.guild}`);
+                                    unmuteUserFromGuild(data.guild, doc.id, data.roles);
                                     break;
                             }
-                            pendingUnpunishments.delete(update.doc.id);
-                            update.doc.ref.delete();
+                            pendingUnpunishments.delete(doc.id);
+                            doc.ref.delete();
                         }, data.time.toDate() - Date.now());
 
-                        pendingUnpunishments.set(update.doc.id, {
+                        pendingUnpunishments.set(doc.id, {
                             event: event,
                             data: data,
-                            document: update.doc,
+                            document: doc,
                         });
 
                         break;
                     case 'modified':
-                        console.log('MODIFIED ENTRY');
-
                         if (data.completed || data.time.toDate() <= Date.now()) {
-                            update.doc.ref.delete();
+                            doc.ref.delete();
                         }
 
                         break;
                     case 'removed':
-                        console.log('REMOVED ENTRY');
-
-                        const doc = pendingUnpunishments.get(update.doc.id);
-                        clearTimeout(doc.event);
-                        pendingUnpunishments.delete(update.doc.id);
+                        if (pendingUnpunishments.has(doc.id)) {
+                            const pendingDoc = pendingUnpunishments.get(doc.id);
+                            clearTimeout(pendingDoc.event);
+                            pendingUnpunishments.delete(doc.id);
+                        }
 
                         break;
 
@@ -75,7 +85,7 @@ async function runSchedule() {
     setInterval(() => {
         unsub();
         unsub = getFirestoreData();
-    }, ms('1d'));
+    }, config.windowMs);
 }
 
 export default runSchedule;
