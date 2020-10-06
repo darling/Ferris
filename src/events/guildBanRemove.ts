@@ -2,27 +2,23 @@ import { client } from '../app';
 import { IDatabaseSchema } from '../util/databaseFunctions';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
-import { newLog } from '../util/webhookLogging';
+import { isLoggable, newLog } from '../util/webhookLogging';
 
-client.on('guildBanAdd', async (guild, member) => {
+client.on('guildBanRemove', async (guild, member) => {
     let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (!guildConfig || !guildConfig.logging) return;
-
-    if (guildConfig.logging.subs & 3) {
-        console.log('CONFIG', guildConfig.logging.subs);
-    }
+    if (isLoggable('BAN_REMOVED', guild.id) || !guildConfig || !guildConfig.logging) return;
 
     const embed = new MessageEmbed();
 
     embed.setDescription(
-        `<@${member.id}> was banned!\nCheck the Audit Logs for more details on who banned.`
+        `<@${member.id}> was unbanned!\nplease Check the Audit Logs for more details.`
     );
     embed.setTimestamp();
     const avURL = member.avatarURL();
     if (avURL) embed.setThumbnail(avURL);
     embed.setFooter(`ID: ${member.id}`);
-    embed.setColor(16548225);
-    embed.setTitle('Member Banned');
+    embed.setColor(6869905);
+    embed.setTitle('Member Unbanned');
 
     await newLog(guild.id, embed);
 });

@@ -1,16 +1,24 @@
-import { Guild, Webhook } from 'discord.js';
-import { client, db } from '../app';
+import { Channel, Guild, GuildChannel, Role, Webhook } from 'discord.js';
+import ms from 'ms';
+import { admin, client, db } from '../app';
 import { loggingHooks, serverConfigs } from './serverInfo';
 
 interface IDatabaseSchema {
     prefix: string;
     owner: string;
     name: string;
+    warns: IDatabaseWarnsSchema;
     channels: any[];
     roles: any[];
     member_count: number;
     logging?: ILoggingProps;
     webhook?: Webhook;
+}
+
+interface IDatabaseWarnsSchema {
+    [user: string]: {
+        [warn: number]: { by: string; reason: string };
+    };
 }
 
 interface ILoggingProps {
@@ -102,11 +110,76 @@ function newGuild(guild: Guild) {
 }
 
 function updateUserCount(guild: Guild) {
-    let reference = db.ref(`guilds/${guild.id}`);
+    const reference = db.ref(`guilds/${guild.id}`);
 
     reference.update({
         member_count: guild.memberCount,
     });
 }
 
-export { ensureGuild, updateUserCount, watchGuild, newGuild, IDatabaseSchema, ILoggingProps };
+async function updateChannel(guild_id: string, channel: Channel) {
+    if (channel.type === 'dm' || channel.type === 'unknown') return;
+    const reference = db.ref(`guilds/${guild_id}/channels/${channel.id}`);
+    const guildChannel = channel as GuildChannel;
+
+    await reference.update({
+        type: channel.type,
+        name: guildChannel.name,
+        manageable: guildChannel.manageable,
+        position: guildChannel.position,
+    });
+}
+
+async function deleteChannel(guild_id: string, channel: Channel) {
+    const reference = db.ref(`guilds/${guild_id}/channels/${channel.id}`);
+    await reference.remove();
+}
+
+async function udpateRole(guild_id: string, role: Role) {
+    const reference = db.ref(`guilds/${guild_id}/roles/${role.id}`);
+
+    await reference.update({
+        name: role.name,
+        perms: role.permissions.bitfield,
+        isManaged: role.managed,
+        color: role.hexColor,
+        hoisted: role.hoist,
+        position: role.position,
+    });
+}
+
+async function deleteRole(guild_id: string, role: Role) {
+    const reference = db.ref(`guilds/${guild_id}/roles/${role.id}`);
+    await reference.remove();
+}
+
+async function addWarn(guild_id: string, warnedID: string, reason: string, byId: string) {
+    const timeGiven = Date.now();
+    const refrence = db.ref(`guilds/${guild_id}/warns/${warnedID}/${timeGiven}`);
+
+    refrence.update({
+        reason: reason,
+        by: byId,
+    });
+}
+
+async function deleteWarn(guildId: string, warnedId: string, timestamp: string) {
+    const refrence = db.ref(`guilds/${guildId}/warns/${warnedId}/${timestamp}`);
+
+    refrence.remove();
+}
+
+export {
+    ensureGuild,
+    updateUserCount,
+    watchGuild,
+    newGuild,
+    IDatabaseSchema,
+    ILoggingProps,
+    updateChannel,
+    deleteChannel,
+    udpateRole,
+    deleteRole,
+    addWarn,
+    deleteWarn,
+};

@@ -1,5 +1,5 @@
 import { Message, GuildMember, MessageEmbed, Guild, Collection } from 'discord.js';
-import { FerrisClient, firestore, admin } from '../app';
+import { FerrisClient, admin } from '../app';
 
 import moment from 'moment';
 

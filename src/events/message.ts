@@ -14,18 +14,7 @@ client.on('message', async (msg: Message) => {
         await watchGuild(guild);
     }
 
-    let prefix = serverConfigs.get(guild.id, "prefix");
-    // let modRoles: any = serverConfigs.get(guild.id, "modroles");
-
-    // if(modRoles) {
-    //     let hits = 0;
-    //     for (let roleId in modRoles) {
-    //         if (msg.member?.roles.cache.has(roleId)) hits++;
-    //     }
-    //     if (hits === 0) {
-    //         return;
-    //     }
-    // }
+    let prefix = serverConfigs.get(guild.id)!.prefix;
 
     if (!msg.content.startsWith(prefix)) return;
 
