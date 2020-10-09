@@ -1,11 +1,7 @@
 import { Message, GuildMember, MessageEmbed, Guild, Collection } from 'discord.js';
-import { FerrisClient, admin } from '../app';
+import { admin, FerrisClient, firestore } from '../../app';
 
-import moment from 'moment';
-
-import { RunCommand } from './util/commandinterface';
-import ms from 'ms';
-import { INewPunishmentData, newPunishment } from '../util/punishment';
+import { RunCommand } from '../../util/commandinterface';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
     const member: GuildMember | null = msg.member;
@@ -41,41 +37,43 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     }
 
     let bannedMember: GuildMember | undefined = mentions.first();
-    if (!bannedMember) return;
+    if (bannedMember === undefined) return;
 
     if (!bannedMember.bannable) {
         msg.reply('I can not ban this member.');
         return;
     }
 
-    let hasProperDateTime = /^\d{1,3}[sdmwh]{1}$/.test(args[1]);
-    if (!hasProperDateTime) return;
-
     bannedMember.ban({ days: 3, reason: args.join(' ') }).then((member) => {
         const embed = new MessageEmbed();
         embed.setColor(16646143);
-        embed.setTitle(member.user.username + ' has been temp-banned!');
-        embed.setDescription(
-            `${member.user.tag} will be unbanned *${moment(Date.now() + ms(args[1])).fromNow()}*.`
-        );
+        embed.setTitle(member.user.username + ' has been banned!');
         embed.setThumbnail('https://i.imgur.com/NG469Iv.png');
         embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
         msg.channel.send(embed);
     });
 
-    const docData: INewPunishmentData = {
-        member: bannedMember.id,
+    const timeGiven = admin.firestore.Timestamp.now();
+
+    const docData = {
         guild: guild.id,
         channel: msg.channel.id,
+        completed: false,
+        desc: args.join(' '),
         type: 'ban',
-        roles: bannedMember.roles.cache.array().map((role) => role.id),
-        author: msg.author.id,
-        time: admin.firestore.Timestamp.fromMillis(Date.now() + ms(args[1])),
+        timeGiven: timeGiven,
+        author: member.id,
     };
 
-    newPunishment(docData);
+    const document = firestore
+        .collection('guilds')
+        .doc(guild.id)
+        .collection('punishments')
+        .doc(bannedMember.id);
+
+    document.set(docData);
 };
 
-const aliases = ['tb', 'tban'];
+const aliases = ['b'];
 
 export { run };

@@ -1,13 +1,14 @@
-import { Message, GuildMember, Guild } from 'discord.js';
-import { FerrisClient, firestore, admin } from '../app';
+import { Message, GuildMember, Guild, TextChannel } from 'discord.js';
+import { FerrisClient, firestore, admin } from '../../app';
 
-import { RunCommand } from './util/commandinterface';
-import { parseIfTime } from './util/parse';
-import { muteDialog } from '../util/muteFunctions';
+import { RunCommand } from '../../util/commandinterface';
+import { isUserMention, parseIfTime, stripMention } from '../../util/parse';
+import { muteDialog } from '../../util/muteFunctions';
+import { sendSimpleEmbed } from '../../util/embed';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
     const guild: Guild | null = msg.guild;
-    if(guild === null) {
+    if (guild === null) {
         return;
     }
 
@@ -18,13 +19,13 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
     }
 
     const member: GuildMember | null = msg.member;
-    if(member === null) {
+    if (member === null) {
         return;
     }
 
-    // TODO: Add permissions through map
-    if (!msg.mentions.members) {
-        msg.reply('please mention a user to mute.');
+    // TODO: Make utility for parsing members
+    if (args.length < 1 || !isUserMention(args[0])) {
+        sendSimpleEmbed('Please mention a valid user', msg.channel as TextChannel);
         return;
     }
 
@@ -38,14 +39,14 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         return;
     }
 
-    let mutedMember: GuildMember | undefined = msg.mentions.members.first();
+    let mutedMember: GuildMember | undefined = guild.members.cache.get(stripMention(args[0]));
     if (mutedMember === undefined) {
         return;
     }
 
     const timeSpecified = parseIfTime(args[1]);
     if (timeSpecified === undefined) {
-        msg.reply('Please specify a correct time.')
+        msg.reply('Please specify a correct time.');
         return;
     }
 

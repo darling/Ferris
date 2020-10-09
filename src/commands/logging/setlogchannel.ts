@@ -1,8 +1,8 @@
 import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
-import { FerrisClient, db, client } from '../app';
-import { RunCommand } from './util/commandinterface';
-import { loggingHooks, serverConfigs } from '../util/serverInfo';
-import { IDatabaseSchema } from '../util/databaseFunctions';
+import { FerrisClient, db, client } from '../../app';
+import { RunCommand } from '../../util/commandinterface';
+import { loggingHooks, serverConfigs } from '../../util/serverInfo';
+import { IDatabaseSchema } from '../../util/databaseFunctions';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     if (!msg.guild) return;

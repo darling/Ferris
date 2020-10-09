@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
-import { FerrisClient, db } from '../app';
+import { FerrisClient, db } from '../../app';
 
-import { RunCommand } from './util/commandinterface';
+import { RunCommand } from '../../util/commandinterface';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
     if (!msg.guild) return;

@@ -1,9 +1,9 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { freemem, totalmem } from 'os';
 import { memoryUsage } from 'process';
-import { FerrisClient } from '../app';
+import { FerrisClient } from '../../app';
 
-import { RunCommand } from './util/commandinterface';
+import { RunCommand } from '../../util/commandinterface';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message): void {
     const embed = new MessageEmbed();

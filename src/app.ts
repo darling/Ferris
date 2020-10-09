@@ -10,7 +10,9 @@ import runSchedule from './util/scheduleHandler';
 import { token } from './assets/config/config.json';
 
 admin.initializeApp({
-    credential: admin.credential.cert(require('./assets/config/ferrisbot-6e0f1-firebase-adminsdk-gi47c-79a7d90ec8.json')),
+    credential: admin.credential.cert(
+        require('./assets/config/ferrisbot-6e0f1-firebase-adminsdk-gi47c-79a7d90ec8.json')
+    ),
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
@@ -36,25 +38,7 @@ readdir(__dirname + '/events', (err, files) => {
 
 client.commands = new Map();
 
-readdir(__dirname + '/commands', (err, files) => {
-    if (err) return console.error(err);
-
-    files.forEach((file) => {
-        if (!file.endsWith('.js')) return;
-
-        let commandName = file.split('.')[0];
-
-        import(`./commands/${file}`).then((prop) => {
-            client.commands.set(commandName, prop);
-
-            if (prop.aliases) {
-                prop.aliases.forEach((alias: string) => {
-                    client.commands.set(alias, prop);
-                });
-            }
-        });
-    });
-});
+require(__dirname + '/commands');
 
 // Schedule Handler (I.e unbans, unmute)
 

@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
-import { FerrisClient } from '../app';
+import { FerrisClient } from '../../app';
 
-import { RunCommand } from './util/commandinterface';
-import { pendingUnpunishments } from '../util/serverInfo';
-import { unbanUserFromGuild } from '../util/banFunctions';
+import { RunCommand } from '../../util/commandinterface';
+import { pendingUnpunishments } from '../../util/serverInfo';
+import { unbanUserFromGuild } from '../../util/banFunctions';
 import { firestore } from 'firebase-admin';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {

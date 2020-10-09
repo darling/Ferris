@@ -1,9 +1,9 @@
 import { Guild, Message } from 'discord.js';
-import { FerrisClient } from '../app';
-import { deleteWarn } from '../util/databaseFunctions';
-import { serverConfigs } from '../util/serverInfo';
+import { FerrisClient } from '../../app';
+import { deleteWarn } from '../../util/databaseFunctions';
+import { serverConfigs } from '../../util/serverInfo';
 
-import { RunCommand } from './util/commandinterface';
+import { RunCommand } from '../../util/commandinterface';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
     const guild: Guild | null = msg.guild;

@@ -1,8 +1,8 @@
 import { Message, MessageEmbed, User } from 'discord.js';
-import { FerrisClient } from '../app';
+import { FerrisClient } from '../../app';
 
-import { RunCommand } from './util/commandinterface';
-import { getAvatar } from './util/users';
+import { RunCommand } from '../../util/commandinterface';
+import { getAvatar } from '../../util/users';
 import moment from 'moment';
 
 const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
@@ -37,7 +37,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
 
     let roles = member?.roles.cache.array();
 
-    embed.addField('Roles', roles ? roles : "No  roles", true);
+    embed.addField('Roles', roles ? roles : 'No  roles', true);
 
     embed.addField('Current Punishments', `None.`, true);
 
@@ -47,16 +47,14 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
         'Joined',
         `${moment(member?.joinedTimestamp).utc().format('LLLL')}, about ${moment(
             member?.joinedTimestamp
-        ).fromNow()}.`,
-
+        ).fromNow()}.`
     );
 
     embed.addField(
         'Created',
         `${moment(user.createdTimestamp).utc().format('LLLL')}, about ${moment(
             user.createdTimestamp
-        ).fromNow()}.`,
-
+        ).fromNow()}.`
     );
 
     msg.channel.send(embed);
