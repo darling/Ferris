@@ -16,7 +16,7 @@ export function parseChannelId(input: string): undefined | string {
 }
 
 export function stripMention(input: string): string {
-    return input.replace('<@', '').replace('>', '');
+    return input.replace('<@', '').replace('!', '').replace('>', '');
 }
 
 export function isUserMention(input: string): boolean {

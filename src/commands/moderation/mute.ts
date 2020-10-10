@@ -25,6 +25,7 @@ const run: RunCommand = function (client: FerrisClient, msg: Message, args: stri
 
     // TODO: Make utility for parsing members
     if (args.length < 1 || !isUserMention(args[0])) {
+        console.log(args);
         sendSimpleEmbed('Please mention a valid user', msg.channel as TextChannel);
         return;
     }
