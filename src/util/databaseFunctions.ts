@@ -1,6 +1,5 @@
 import { Channel, Guild, GuildChannel, Role, Webhook } from 'discord.js';
-import ms from 'ms';
-import { admin, client, db } from '../app';
+import { client, db } from '../app';
 import { loggingHooks, serverConfigs } from './serverInfo';
 
 interface IDatabaseSchema {
