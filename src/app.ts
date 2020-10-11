@@ -45,10 +45,4 @@ require(__dirname + '/commands');
 export { client, FerrisClient, db, firestore, admin };
 
 // Let's start!
-client.login(token).then(() => {
-    client.user?.setActivity('commands', {
-        type: 'LISTENING',
-        url: 'https://github.com/darling/Ferris',
-    });
-    runSchedule();
-});
+client.login(token);
