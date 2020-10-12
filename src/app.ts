@@ -7,12 +7,10 @@ import * as admin from 'firebase-admin';
 import { readdir } from 'fs';
 
 import runSchedule from './util/scheduleHandler';
-import { token } from './assets/config/config.json';
+import { config } from './assets/config/config';
 
 admin.initializeApp({
-    credential: admin.credential.cert(
-        require('./assets/config/ferrisbot-6e0f1-firebase-adminsdk-gi47c-79a7d90ec8.json')
-    ),
+    credential: admin.credential.cert(config.firebase),
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
@@ -45,4 +43,4 @@ require(__dirname + '/commands');
 export { client, FerrisClient, db, firestore, admin };
 
 // Let's start!
-client.login(token);
+client.login(config.token);
