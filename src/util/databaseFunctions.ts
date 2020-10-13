@@ -134,7 +134,7 @@ async function deleteChannel(guild_id: string, channel: Channel) {
     await reference.remove();
 }
 
-async function udpateRole(guild_id: string, role: Role) {
+async function updateRole(guild_id: string, role: Role) {
     const reference = db.ref(`guilds/${guild_id}/roles/${role.id}`);
 
     await reference.update({
@@ -177,7 +177,7 @@ export {
     ILoggingProps,
     updateChannel,
     deleteChannel,
-    udpateRole,
+    updateRole,
     deleteRole,
     addWarn,
     deleteWarn,

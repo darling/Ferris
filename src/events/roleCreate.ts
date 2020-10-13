@@ -1,11 +1,11 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role } from 'discord.js';
-import { IDatabaseSchema, udpateRole } from '../util/databaseFunctions';
+import { IDatabaseSchema, updateRole } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('roleCreate', async (role: Role) => {
-    udpateRole(role.guild.id, role);
+    updateRole(role.guild.id, role);
 
     const guild: Guild = role.guild;
 

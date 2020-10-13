@@ -1,12 +1,12 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role, RoleData } from 'discord.js';
-import { IDatabaseSchema, udpateRole } from '../util/databaseFunctions';
+import { IDatabaseSchema, updateRole } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 import { isDeepStrictEqual } from 'util';
 
 client.on('roleUpdate', async (role: Role, newRole: Role) => {
-    udpateRole(newRole.guild.id, newRole);
+    updateRole(newRole.guild.id, newRole);
 
     if (role.rawPosition !== newRole.rawPosition) return;
 

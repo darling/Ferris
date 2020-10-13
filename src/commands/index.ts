@@ -13,7 +13,6 @@ export const requireCommands = (dirname: string) => {
         if (commandName === 'index') return;
 
         import(`${dirname}/${filename}`).then((prop) => {
-            console.log('importing ' + dirname + '/' + filename);
             client.commands.set(commandName, prop);
 
             if (prop.aliases) {
@@ -32,6 +31,5 @@ const dirs = readdirSync(__dirname + '/', { withFileTypes: true })
     .map((dir) => dir.name);
 
 dirs.forEach((dir) => {
-    console.log('COMMANDS: ', 'FOUND DIRECTORY: ', dir);
     require(__dirname + '/' + dir);
 });
