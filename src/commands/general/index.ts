@@ -1,3 +1,3 @@
-import { requireCommands } from '..';
+// import { requireCommands } from '..';
 
-requireCommands(__dirname);
+// requireCommands(__dirname);

@@ -1,12 +1,25 @@
-import { Message } from 'discord.js';
-import { FerrisClient } from '../../app';
+import { MessageEmbed } from 'discord.js';
+import { client } from '../../app';
+import { ICommand } from '../../types/commands';
 
-import { RunCommand } from '../../util/commandinterface';
+client.commands.set('echo', {
+    name: 'echo',
+    arguments: [
+        {
+            name: 'first',
+            type: 'string',
+        },
+        {
+            name: 'output',
+            type: '...string',
+        },
+    ],
+    run: (msg, args: EchoArgs) => {
+        msg.channel.send(JSON.stringify(args));
+    },
+});
 
-const run: RunCommand = function (client: FerrisClient, msg: Message): void {
-    msg.channel.send(msg.content.slice(5)).catch((err: Error) => {
-        console.error(err);
-    });
-};
-
-export { run };
+interface EchoArgs {
+    first?: string;
+    output?: string;
+}

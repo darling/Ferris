@@ -1,35 +1,39 @@
 import { Dirent, readdirSync } from 'fs';
 import { client } from '../app';
 
-export const requireCommands = (dirname: string) => {
-    const files = readdirSync(dirname + '/', { withFileTypes: true });
+// export const requireCommands = (dirname: string) => {
+//     const files = readdirSync(dirname + '/', { withFileTypes: true });
 
-    files.forEach((file: Dirent) => {
-        const filename = file.name;
-        if (!filename.endsWith('.js')) return;
+//     files.forEach((file: Dirent) => {
+//         const filename = file.name;
+//         if (!filename.endsWith('.js')) return;
 
-        let commandName = filename.split('.')[0];
+//         let commandName = filename.split('.')[0];
 
-        if (commandName === 'index') return;
+//         if (commandName === 'index') return;
 
-        import(`${dirname}/${filename}`).then((prop) => {
-            client.commands.set(commandName, prop);
+//         import(`${dirname}/${filename}`).then((prop) => {
+//             client.commands.set(commandName, prop);
 
-            if (prop.aliases) {
-                prop.aliases.forEach((alias: string) => {
-                    client.commands.set(alias, prop);
-                });
-            }
-        });
-    });
-};
+//             if (prop.aliases) {
+//                 prop.aliases.forEach((alias: string) => {
+//                     client.commands.set(alias, prop);
+//                 });
+//             }
+//         });
+//     });
+// };
 
-const dirs = readdirSync(__dirname + '/', { withFileTypes: true })
-    .filter((dirent) => {
-        return dirent.isDirectory();
-    })
-    .map((dir) => dir.name);
+// const dirs = readdirSync(__dirname + '/', { withFileTypes: true })
+//     .filter((dirent) => {
+//         return dirent.isDirectory();
+//     })
+//     .map((dir) => dir.name);
 
-dirs.forEach((dir) => {
-    require(__dirname + '/' + dir);
-});
+// dirs.forEach((dir) => {
+//     require(__dirname + '/' + dir);
+// });
+
+require('./general/help');
+require('./general/test');
+require('./development/echo');

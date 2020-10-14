@@ -1,13 +1,13 @@
-import { Client } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 
 // Database
 import * as admin from 'firebase-admin';
 
 // Util
-import { readdir } from 'fs';
+import { readdir, readdirSync } from 'fs';
 
-import runSchedule from './util/scheduleHandler';
 import { config } from './assets/config/config';
+import { ICommand } from './types/commands';
 
 admin.initializeApp({
     credential: admin.credential.cert(config.firebase),
@@ -19,7 +19,7 @@ const firestore = admin.firestore();
 
 // Extending Client to hold some extra data
 interface FerrisClient extends Client {
-    commands: Map<string, any>;
+    commands: Collection<string, ICommand>;
 }
 
 const client = new Client() as FerrisClient;
@@ -34,8 +34,11 @@ readdir(__dirname + '/events', (err, files) => {
     });
 });
 
-client.commands = new Map();
+readdirSync(`${__dirname}/util/arguments`).forEach((file) => {
+    require(`./util/arguments/${file}`);
+});
 
+client.commands = new Collection<string, ICommand>();
 require(__dirname + '/commands');
 
 // Schedule Handler (I.e unbans, unmute)
