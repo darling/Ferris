@@ -91,7 +91,6 @@ async function parseArgs(msg: Message, cmd: ICommand, params: string[]) {
 
         const result = await resolver.execute(argument, parameteres, msg, cmd);
         if (result) {
-            console.log('NEW PARSED PARAM', argument.name, result);
             args[argument.name] = result;
 
             if (argument.type && ['...string', '...roles'].includes(argument.type)) {

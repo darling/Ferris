@@ -12,6 +12,7 @@ client.commands.set('echo', {
         {
             name: 'output',
             type: '...string',
+            defualtValue: 'This is stupid',
         },
     ],
     run: (msg, args: EchoArgs) => {
