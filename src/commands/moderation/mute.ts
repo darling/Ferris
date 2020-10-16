@@ -10,8 +10,8 @@ import { serverConfigs } from '../../util/serverInfo';
 
 import { client } from '../../app';
 
-client.commands.set('warn', {
-    name: 'warn',
+client.commands.set('mute', {
+    name: 'mute',
     guildOnly: true,
     arguments: [
         {
