@@ -10,16 +10,11 @@ import { IConfig } from './assets/config/config';
 // import { config } from './assets/config/config';
 import { ICommand } from './types/commands';
 
-const type = process.env.TYPE;
 const project_id = process.env.PROJECT_ID;
-const private_key_id = process.env.PRIVATE_KEY_ID;
-const private_key = process.env.PRIVATE_KEY;
+const private_key = process.env.PRIVATE_KEY?.replace(/\\n/g, '\n');
 const client_email = process.env.CLIENT_EMAIL;
-const client_id = process.env.CLIENT_ID;
-const curl = process.env.client_x509_cert_url;
 
-if (!type || !project_id || !private_key || !private_key_id || !client_email || !client_id || !curl)
-    throw Error('Load console vargs');
+if (!project_id || !private_key || !client_email) throw Error('Load console vargs');
 
 const envKey: admin.ServiceAccount = {
     projectId: project_id,
