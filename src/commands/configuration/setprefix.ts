@@ -1,13 +1,37 @@
-import { Message } from 'discord.js';
-import { FerrisClient, db } from '../../app';
+import { MessageEmbed } from 'discord.js';
+import { db } from '../../app';
 
-import { RunCommand } from '../../util/commandinterface';
+import { client } from '../../app';
+import { serverConfigs } from '../../util/serverInfo';
 
-const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    if (!msg.guild) return;
+client.commands.set('setprefix', {
+    name: 'setprefix',
+    aliases: ['prefix'],
+    guildOnly: true,
+    arguments: [
+        {
+            name: 'newPrefix',
+            type: 'string',
+            required: false,
+        },
+    ],
+    run: (msg, args: EchoArgs, guild) => {
+        if (!guild) return;
 
-    db.ref(`guilds/${msg.guild.id}/prefix`).set(args[0]);
-    msg.reply(`new prefix is ${args[0]}`);
-};
+        if (args.newPrefix) {
+            db.ref(`guilds/${guild.id}/prefix`).set(args.newPrefix);
+        }
 
-export { run };
+        const embed = new MessageEmbed();
+
+        embed.setDescription(
+            `The prefix is ${args.newPrefix ? 'now ' : ''}${serverConfigs.get(guild.id, 'prefix')}`
+        );
+
+        msg.channel.send(embed);
+    },
+});
+
+interface EchoArgs {
+    newPrefix?: string;
+}

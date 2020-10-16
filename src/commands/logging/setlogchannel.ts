@@ -1,22 +1,41 @@
-import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
-import { FerrisClient, db, client } from '../../app';
-import { RunCommand } from '../../util/commandinterface';
+import { Guild, MessageEmbed, TextChannel } from 'discord.js';
+import { db } from '../../app';
 import { loggingHooks, serverConfigs } from '../../util/serverInfo';
 import { IDatabaseSchema } from '../../util/databaseFunctions';
 
-const run: RunCommand = function (client: FerrisClient, msg: Message): void {
-    if (!msg.guild) return;
+import { client } from '../../app';
 
-    const channel: TextChannel = msg.channel as TextChannel;
+client.commands.set('setlogchannel', {
+    name: 'setlogchannel',
+    arguments: [
+        {
+            name: 'newLogChannel',
+            type: 'textchannel',
+            required: true,
+            missing: (msg) => {
+                const embed = new MessageEmbed();
 
-    const guild: Guild = msg.guild;
+                embed.setDescription('Please mention a channel or channel id');
 
-    if (!serverConfigs.has(guild.id, 'logging')) {
-        newWebhookLog(channel, guild);
-    } else {
-        changeWebhookLogChannel(channel, guild);
-    }
-};
+                msg.channel.send(embed);
+            },
+        },
+    ],
+    guildOnly: true,
+    run: (msg, args: LogArgs, guild) => {
+        if (!guild) return;
+
+        if (serverConfigs.has(guild.id, 'logging')) {
+            newWebhookLog(args.newLogChannel, guild);
+        } else {
+            changeWebhookLogChannel(args.newLogChannel, guild);
+        }
+    },
+});
+
+interface LogArgs {
+    newLogChannel: TextChannel;
+}
 
 function getNewChannelEmbeds() {
     const embed = new MessageEmbed();
@@ -61,5 +80,3 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
 
     await webhook.send(getNewChannelEmbeds());
 }
-
-export { run };

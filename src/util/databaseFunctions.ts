@@ -152,12 +152,12 @@ async function deleteRole(guild_id: string, role: Role) {
     await reference.remove();
 }
 
-async function addWarn(guild_id: string, warnedID: string, reason: string, byId: string) {
+async function addWarn(guild_id: string, warnedID: string, byId: string, reason?: string) {
     const timeGiven = Date.now();
     const refrence = db.ref(`guilds/${guild_id}/warns/${warnedID}/${timeGiven}`);
 
     refrence.update({
-        reason: reason,
+        reason: reason + '',
         by: byId,
     });
 }

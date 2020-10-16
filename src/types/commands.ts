@@ -1,5 +1,4 @@
 import { Collection, Guild, Message } from 'discord.js';
-import { FerrisClient } from '../app';
 
 export interface ICommand {
     name: string;

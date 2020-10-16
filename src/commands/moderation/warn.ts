@@ -3,22 +3,33 @@ import { FerrisClient } from '../../app';
 import { addWarn, IDatabaseSchema } from '../../util/databaseFunctions';
 import { serverConfigs } from '../../util/serverInfo';
 
-import { RunCommand } from '../../util/commandinterface';
+import { GuildMember, MessageEmbed } from 'discord.js';
 
-const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    const guild: Guild | null = msg.guild;
-    if (!guild) return;
+import { client } from '../../app';
 
-    const memberToWarn = msg.mentions.members?.first();
-    if (!memberToWarn) {
-        msg.reply('You did not mention anyone!');
-        return;
-    }
+client.commands.set('warn', {
+    name: 'warn',
+    guildOnly: true,
+    arguments: [
+        {
+            name: 'user',
+            type: 'member',
+            required: true,
+        },
+        {
+            name: 'reason',
+            type: '...string',
+            required: false,
+        },
+    ],
+    run: (msg, args: PunishArgs, guild) => {
+        if (!guild) return;
 
-    args.shift();
-    const reason = args.join(' ');
+        addWarn(guild.id, args.user.id, msg.author.id, args.reason);
+    },
+});
 
-    addWarn(guild.id, memberToWarn.id, reason, msg.author.id);
-};
-
-export { run };
+interface PunishArgs {
+    user: GuildMember;
+    reason?: string;
+}

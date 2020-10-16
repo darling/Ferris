@@ -1,63 +1,56 @@
-import { Message, MessageEmbed, User } from 'discord.js';
-import { FerrisClient } from '../../app';
-
-import { RunCommand } from '../../util/commandinterface';
+import { GuildMember, Message, MessageEmbed, User } from 'discord.js';
 import { getAvatar } from '../../util/users';
 import moment from 'moment';
 
-const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-    let user: User | undefined = msg.mentions.users.first();
+import { client } from '../../app';
 
-    if (args.length < 1) {
-        user = msg.author;
-    }
+client.commands.set('whois', {
+    name: 'whois',
+    arguments: [
+        {
+            name: 'user',
+            type: 'member',
+            required: false,
+        },
+    ],
+    run: (msg, args: WhoisArgs) => {
+        const member = args.user || msg.member;
+        if (!member) return;
 
-    if (user === undefined) {
-        try {
-            user = client.users.cache.get(args[0]);
-        } catch (e) {
-            console.error(e);
-        }
-    }
+        const embed = new MessageEmbed();
 
-    if (user === undefined) {
-        return;
-    }
+        embed.setColor(16646143);
 
-    const member = msg.guild?.member(user);
-    if (member === undefined) return;
+        embed.setTitle(`${member.user.tag}${member.user.bot ? ' **BOT**' : ''}`);
+        if (member?.nickname) embed.setDescription(`Nickname: ${member?.nickname}`);
+        embed.setThumbnail(getAvatar(member.user.id, member.user.avatar!));
 
-    const embed = new MessageEmbed();
+        let roles = member?.roles.cache.array();
 
-    embed.setColor(16646143);
+        embed.addField('Roles', roles ? roles : 'No  roles', true);
 
-    embed.setTitle(`${user.tag}${user.bot ? ' **BOT**' : ''}`);
-    if (member?.nickname) embed.setDescription(`Nickname: ${member?.nickname}`);
-    embed.setThumbnail(getAvatar(user.id, user.avatar!));
+        embed.addField('Notes', `None.`, true);
 
-    let roles = member?.roles.cache.array();
+        embed.setFooter(`ID: ${member.user.id}  •  UTC`);
 
-    embed.addField('Roles', roles ? roles : 'No  roles', true);
+        embed.addField(
+            'Joined',
+            `${moment(member?.joinedTimestamp).utc().format('LLLL')}, about ${moment(
+                member?.joinedTimestamp
+            ).fromNow()}.`
+        );
 
-    embed.addField('Current Punishments', `None.`, true);
+        embed.addField(
+            'Created',
+            `${moment(member.user.createdTimestamp).utc().format('LLLL')}, about ${moment(
+                member.user.createdTimestamp
+            ).fromNow()}.`
+        );
 
-    embed.setFooter(`ID: ${user.id}  •  UTC`);
+        msg.channel.send(embed);
+    },
+});
 
-    embed.addField(
-        'Joined',
-        `${moment(member?.joinedTimestamp).utc().format('LLLL')}, about ${moment(
-            member?.joinedTimestamp
-        ).fromNow()}.`
-    );
-
-    embed.addField(
-        'Created',
-        `${moment(user.createdTimestamp).utc().format('LLLL')}, about ${moment(
-            user.createdTimestamp
-        ).fromNow()}.`
-    );
-
-    msg.channel.send(embed);
-};
-
-export { run };
+interface WhoisArgs {
+    user?: GuildMember;
+}

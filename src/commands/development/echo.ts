@@ -1,6 +1,4 @@
-import { MessageEmbed } from 'discord.js';
 import { client } from '../../app';
-import { ICommand } from '../../types/commands';
 
 client.commands.set('echo', {
     name: 'echo',
