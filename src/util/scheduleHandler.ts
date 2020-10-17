@@ -11,7 +11,7 @@ const config = {
 
         If the number of calls gets past something I can handle, I will lower this number.
     */
-    windowMs: ms('1d'),
+    windowMs: ms('30m'),
 };
 
 function getFirestoreData(): () => void {
