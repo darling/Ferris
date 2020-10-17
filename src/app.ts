@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import { Client, Collection } from 'discord.js';
 
 // Database
@@ -5,9 +7,10 @@ import * as admin from 'firebase-admin';
 
 // Util
 import { readdir, readdirSync } from 'fs';
-import { IConfig } from './assets/config/config';
 
+// import { IConfig } from './assets/config/config';
 // import { config } from './assets/config/config';
+
 import { ICommand } from './types/commands';
 
 const project_id = process.env.PROJECT_ID;

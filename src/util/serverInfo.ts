@@ -1,5 +1,5 @@
 import Enmap from 'enmap';
-import { Webhook } from 'discord.js';
+import { Collection, Webhook } from 'discord.js';
 import { IDatabaseSchema } from './databaseFunctions';
 
 const pendingUnpunishments = new Map();

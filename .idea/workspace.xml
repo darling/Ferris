@@ -20,21 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Cleaning">
-      <change afterPath="$PROJECT_DIR$/src/util/webhookLogging.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/log.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/setlogchannel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/setlogchannel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/unban.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/unban.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/guildBanAdd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildBanAdd.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/guildDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/guildDelete.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/message.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/messageDelete.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/messageDelete.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/messageUpdate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/messageUpdate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/ready.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/ready.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/databaseFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/databaseFunctions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/scheduleHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/scheduleHandler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/serverinfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/serverInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/configuration/setprefix.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/configuration/setprefix.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/serverInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/serverInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/webhookLogging.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/webhookLogging.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +70,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="C:\Users\Ca\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\202.6948.73\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="\\wsl$\Ubuntu-20.04\home\safe\Documents\Github\Ferris\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -148,6 +142,7 @@
       <workItem from="1601065534667" duration="15004000" />
       <workItem from="1601268683954" duration="123000" />
       <workItem from="1601497179581" duration="56000" />
+      <workItem from="1602871723031" duration="2308000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
@@ -327,10 +322,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="742" y="440" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1600899743509" />
-    <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1599439986252">
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1602872292129">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="616" y="243" width="672" height="677" key="run.anything.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1599439986252" />
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup/-1920.0.1920.1050/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1602872292129" />
     <state x="623" y="227" key="search.everywhere.popup" timestamp="1600299452536">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

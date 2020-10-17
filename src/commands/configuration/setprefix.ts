@@ -23,7 +23,7 @@ client.commands.set('setprefix', {
         }
 
         const embed = new MessageEmbed();
-
+        
         embed.setDescription(
             `The prefix is ${args.newPrefix ? 'now ' : ''}${serverConfigs.get(guild.id, 'prefix')}`
         );
