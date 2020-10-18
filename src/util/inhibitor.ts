@@ -1,5 +1,5 @@
 import { Collection, Guild, Message } from 'discord.js';
-import { ICommand } from '../../types/commands';
+import { ICommand } from '../types/commands';
 
 export const inhibitors = new Collection<
     string,

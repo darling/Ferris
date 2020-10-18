@@ -54,6 +54,10 @@ readdirSync(`${__dirname}/util/arguments`).forEach((file) => {
     require(`./util/arguments/${file}`);
 });
 
+readdirSync(`${__dirname}/util/inhibitors`).forEach((file) => {
+    require(`./util/inhibitors/${file}`);
+});
+
 client.commands = new Collection<string, ICommand>();
 require(__dirname + '/commands');
 

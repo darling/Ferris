@@ -1,5 +1,4 @@
 import { Dirent, readdirSync } from 'fs';
-import { client } from '../app';
 
 export const requireCommands = (dirname: string) => {
     const files = readdirSync(dirname + '/', { withFileTypes: true });

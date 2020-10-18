@@ -6,6 +6,7 @@ import { watchGuild } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { ICommand } from '../types/commands';
 import { argumentList } from '../util/arguments';
+import { inhibitors } from '../util/inhibitor';
 
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID) return;
@@ -26,6 +27,13 @@ client.on('message', async (msg: Message) => {
 
     const cmd = await parseCommand(commandName);
     if (!cmd) return;
+
+    const tests = inhibitors.map((fn) => {
+        return fn(msg, cmd, guild);
+    });
+
+    const testResults = await Promise.all(tests);
+    if (testResults.includes(true)) return;
 
     executeCommand(msg, cmd, parameters, guild);
 });
