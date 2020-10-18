@@ -18,7 +18,7 @@ client.on('message', async (msg: Message) => {
     }
 
     let prefix = serverConfigs.get(guild.id)!.prefix;
-    const botMention = `<@${client.user?.id}>`;
+    const botMention = `<@!${client.user?.id}>`;
 
     if (msg.content === botMention || msg.content.startsWith(botMention)) prefix = botMention;
     if (!msg.content.startsWith(prefix)) return;
@@ -33,6 +33,7 @@ client.on('message', async (msg: Message) => {
     });
 
     const testResults = await Promise.all(tests);
+    console.log(testResults);
     if (testResults.includes(true)) return;
 
     executeCommand(msg, cmd, parameters, guild);
