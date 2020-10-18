@@ -2,8 +2,6 @@ import Enmap from 'enmap';
 import { Collection, Webhook } from 'discord.js';
 import { IDatabaseSchema } from './databaseFunctions';
 
-const pendingUnpunishments = new Map();
-const serverConfigs = new Enmap<string, IDatabaseSchema>();
-const loggingHooks = new Map<string, Webhook>();
-
-export { pendingUnpunishments, serverConfigs, loggingHooks };
+export const pendingUnpunishments = new Map();
+export const serverConfigs = new Enmap<string, IDatabaseSchema>();
+export const loggingHooks = new Map<string, Webhook>();
