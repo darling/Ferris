@@ -1,11 +1,8 @@
-import { Guild, Message } from 'discord.js';
-import { FerrisClient } from '../../app';
-import { addWarn, IDatabaseSchema } from '../../util/databaseFunctions';
-import { serverConfigs } from '../../util/serverInfo';
+import { addWarn } from '../../../util/databaseFunctions';
 
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 
-import { client } from '../../app';
+import { client } from '../../../app';
 
 client.commands.set('warn', {
     name: 'warn',

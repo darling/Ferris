@@ -8,6 +8,11 @@ export const requireCommands = (dirname: string) => {
         const filename = file.name;
         if (!filename.endsWith('.js')) return;
 
+        if (file.isDirectory()) {
+            require(dirname + '/' + filename);
+            return;
+        }
+
         let commandName = filename.split('.')[0];
 
         if (commandName === 'index') return;
