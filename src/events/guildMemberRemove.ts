@@ -6,15 +6,16 @@ import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('guildMemberRemove', async (member) => {
     updateUserCount(member.guild);
+
+    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(member.guild.id);
+    if (!guildConfig || !guildConfig.logging) return;
+
     const auditKick = await member.guild.fetchAuditLogs({
         type: 'MEMBER_KICK',
         limit: 1,
     });
     const lastAudit = auditKick.entries.first();
     if (!lastAudit) return;
-
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(member.guild.id);
-    if (!guildConfig) return;
 
     if (
         isLoggable('MEMBER_KICKED', member.guild.id) ||
