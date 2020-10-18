@@ -1,10 +1,12 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { client, FerrisClient } from '../../app';
+import { PermissionLevels } from '../../types/commands';
 
 client.commands.set('test', {
     name: 'test',
     arguments: [],
-    userGuildPerms: ['ADMINISTRATOR'],
+    permissionLevels: [PermissionLevels.BOT_DEV],
+    // userGuildPerms: ['ADMINISTRATOR'],
     run: (msg, args: TestArgs) => {
         msg.channel.send(JSON.stringify(args));
     },
