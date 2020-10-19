@@ -1,4 +1,3 @@
-import { PermissionLevels } from '../../types/commands';
 import { inhibitors, permissionLevelTests } from '../inhibitor';
 
 inhibitors.set('permLevel', async (msg, command, guild) => {

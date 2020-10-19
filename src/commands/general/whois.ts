@@ -1,8 +1,8 @@
-import { GuildMember, Message, MessageEmbed, User } from 'discord.js';
-import { getAvatar } from '../../util/users';
+import { GuildMember, MessageEmbed } from 'discord.js';
 import moment from 'moment';
 
 import { client } from '../../app';
+import { getAvatar } from '../../util/users';
 
 client.commands.set('whois', {
     name: 'whois',
