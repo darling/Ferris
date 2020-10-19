@@ -50,6 +50,8 @@ readdir(__dirname + '/events', (err, files) => {
     });
 });
 
+// Todo: CLEAN THIS UP
+
 readdirSync(`${__dirname}/util/arguments`).forEach((file) => {
     require(`./util/arguments/${file}`);
 });
