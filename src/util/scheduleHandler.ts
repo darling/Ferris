@@ -1,9 +1,8 @@
-import { firestore, client, admin } from '../app';
+import { firestore, admin } from '../app';
 import { pendingUnpunishments } from './serverInfo';
 import ms from 'ms';
 import { unbanUserFromGuild } from './banFunctions';
 import { unmuteUserFromGuild } from './muteFunctions';
-import { INewPunishmentData } from './punishment';
 
 const config = {
     /*
