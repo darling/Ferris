@@ -14,11 +14,6 @@ client.commands.set('query', {
             type: 'string',
             required: false,
         },
-        {
-            name: 'prop',
-            type: 'string',
-            required: false,
-        },
     ],
     run: (msg, args: QueryArgs) => {
         if (args.prop) {

@@ -1,12 +1,12 @@
 import { client } from '../app';
-import { IDatabaseSchema } from '../util/databaseFunctions';
-import { MessageEmbed, TextChannel } from 'discord.js';
+import { ILoggingProps } from '../util/databaseFunctions';
+import { MessageEmbed } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('guildBanRemove', async (guild, member) => {
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (isLoggable('BAN_REMOVED', guild.id) || !guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (isLoggable('BAN_REMOVED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 

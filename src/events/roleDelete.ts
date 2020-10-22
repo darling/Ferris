@@ -1,16 +1,16 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role } from 'discord.js';
-import { deleteRole, IDatabaseSchema } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('roleDelete', async (role: Role) => {
-    deleteRole(role.guild.id, role);
+    // deleteRole(role.guild.id, role);
 
     const guild: Guild = role.guild;
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (isLoggable('ROLE_DELETED', guild.id) || !guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (isLoggable('ROLE_DELETED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 

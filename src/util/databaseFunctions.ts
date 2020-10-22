@@ -1,17 +1,13 @@
 import { Channel, Guild, GuildChannel, Role, Webhook } from 'discord.js';
 import { client, db } from '../app';
+import { IConfigSchema } from './db/config';
 import { loggingHooks, serverConfigs } from './serverInfo';
 
+// Each database entry needs to contain an optional config and the warnings/notes for each member.
 interface IDatabaseSchema {
-    prefix: string;
-    owner: string;
-    name: string;
-    warns: IDatabaseWarnsSchema;
-    channels: any[];
-    roles: any[];
+    config?: IConfigSchema;
     member_count: number;
-    logging?: ILoggingProps;
-    webhook?: Webhook;
+    warns?: IDatabaseWarnsSchema;
 }
 
 interface IDatabaseWarnsSchema {
@@ -24,18 +20,7 @@ interface ILoggingProps {
     channel: string;
     enabled: boolean;
     subs: number;
-    webhookID: string;
-}
-
-function ensureGuild(guild: Guild) {
-    let reference = db.ref(`guilds/${guild.id}`);
-    console.log('Ensuring ' + guild.name);
-
-    reference.once('value', (snapshot) => {
-        if (!snapshot.exists()) {
-            newGuild(guild);
-        }
-    });
+    webhook_id: string;
 }
 
 function watchGuild(guild: Guild) {
@@ -49,14 +34,14 @@ function watchGuild(guild: Guild) {
                 if (snapshot.exists()) {
                     serverConfigs.set(guild.id, snapshot.val());
 
-                    const loggingInfo: ILoggingProps | undefined = snapshot.val().logging;
+                    const loggingInfo: ILoggingProps | undefined = snapshot.val().config?.logging;
 
                     if (!loggingInfo) return;
 
-                    const webhook = await client.fetchWebhook(loggingInfo.webhookID);
+                    const webhook = await client.fetchWebhook(loggingInfo.webhook_id);
                     loggingHooks.set(guild.id, webhook);
                 } else {
-                    ensureGuild(guild);
+                    newGuild(guild);
                 }
 
                 return resolve();
@@ -66,46 +51,19 @@ function watchGuild(guild: Guild) {
             }
         );
 
-        serverConfigs.set(guild.id, callback, 'close');
+        // serverConfigs.set(guild.id, callback);
     });
 }
 
 function newGuild(guild: Guild) {
     // TODO: Minimize sent data
     let reference = db.ref(`guilds/${guild.id}`);
-    console.log('Ensuring ' + guild.name);
 
-    let channels: any = {};
-    let roles: any = {};
-
-    guild.channels.cache.forEach((channel) => {
-        channels[channel.id] = {
-            type: channel.type,
-            name: channel.name,
-            manageable: channel.manageable,
-            position: channel.position,
-        };
-    });
-
-    guild.roles.cache.forEach((role) => {
-        roles[role.id] = {
-            name: role.name,
-            perms: role.permissions.bitfield,
-            isManaged: role.managed,
-            color: role.hexColor,
-            hoisted: role.hoist,
-            position: role.position,
-        };
-    });
-
-    reference.update({
-        prefix: ';',
-        owner: guild.ownerID,
-        name: guild.name,
-        channels: channels,
-        roles: roles,
+    const guildEntry: IDatabaseSchema = {
         member_count: guild.memberCount,
-    });
+    };
+
+    reference.set(guildEntry);
 }
 
 function updateUserCount(guild: Guild) {
@@ -114,42 +72,6 @@ function updateUserCount(guild: Guild) {
     reference.update({
         member_count: guild.memberCount,
     });
-}
-
-async function updateChannel(guild_id: string, channel: Channel) {
-    if (channel.type === 'dm' || channel.type === 'unknown') return;
-    const reference = db.ref(`guilds/${guild_id}/channels/${channel.id}`);
-    const guildChannel = channel as GuildChannel;
-
-    await reference.update({
-        type: channel.type,
-        name: guildChannel.name,
-        manageable: guildChannel.manageable,
-        position: guildChannel.position,
-    });
-}
-
-async function deleteChannel(guild_id: string, channel: Channel) {
-    const reference = db.ref(`guilds/${guild_id}/channels/${channel.id}`);
-    await reference.remove();
-}
-
-async function updateRole(guild_id: string, role: Role) {
-    const reference = db.ref(`guilds/${guild_id}/roles/${role.id}`);
-
-    await reference.update({
-        name: role.name,
-        perms: role.permissions.bitfield,
-        isManaged: role.managed,
-        color: role.hexColor,
-        hoisted: role.hoist,
-        position: role.position,
-    });
-}
-
-async function deleteRole(guild_id: string, role: Role) {
-    const reference = db.ref(`guilds/${guild_id}/roles/${role.id}`);
-    await reference.remove();
 }
 
 async function addWarn(guild_id: string, warnedID: string, byId: string, reason?: string) {
@@ -169,16 +91,11 @@ async function deleteWarn(guildId: string, warnedId: string, timestamp: string) 
 }
 
 export {
-    ensureGuild,
     updateUserCount,
     watchGuild,
     newGuild,
     IDatabaseSchema,
     ILoggingProps,
-    updateChannel,
-    deleteChannel,
-    updateRole,
-    deleteRole,
     addWarn,
     deleteWarn,
 };

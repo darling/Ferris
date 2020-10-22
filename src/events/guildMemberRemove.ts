@@ -1,14 +1,15 @@
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { client } from '../app';
-import { IDatabaseSchema, updateUserCount } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps, updateUserCount } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('guildMemberRemove', async (member) => {
     updateUserCount(member.guild);
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(member.guild.id);
-    if (!guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(member.guild.id)?.config
+        ?.log_channel;
+    if (!loggingProps) return;
 
     const auditKick = await member.guild.fetchAuditLogs({
         type: 'MEMBER_KICK',
@@ -19,7 +20,7 @@ client.on('guildMemberRemove', async (member) => {
 
     if (
         isLoggable('MEMBER_KICKED', member.guild.id) ||
-        !guildConfig.logging ||
+        loggingProps ||
         Date.now() - lastAudit.createdAt.getTime() > 5000
     ) {
         if (isLoggable('MEMBER_LEFT', member.guild.id)) return;

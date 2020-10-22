@@ -22,11 +22,11 @@ client.commands.set('setprefix', {
             db.ref(`guilds/${guild.id}/prefix`).set(args.newPrefix);
         }
 
+        const prefix = serverConfigs.get(guild.id)?.config?.prefix || ';';
+
         const embed = new MessageEmbed();
-        
-        embed.setDescription(
-            `The prefix is ${args.newPrefix ? 'now ' : ''}${serverConfigs.get(guild.id, 'prefix')}`
-        );
+
+        embed.setDescription(`The prefix is ${args.newPrefix ? 'now ' : ''}${prefix}`);
 
         msg.channel.send(embed);
     },

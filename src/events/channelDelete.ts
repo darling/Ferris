@@ -1,6 +1,6 @@
 import { Guild, MessageEmbed } from 'discord.js';
 import { client } from '../app';
-import { deleteChannel, IDatabaseSchema } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
@@ -8,10 +8,10 @@ client.on('channelDelete', async (channel) => {
     if (channel.type === 'dm' || channel.type === 'unknown') return;
 
     const guild: Guild = (channel as any).guild;
-    deleteChannel(guild.id, channel);
+    // deleteChannel(guild.id, channel);
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (isLoggable('CHANNEL_DELETED', guild.id) || !guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (isLoggable('CHANNEL_DELETED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 

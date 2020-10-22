@@ -5,11 +5,9 @@ import { PermissionLevels } from '../../types/commands';
 client.commands.set('test', {
     name: 'test',
     arguments: [],
-    permissionLevels: [PermissionLevels.BOT_DEV],
+    // permissionLevels: [PermissionLevels.BOT_DEV],
     // userGuildPerms: ['ADMINISTRATOR'],
-    run: (msg, args: TestArgs) => {
-        msg.channel.send(JSON.stringify(args));
-    },
+    run: (msg, args: TestArgs, guild) => {},
 });
 
 interface TestArgs {

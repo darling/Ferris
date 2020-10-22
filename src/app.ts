@@ -52,16 +52,10 @@ readdir(__dirname + '/events', (err, files) => {
 
 // Todo: CLEAN THIS UP
 
-readdirSync(`${__dirname}/util/arguments`).forEach((file) => {
-    require(`./util/arguments/${file}`);
-});
-
-readdirSync(`${__dirname}/util/inhibitors`).forEach((file) => {
-    require(`./util/inhibitors/${file}`);
-});
-
-readdirSync(`${__dirname}/util/permissionLevels`).forEach((file) => {
-    require(`./util/permissionLevels/${file}`);
+['arguments', 'inhibitors', 'permissionLevels'].forEach((name) => {
+    readdirSync(`${__dirname}/util/${name}`).forEach((file) => {
+        require(`./util/${name}/${file}`);
+    });
 });
 
 client.commands = new Collection<string, ICommand>();

@@ -3,7 +3,7 @@ import { client } from '../app';
 // Instead of grabbing the prefix each time, we can store the current prefix of any server this shard looks at, and update it when the database updates.
 import { serverConfigs } from '../util/serverInfo';
 import { Guild, MessageEmbed } from 'discord.js';
-import { IDatabaseSchema } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('messageUpdate', async (msg, newMsg) => {
@@ -14,11 +14,11 @@ client.on('messageUpdate', async (msg, newMsg) => {
     const guild: Guild | null = msg.guild;
     if (guild === null) return;
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (!guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (!loggingProps) return;
 
     if (isLoggable('MESSAGE_UPDATED', guild.id)) {
-        console.log('CONFIG', guildConfig.logging.subs);
+        console.log('CONFIG', loggingProps.subs);
     }
 
     const embed = new MessageEmbed({

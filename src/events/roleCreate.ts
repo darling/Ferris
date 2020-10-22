@@ -1,16 +1,14 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role } from 'discord.js';
-import { IDatabaseSchema, updateRole } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('roleCreate', async (role: Role) => {
-    updateRole(role.guild.id, role);
-
     const guild: Guild = role.guild;
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (isLoggable('ROLE_CREATED', guild.id) || !guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (isLoggable('ROLE_CREATED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 

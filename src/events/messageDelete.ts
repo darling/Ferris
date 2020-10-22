@@ -2,7 +2,7 @@ import { client } from '../app';
 
 import { Guild, MessageEmbed } from 'discord.js';
 import { isLoggable, newLog } from '../util/webhookLogging';
-import { IDatabaseSchema } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 
 client.on('messageDelete', async (msg) => {
@@ -13,8 +13,9 @@ client.on('messageDelete', async (msg) => {
     const guild: Guild | null = msg.guild;
     if (guild === null) return;
 
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (isLoggable('MESSAGE_DELETED', guild.id) || !guildConfig || !guildConfig.logging) return;
+    console.log(isLoggable('MESSAGE_DELETED', guild.id));
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (isLoggable('MESSAGE_DELETED', guild.id) || !loggingProps) return;
 
     await newLog(
         guild.id,

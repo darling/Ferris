@@ -9,7 +9,7 @@ import { argumentList } from '../util/arguments';
 import { inhibitors } from '../util/inhibitor';
 
 client.on('message', async (msg: Message) => {
-    if (!msg.guild || msg.author.bot || msg.webhookID) return;
+    if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
     const guild: Guild = msg.guild;
 
     // Loads the prefix and listens for any changes in the future
@@ -17,8 +17,9 @@ client.on('message', async (msg: Message) => {
         await watchGuild(guild);
     }
 
-    let prefix = serverConfigs.get(guild.id)!.prefix;
-    const botMention = `<@!${client.user?.id}>`;
+    let prefix = serverConfigs.get(guild.id)?.config?.prefix || ';';
+
+    const botMention = `<@!${client.user.id}>`;
 
     if (msg.content === botMention || msg.content.startsWith(botMention)) prefix = botMention;
     if (!msg.content.startsWith(prefix)) return;

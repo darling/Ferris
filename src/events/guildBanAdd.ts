@@ -1,15 +1,15 @@
 import { client } from '../app';
-import { IDatabaseSchema } from '../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
 import { newLog } from '../util/webhookLogging';
 
 client.on('guildBanAdd', async (guild, member) => {
-    let guildConfig: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (!guildConfig || !guildConfig.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (!loggingProps) return;
 
-    if (guildConfig.logging.subs & 3) {
-        console.log('CONFIG', guildConfig.logging.subs);
+    if (loggingProps.subs & 3) {
+        console.log('CONFIG', loggingProps.subs);
     }
 
     const embed = new MessageEmbed();

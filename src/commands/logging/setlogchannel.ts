@@ -1,9 +1,10 @@
 import { Guild, MessageEmbed, TextChannel } from 'discord.js';
 import { db } from '../../app';
 import { loggingHooks, serverConfigs } from '../../util/serverInfo';
-import { IDatabaseSchema } from '../../util/databaseFunctions';
+import { IDatabaseSchema, ILoggingProps } from '../../util/databaseFunctions';
 
 import { client } from '../../app';
+import { updateLogChannel } from '../../util/db/config';
 
 client.commands.set('setlogchannel', {
     name: 'setlogchannel',
@@ -25,7 +26,7 @@ client.commands.set('setlogchannel', {
     run: (msg, args: LogArgs, guild) => {
         if (!guild) return;
 
-        if (serverConfigs.has(guild.id, 'logging')) {
+        if (serverConfigs.get(guild.id)?.config?.log_channel === undefined) {
             newWebhookLog(args.newLogChannel, guild);
         } else {
             changeWebhookLogChannel(args.newLogChannel, guild);
@@ -48,19 +49,19 @@ function getNewChannelEmbeds() {
 }
 
 async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
-    const webhookID: IDatabaseSchema | undefined = serverConfigs.get(guild.id);
-    if (!webhookID || !webhookID.logging) return;
+    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    if (!loggingProps) return;
 
-    const webhook = await client.fetchWebhook(webhookID.logging.webhookID);
+    const webhook = await client.fetchWebhook(loggingProps.webhook_id);
 
     await webhook.edit({ channel: channel }).then((webhook) => {
         webhook.send(getNewChannelEmbeds());
         loggingHooks.set(guild.id, webhook);
     });
 
-    await db.ref(`guilds/${guild.id}/logging`).update({
-        channel: channel.id,
-    });
+    loggingProps.channel = channel.id;
+
+    updateLogChannel(guild.id, loggingProps);
 }
 
 async function newWebhookLog(channel: TextChannel, guild: Guild) {
@@ -69,11 +70,11 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
         reason: 'To log items in this discord server.',
     });
 
-    await db.ref(`guilds/${guild.id}/logging`).update({
+    updateLogChannel(guild.id, {
         channel: channel.id,
         enabled: true,
         subs: 0,
-        webhookID: webhook.id,
+        webhook_id: webhook.id,
     });
 
     loggingHooks.set(guild.id, webhook);
