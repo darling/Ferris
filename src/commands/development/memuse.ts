@@ -3,10 +3,12 @@ import { freemem, totalmem } from 'os';
 import { memoryUsage } from 'process';
 
 import { client } from '../../app';
+import { PermissionLevels } from '../../types/commands';
 
 client.commands.set('memuse', {
     name: 'memuse',
     arguments: [],
+    permissionLevels: [PermissionLevels.BOT_DEV],
     run: (msg, args: MemArgs) => {
         const embed = new MessageEmbed();
 

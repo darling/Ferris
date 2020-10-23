@@ -1,4 +1,5 @@
 import { client } from '../../app';
+import { PermissionLevels } from '../../types/commands';
 
 client.commands.set('query', {
     name: 'query',
@@ -15,6 +16,7 @@ client.commands.set('query', {
             required: false,
         },
     ],
+    permissionLevels: [PermissionLevels.BOT_DEV],
     run: (msg, args: QueryArgs) => {
         if (args.prop) {
             if (args.type === 'commands') {
