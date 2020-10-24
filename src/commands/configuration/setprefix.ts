@@ -3,6 +3,7 @@ import { db } from '../../app';
 
 import { client } from '../../app';
 import { getConfig, updateProperty } from '../../util/db/config';
+import { changePrefix } from '../../util/db/prefix';
 import { serverConfigs } from '../../util/serverInfo';
 
 client.commands.set('setprefix', {
@@ -20,7 +21,7 @@ client.commands.set('setprefix', {
         if (!guild) return;
 
         if (args.newPrefix) {
-            updateProperty(guild.id, { prefix: args.newPrefix });
+            changePrefix(guild.id, args.newPrefix);
         }
 
         const prefix = getConfig(guild.id)?.prefix || ';';
