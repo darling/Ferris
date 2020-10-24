@@ -4,7 +4,7 @@ import { loggingHooks, serverConfigs } from '../../util/serverInfo';
 import { IDatabaseSchema, ILoggingProps } from '../../util/databaseFunctions';
 
 import { client } from '../../app';
-import { updateLogChannel } from '../../util/db/config';
+import { getConfig, getLoggingProps, updateLogChannel } from '../../util/db/config';
 
 client.commands.set('setlogchannel', {
     name: 'setlogchannel',
@@ -26,7 +26,7 @@ client.commands.set('setlogchannel', {
     run: (msg, args: LogArgs, guild) => {
         if (!guild) return;
 
-        if (serverConfigs.get(guild.id)?.config?.log_channel === undefined) {
+        if (getConfig(guild.id)?.log_channel === undefined) {
             newWebhookLog(args.newLogChannel, guild);
         } else {
             changeWebhookLogChannel(args.newLogChannel, guild);
@@ -49,7 +49,7 @@ function getNewChannelEmbeds() {
 }
 
 async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
-    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (!loggingProps) return;
 
     const webhook = await client.fetchWebhook(loggingProps.webhook_id);

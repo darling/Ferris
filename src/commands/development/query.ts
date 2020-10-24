@@ -17,7 +17,7 @@ client.commands.set('query', {
         },
     ],
     permissionLevels: [PermissionLevels.BOT_DEV],
-    run: (msg, args: QueryArgs) => {
+    run: (msg, args: QueryArgs, guild) => {
         if (args.prop) {
             if (args.type === 'commands') {
                 const cache = client[args.type];

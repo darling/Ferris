@@ -26,7 +26,8 @@ client.commands.set('listwarns', {
         embed.setThumbnail(getAvatar(member.user.id, member.user.avatar!));
         embed.setFooter(`ID: ${member.user.id}  •  UTC`);
 
-        let memberWarns: any[any] = serverConfigs.get(guild.id)?.warns?.[member.id];
+        // TODO: Fetch warns for any given user
+        let memberWarns: any[any] = null; //serverConfigs.get(guild.id)?.warns?.[member.id];
 
         if (!memberWarns) {
             embed.setDescription('This user has no warnings.');

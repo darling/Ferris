@@ -2,6 +2,7 @@ import { MessageEmbed } from 'discord.js';
 import { db } from '../../app';
 
 import { client } from '../../app';
+import { getConfig, updateProperty } from '../../util/db/config';
 import { serverConfigs } from '../../util/serverInfo';
 
 client.commands.set('setprefix', {
@@ -19,10 +20,10 @@ client.commands.set('setprefix', {
         if (!guild) return;
 
         if (args.newPrefix) {
-            db.ref(`guilds/${guild.id}/prefix`).set(args.newPrefix);
+            updateProperty(guild.id, { prefix: args.newPrefix });
         }
 
-        const prefix = serverConfigs.get(guild.id)?.config?.prefix || ';';
+        const prefix = getConfig(guild.id)?.prefix || ';';
 
         const embed = new MessageEmbed();
 

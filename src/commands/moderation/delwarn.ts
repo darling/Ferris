@@ -28,7 +28,8 @@ client.commands.set('delwarn', {
     run: (msg, args: PunishArgs, guild) => {
         if (!guild) return;
 
-        let warnings: any = serverConfigs.get(guild.id)?.warns?.[args.member.id];
+        // TODO: setup warn fetches
+        let warnings: any = null; // serverConfigs.get(guild.id)?.warns?.[args.member.id];
 
         if (!warnings) {
             sendSimpleEmbed(

@@ -3,9 +3,10 @@ import { ILoggingProps } from '../util/databaseFunctions';
 import { MessageEmbed } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
+import { getLoggingProps } from '../util/db/config';
 
 client.on('guildBanRemove', async (guild, member) => {
-    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (isLoggable('BAN_REMOVED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();

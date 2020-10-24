@@ -3,9 +3,10 @@ import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
 import { newLog } from '../util/webhookLogging';
+import { getLoggingProps } from '../util/db/config';
 
 client.on('guildBanAdd', async (guild, member) => {
-    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (!loggingProps) return;
 
     if (loggingProps.subs & 3) {

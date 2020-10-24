@@ -1,5 +1,6 @@
 import { db } from '../../app';
 import { ILoggingProps } from '../databaseFunctions';
+import { serverConfigs } from '../serverInfo';
 
 export interface IConfigSchema {
     prefix?: string;
@@ -9,6 +10,14 @@ export interface IConfigSchema {
     mods?: string[];
     members_can_use_bot?: boolean;
     log_channel?: ILoggingProps;
+}
+
+export function getConfig(guildId: string): IConfigSchema | undefined {
+    return serverConfigs.get(guildId);
+}
+
+export function getLoggingProps(guildId: string): ILoggingProps | undefined {
+    return serverConfigs.get(guildId)?.log_channel;
 }
 
 export function updateProperty(guildId: string, data: IConfigSchema) {

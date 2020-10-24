@@ -1,6 +1,7 @@
 import { Guild, MessageEmbed } from 'discord.js';
 import { client } from '../app';
 import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
+import { getLoggingProps } from '../util/db/config';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 
@@ -10,7 +11,7 @@ client.on('channelCreate', async (channel) => {
     const guild: Guild = (channel as any).guild;
     // updateChannel(guild.id, channel);
 
-    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (isLoggable('CHANNEL_CREATED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();

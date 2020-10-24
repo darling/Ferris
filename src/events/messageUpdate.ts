@@ -5,6 +5,7 @@ import { serverConfigs } from '../util/serverInfo';
 import { Guild, MessageEmbed } from 'discord.js';
 import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { isLoggable, newLog } from '../util/webhookLogging';
+import { getLoggingProps } from '../util/db/config';
 
 client.on('messageUpdate', async (msg, newMsg) => {
     if (msg.author?.bot) return;
@@ -14,7 +15,7 @@ client.on('messageUpdate', async (msg, newMsg) => {
     const guild: Guild | null = msg.guild;
     if (guild === null) return;
 
-    let loggingProps: ILoggingProps | undefined = serverConfigs.get(guild.id)?.config?.log_channel;
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (!loggingProps) return;
 
     if (isLoggable('MESSAGE_UPDATED', guild.id)) {

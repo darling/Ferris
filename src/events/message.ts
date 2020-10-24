@@ -7,21 +7,17 @@ import { serverConfigs } from '../util/serverInfo';
 import { ICommand } from '../types/commands';
 import { argumentList } from '../util/arguments';
 import { inhibitors } from '../util/inhibitor';
+import { getConfig } from '../util/db/config';
 
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
     const guild: Guild = msg.guild;
 
-    // Loads the prefix and listens for any changes in the future
-    if (!serverConfigs.has(guild.id)) {
-        await watchGuild(guild);
-    }
-
-    let prefix = serverConfigs.get(guild.id)?.config?.prefix || ';';
+    let prefix = getConfig(guild.id)?.prefix || ';';
 
     const botMention = `<@!${client.user.id}>`;
 
-    if (msg.content === botMention || msg.content.startsWith(botMention)) prefix = botMention;
+    if (msg.content === botMention || msg.content.startsWith(botMention)) prefix = botMention + ' ';
     if (!msg.content.startsWith(prefix)) return;
 
     const [commandName, ...parameters] = msg.content.substring(prefix.length).split(/ +/g);

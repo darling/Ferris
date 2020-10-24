@@ -1,6 +1,6 @@
 import { Channel, Guild, GuildChannel, Role, Webhook } from 'discord.js';
 import { client, db } from '../app';
-import { IConfigSchema } from './db/config';
+import { getLoggingProps, IConfigSchema } from './db/config';
 import { loggingHooks, serverConfigs } from './serverInfo';
 
 // Each database entry needs to contain an optional config and the warnings/notes for each member.
@@ -24,7 +24,9 @@ interface ILoggingProps {
 }
 
 function watchGuild(guild: Guild) {
-    const ref = db.ref(`guilds/${guild.id}`);
+    const ref = db.ref(`guilds/${guild.id}/config`);
+
+    console.log('watching ' + guild.name);
 
     return new Promise<void>((resolve) => {
         let callback = ref.on(
@@ -32,16 +34,19 @@ function watchGuild(guild: Guild) {
             async (snapshot) => {
                 console.log('Received Database update for server ' + guild.name);
                 if (snapshot.exists()) {
-                    serverConfigs.set(guild.id, snapshot.val());
+                    serverConfigs.set(guild.id, snapshot.exportVal());
 
-                    const loggingInfo: ILoggingProps | undefined = snapshot.val().config?.logging;
+                    const loggingInfo: ILoggingProps | undefined = getLoggingProps(guild.id);
 
                     if (!loggingInfo) return;
 
                     const webhook = await client.fetchWebhook(loggingInfo.webhook_id);
                     loggingHooks.set(guild.id, webhook);
                 } else {
-                    newGuild(guild);
+                    // If the parent of the guild doesn't exist, create a db entry of them.
+                    if (!(await snapshot.ref.parent?.once('value'))?.exists()) {
+                        newGuild(guild);
+                    }
                 }
 
                 return resolve();
@@ -50,8 +55,6 @@ function watchGuild(guild: Guild) {
                 console.error(err);
             }
         );
-
-        // serverConfigs.set(guild.id, callback);
     });
 }
 
@@ -63,7 +66,7 @@ function newGuild(guild: Guild) {
         member_count: guild.memberCount,
     };
 
-    reference.set(guildEntry);
+    reference.update(guildEntry);
 }
 
 function updateUserCount(guild: Guild) {
