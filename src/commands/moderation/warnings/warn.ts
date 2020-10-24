@@ -1,12 +1,12 @@
-import { addWarn } from '../../../util/databaseFunctions';
-
+import { addWarn } from '../../../util/db/warnings';
 import { GuildMember } from 'discord.js';
-
 import { client } from '../../../app';
+import { PermissionLevels } from '../../../types/commands';
 
 client.commands.set('warn', {
     name: 'warn',
     guildOnly: true,
+    permissionLevels: [PermissionLevels.MODERATOR, PermissionLevels.ADMIN],
     arguments: [
         {
             name: 'user',

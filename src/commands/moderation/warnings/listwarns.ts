@@ -1,9 +1,11 @@
-import { serverConfigs } from '../../util/serverInfo';
+import { serverConfigs } from '../../../util/serverInfo';
 import { GuildMember, MessageEmbed } from 'discord.js';
-import { getAvatar } from '../../util/users';
+import { getAvatar } from '../../../util/users';
 import moment from 'moment';
-import { client } from '../../app';
-import { EmbedColors } from '../../util/embed';
+import { client } from '../../../app';
+import { EmbedColors } from '../../../util/embed';
+import { getWarningsForUser, IWarnings } from '../../../util/db/warnings';
+import { PermissionLevels } from '../../../types/commands';
 
 client.commands.set('listwarns', {
     name: 'listwarns',
@@ -14,7 +16,8 @@ client.commands.set('listwarns', {
             required: false,
         },
     ],
-    run: (msg, args: ListWarnsArgs, guild) => {
+    permissionLevels: [PermissionLevels.MODERATOR, PermissionLevels.ADMIN],
+    run: async (msg, args: ListWarnsArgs, guild) => {
         const member = args.user || msg.member;
         if (!member || !guild) return;
 
@@ -27,9 +30,9 @@ client.commands.set('listwarns', {
         embed.setFooter(`ID: ${member.user.id}  •  UTC`);
 
         // TODO: Fetch warns for any given user
-        let memberWarns: any[any] = null; //serverConfigs.get(guild.id)?.warns?.[member.id];
+        let memberWarns: IWarnings | undefined = await getWarningsForUser(guild.id, member.id); //serverConfigs.get(guild.id)?.warns?.[member.id];
 
-        if (!memberWarns) {
+        if (memberWarns === undefined) {
             embed.setDescription('This user has no warnings.');
             msg.channel.send(embed);
             return;
@@ -38,6 +41,8 @@ client.commands.set('listwarns', {
         const keys = Object.keys(memberWarns);
 
         keys.forEach((timeGiven, count) => {
+            if (!memberWarns)
+                throw Error('memberWarns is undefined after checking if it was defined?');
             const warn = memberWarns[timeGiven];
             const time = moment(+timeGiven).format('MMMM Do YYYY, h:mm a [PST]');
             embed.addField(
