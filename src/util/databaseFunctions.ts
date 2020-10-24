@@ -77,28 +77,4 @@ function updateUserCount(guild: Guild) {
     });
 }
 
-async function addWarn(guild_id: string, warnedID: string, byId: string, reason?: string) {
-    const timeGiven = Date.now();
-    const refrence = db.ref(`guilds/${guild_id}/warns/${warnedID}/${timeGiven}`);
-
-    refrence.update({
-        reason: reason + '',
-        by: byId,
-    });
-}
-
-async function deleteWarn(guildId: string, warnedId: string, timestamp: string) {
-    const refrence = db.ref(`guilds/${guildId}/warns/${warnedId}/${timestamp}`);
-
-    refrence.remove();
-}
-
-export {
-    updateUserCount,
-    watchGuild,
-    newGuild,
-    IDatabaseSchema,
-    ILoggingProps,
-    addWarn,
-    deleteWarn,
-};
+export { updateUserCount, watchGuild, newGuild, IDatabaseSchema, ILoggingProps };
