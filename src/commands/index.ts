@@ -1,16 +1,18 @@
 import { Dirent, readdirSync } from 'fs';
 
 export const requireCommands = (dirname: string) => {
+    console.log('importing', dirname);
     const files = readdirSync(dirname + '/', { withFileTypes: true });
 
     files.forEach((file: Dirent) => {
         const filename = file.name;
-        if (!filename.endsWith('.js')) return;
 
         if (file.isDirectory()) {
             require(dirname + '/' + filename);
             return;
         }
+
+        if (!filename.endsWith('.js')) return;
 
         let commandName = filename.split('.')[0];
 
