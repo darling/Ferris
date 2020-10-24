@@ -17,7 +17,8 @@ const project_id = process.env.PROJECT_ID;
 const private_key = process.env.PRIVATE_KEY?.replace(/\\n/g, '\n');
 const client_email = process.env.CLIENT_EMAIL;
 
-if (!project_id || !private_key || !client_email) throw Error('Load console vargs');
+if (!project_id || !private_key || !client_email)
+    throw Error('Can not see Firebase Environment Variables. Did you load them correctly?');
 
 const envKey: admin.ServiceAccount = {
     projectId: project_id,
