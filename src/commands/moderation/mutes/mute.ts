@@ -1,15 +1,9 @@
-import { Message, GuildMember, Guild, TextChannel } from 'discord.js';
-import { FerrisClient, firestore, admin } from '../../../app';
+import { GuildMember } from 'discord.js';
 
-import { isUserMention, parseIfTime, stripMention } from '../../../util/parse';
-import { muteDialog } from '../../../util/muteFunctions';
-import { sendSimpleEmbed } from '../../../util/embed';
-
-import { IDatabaseSchema } from '../../../util/databaseFunctions';
-import { serverConfigs } from '../../../util/serverInfo';
-
-import { client } from '../../../app';
+import { admin, client, firestore } from '../../../app';
 import { PermissionLevels } from '../../../types/commands';
+import { missingParamEmbed } from '../../../util/embedTemplates';
+import { muteDialog } from '../../../util/muteFunctions';
 
 client.commands.set('mute', {
     name: 'mute',
@@ -19,11 +13,23 @@ client.commands.set('mute', {
             name: 'user',
             type: 'member',
             required: true,
+            missing: (msg) => {
+                const embed = missingParamEmbed(
+                    'Please mention or put the ID of any member in this Guild.'
+                );
+                msg.channel.send(embed);
+            },
         },
         {
             name: 'time',
             type: 'duration',
             required: true,
+            missing: (msg) => {
+                const embed = missingParamEmbed(
+                    'Please make sure to put a duration. Examples of durations inlcude `2w`, `3h`.'
+                );
+                msg.channel.send(embed);
+            },
         },
         {
             name: 'reason',
@@ -55,7 +61,7 @@ client.commands.set('mute', {
             guild: guild.id,
             channel: msg.channel.id,
             completed: false,
-            desc: '',
+            desc: args.reason || 'No reason provided',
             type: 'mute',
             roles: currentRoles,
             timeGiven: timeGiven,
