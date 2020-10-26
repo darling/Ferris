@@ -1,4 +1,3 @@
-import Enmap from 'enmap';
 import { Collection, Webhook } from 'discord.js';
 import { IDatabaseSchema } from './databaseFunctions';
 import { IConfigSchema } from './db/config';
