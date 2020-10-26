@@ -8,7 +8,6 @@ export function isLoggable(type: LoggingTypes, guildID: string): boolean {
     const logConfig = getLogSubs(guildID);
 
     if (!logConfig) return false;
-    console.log('is it making it');
     return 0 === (logConfig & logTypeToBit(type));
 }
 
