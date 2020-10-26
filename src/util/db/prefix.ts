@@ -6,5 +6,6 @@ export function changePrefix(guildId: string, prefix: string): boolean {
 }
 
 export function getPrefix(guildId: string): string {
+    // TODO: Add database fetching
     return ';';
 }
