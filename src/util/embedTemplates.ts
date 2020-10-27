@@ -18,6 +18,15 @@ export function getErrorEmbed(): MessageEmbed {
     return embed;
 }
 
+export function getSuccessEmbed() {
+    const embed = new MessageEmbed();
+
+    embed.setColor(EmbedColors.GREEN100);
+    embed.setTimestamp();
+
+    return embed;
+}
+
 export function missingParamEmbed(description: string): MessageEmbed {
     return getErrorEmbed().setTitle('Missing Parameter!').setDescription(description);
 }
