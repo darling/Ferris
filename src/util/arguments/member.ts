@@ -12,7 +12,7 @@ argumentList.set('member', {
         const userId = id.startsWith('<@')
             ? id.substring(id.startsWith('<@!') ? 3 : 2, id.length - 1)
             : id;
-        const member = guild.members.cache.get(userId);
+        const member = await guild.members.fetch(userId);
         if (member) return member;
     },
 });
