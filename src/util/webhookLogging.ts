@@ -1,13 +1,16 @@
 import { APIMessage, StringResolvable, Webhook } from 'discord.js';
 import { loggingHooks, serverConfigs } from './serverInfo';
 import { LoggingTypes } from '../types/log';
-import { type } from 'os';
+import { getLoggingProps } from './db/config';
 
 // Will return if a certian part of LoggingTypes is not listed in the config, Will also return false if there's no config at all.
 export function isLoggable(type: LoggingTypes, guildID: string): boolean {
     const logConfig = getLogSubs(guildID);
+    if (!logConfig) return true;
 
-    if (!logConfig) return false;
+    const { enabled } = getLoggingProps(guildID)!;
+    if (!enabled) return true;
+
     return 0 === (logConfig & logTypeToBit(type));
 }
 

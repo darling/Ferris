@@ -14,7 +14,6 @@ client.on('messageDelete', async (msg) => {
     const guild: Guild | null = msg.guild;
     if (guild === null) return;
 
-    console.log(isLoggable('MESSAGE_DELETED', guild.id));
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (isLoggable('MESSAGE_DELETED', guild.id) || !loggingProps) return;
 

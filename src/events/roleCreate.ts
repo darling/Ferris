@@ -9,7 +9,7 @@ client.on('roleCreate', async (role: Role) => {
     const guild: Guild = role.guild;
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('ROLE_CREATED', guild.id) || !loggingProps) return;
+    if (!isLoggable('ROLE_CREATED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 

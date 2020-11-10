@@ -1,4 +1,4 @@
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { Guild, GuildMember, MessageEmbed } from 'discord.js';
 import moment from 'moment';
 
 import { client } from '../../app';
@@ -13,9 +13,9 @@ client.commands.set('whois', {
             required: false,
         },
     ],
-    run: (msg, args: WhoisArgs) => {
+    run: (msg, args: WhoisArgs, guild) => {
         const member = args.user || msg.member;
-        if (!member) return;
+        if (!member || !guild) return;
 
         const embed = new MessageEmbed();
 
@@ -25,7 +25,7 @@ client.commands.set('whois', {
         if (member?.nickname) embed.setDescription(`Nickname: ${member?.nickname}`);
         embed.setThumbnail(getAvatar(member.user.id, member.user.avatar!));
 
-        let roles = member?.roles.cache.array();
+        let roles = member?.roles.cache.array().filter((role) => role.id !== guild.id);
 
         embed.addField('Roles', roles ? roles : 'No  roles', true);
 

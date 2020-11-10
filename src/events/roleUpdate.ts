@@ -17,8 +17,6 @@ client.on('roleUpdate', async (role: Role, newRole: Role) => {
 
     const differentKeys = deepDif(role, newRole);
 
-    console.log(JSON.stringify(role, null, 2), JSON.stringify(newRole, null, 2));
-
     let outputDesk: string = `<@&${role.id}> was changed.\n\n`;
 
     differentKeys.forEach((val) => {

@@ -1,5 +1,33 @@
-import { Channel, Message, TextChannel } from 'discord.js';
-import { FerrisClient } from '../../app';
+import { TextChannel } from 'discord.js';
+import { client } from '../../app';
+import { PermissionLevels } from '../../types/commands';
+
+client.commands.set('purge', {
+    name: 'purge',
+    aliases: ['p'],
+    userGuildPerms: ['MANAGE_MESSAGES'],
+    botGuildPerms: ['MANAGE_MESSAGES'],
+    arguments: [
+        {
+            name: 'amtOfMessages',
+            type: 'number',
+            required: true,
+            missing: (msg) => {
+                msg.reply('You r missing shit');
+            },
+        },
+    ],
+    guildOnly: true,
+    run: (msg, args: PurgeArgs, guild) => {
+        const channel = msg.channel as TextChannel;
+
+        channel.bulkDelete(args.amtOfMessages);
+    },
+});
+
+interface PurgeArgs {
+    amtOfMessages: number;
+}
 
 // const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
 //     const amtOfMessages: number = +args[0];

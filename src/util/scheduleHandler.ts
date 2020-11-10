@@ -10,10 +10,13 @@ const config = {
 
         If the number of calls gets past something I can handle, I will lower this number.
     */
-    windowMs: ms('30m'),
+    windowMs: ms('600s'),
 };
 
 function getFirestoreData(): () => void {
+    console.log(
+        'Gathering punishment data for next window of ' + config.windowMs / 1000 + ' seconds.'
+    );
     return firestore
         .collectionGroup('punishments')
         .where('time', '<=', admin.firestore.Timestamp.fromMillis(Date.now() + config.windowMs))
@@ -26,6 +29,8 @@ function getFirestoreData(): () => void {
             snapshot.docChanges().forEach((update) => {
                 let doc = update.doc;
                 let data = doc.data();
+
+                console.log('Update for new punishment', doc.id);
 
                 switch (update.type) {
                     case 'added':

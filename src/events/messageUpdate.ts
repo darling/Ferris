@@ -16,11 +16,7 @@ client.on('messageUpdate', async (msg, newMsg) => {
     if (guild === null) return;
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (!loggingProps) return;
-
-    if (isLoggable('MESSAGE_UPDATED', guild.id)) {
-        console.log('CONFIG', loggingProps.subs);
-    }
+    if (isLoggable('MESSAGE_UPDATED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed({
         author: { name: `${msg.author?.tag} ID: ${msg.author?.id}` },

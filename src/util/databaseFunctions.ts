@@ -7,6 +7,8 @@ import { loggingHooks, serverConfigs } from './serverInfo';
 interface IDatabaseSchema {
     config?: IConfigSchema;
     member_count: number;
+    name?: string;
+    icon?: string;
     warns?: IDatabaseWarnsSchema;
 }
 
@@ -64,6 +66,8 @@ function newGuild(guild: Guild) {
 
     const guildEntry: IDatabaseSchema = {
         member_count: guild.memberCount,
+        icon: guild.icon || undefined,
+        name: guild.name,
     };
 
     reference.update(guildEntry);

@@ -27,6 +27,12 @@ export function updateProperty(guildId: string, data: IConfigSchema) {
     ref.update(data);
 }
 
+export function updateLogChannelProperty(guildId: string, data: Partial<ILoggingProps>) {
+    const ref = db.ref(`guilds/${guildId}/config/log_channel`);
+
+    ref.update(data);
+}
+
 export function updateLogChannel(guildId: string, data: ILoggingProps) {
     updateProperty(guildId, {
         log_channel: data,

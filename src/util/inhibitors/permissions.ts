@@ -4,8 +4,22 @@ import { client } from '../../app';
 import { Permissions } from '../../types/commands';
 import { inhibitors } from '../inhibitor';
 
-function missingCommandPerms() {
-    console.log('Missing');
+function missingCommandPerms(isBot: boolean, msg: Message, statement: string, type: string) {
+    if (isBot) {
+        msg.reply(
+            'I do not have the permission to do this in this ' +
+                type +
+                '. Missing permission: ' +
+                statement
+        );
+    } else {
+        msg.reply(
+            'You do not have permission to do this in this ' +
+                type +
+                '. Missing permissions: ' +
+                statement
+        );
+    }
 }
 
 inhibitors.set('permissions', async (msg, command, guild) => {
@@ -24,10 +38,10 @@ inhibitors.set('permissions', async (msg, command, guild) => {
 
     if (command.userChannelPerms?.length) {
         const missingPermissions = command.userChannelPerms.filter((perm) => {
-            return !msg.member?.permissionsIn(msg.channel).has(Permissions[perm]);
+            return !msg.member?.permissionsIn(msg.channel).has(Permissions[perm], true);
         });
-        if (missingPermissions.length) {
-            missingCommandPerms();
+        if (!!missingPermissions.length) {
+            missingCommandPerms(false, msg, JSON.stringify(command.userChannelPerms), 'channel');
             // Missing reply goes here
             return true;
         }
@@ -35,10 +49,13 @@ inhibitors.set('permissions', async (msg, command, guild) => {
 
     if (command.userGuildPerms?.length) {
         const missingPermissions = command.userGuildPerms.filter((perm) => {
-            return !msg.member?.hasPermission(Permissions[perm]);
+            return !msg.member?.hasPermission(Permissions[perm], {
+                checkAdmin: true,
+                checkOwner: true,
+            });
         });
-        if (missingPermissions.length) {
-            missingCommandPerms();
+        if (!!missingPermissions.length) {
+            missingCommandPerms(false, msg, JSON.stringify(command.userGuildPerms), 'guild');
             // Missing reply goes here
             return true;
         }
@@ -49,10 +66,10 @@ inhibitors.set('permissions', async (msg, command, guild) => {
 
     if (command.botChannelPerms?.length) {
         const missingPermissions = command.botChannelPerms.filter((perm) => {
-            return bot.permissionsIn(msg.channel).has(Permissions[perm]);
+            return !bot.permissionsIn(msg.channel).has(Permissions[perm], true);
         });
-        if (missingPermissions.length) {
-            missingCommandPerms();
+        if (!!missingPermissions.length) {
+            missingCommandPerms(true, msg, JSON.stringify(command.botChannelPerms), 'channel');
             // Missing reply goes here
             return true;
         }
@@ -60,10 +77,10 @@ inhibitors.set('permissions', async (msg, command, guild) => {
 
     if (command.botGuildPerms?.length) {
         const missingPermissions = command.botGuildPerms.filter((perm) => {
-            return bot.hasPermission(Permissions[perm]);
+            return !bot.hasPermission(Permissions[perm], { checkAdmin: true });
         });
-        if (missingPermissions.length) {
-            missingCommandPerms();
+        if (!!missingPermissions.length) {
+            missingCommandPerms(true, msg, JSON.stringify(command.botGuildPerms), 'guild');
             // Missing reply goes here
             return true;
         }
