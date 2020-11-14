@@ -1,24 +1,28 @@
-import { Message, GuildMember, MessageEmbed, Guild, Collection } from 'discord.js';
-import { admin, FerrisClient, firestore } from '../../app';
-
+import { GuildMember } from 'discord.js';
 import { client } from '../../app';
-import { PermissionLevels } from '../../types/commands';
-import { EmbedColors } from '../../util/embed';
+import { getErrorEmbed, getSuccessEmbed } from '../../util/embedTemplates';
 
 client.commands.set('ban', {
     name: 'ban',
     arguments: [
         {
-            name: 'user',
+            name: 'member',
             type: 'member',
             required: true,
-            missing: (msg) => {},
+            missing: (msg) => {
+                const embed = getErrorEmbed();
+
+                embed.setTitle('Uh oh!');
+                embed.setDescription('Please make sure to mention or put the ID of any user.');
+
+                msg.channel.send(embed);
+            },
         },
-        {
-            name: 'time',
-            type: 'duration',
-            required: false,
-        },
+        // {
+        //     name: 'time',
+        //     type: 'duration',
+        //     required: false,
+        // },
         {
             name: 'reason',
             type: '...string',
@@ -29,83 +33,52 @@ client.commands.set('ban', {
     botGuildPerms: ['BAN_MEMBERS'],
     userGuildPerms: ['BAN_MEMBERS'],
     run: (msg, args: BanArgs) => {
-        msg.channel.send(JSON.stringify(args, null, 2));
+        if (!(msg.member!.roles.highest.comparePositionTo(args.member.roles.highest) > 0)) {
+            const embed = getErrorEmbed();
+
+            embed.setTitle('Uh oh!');
+            embed.setDescription(
+                "Please make sure to check the permissions between you and the user you're trying to ban. It seems like they have a higher role than you."
+            );
+
+            msg.channel.send(embed);
+            return;
+        }
+        if (args.member.bannable) {
+            args.member
+                .ban({
+                    reason:
+                        msg.author.id + ' banned ' + (args.reason || 'Banned by the ban command'),
+                    days: 3,
+                })
+                .then((member) => {
+                    const embed = getSuccessEmbed();
+
+                    embed.setTitle('Success!');
+                    embed.setDescription(member.user.username + ' has been banned.');
+
+                    msg.channel.send(embed);
+                    return;
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        } else {
+            const embed = getErrorEmbed();
+
+            embed.setTitle('Uh oh!');
+            embed.setDescription(
+                "Please make sure to check the permissions between me and the user, it seems like I don't have permission to ban them."
+            );
+
+            msg.channel.send(embed);
+            return;
+        }
     },
 });
 
 interface BanArgs {
-    user: GuildMember;
+    member: GuildMember;
     time?: string;
     reason?: string;
 }
-
-// const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-//     const member: GuildMember | null = msg.member;
-//     if (member === null) {
-//         return;
-//     }
-
-//     const guild: Guild | null = msg.guild;
-//     if (guild === null) {
-//         return;
-//     }
-
-//     const guildClient: GuildMember | null = guild.me;
-//     if (guildClient === null) {
-//         msg.reply('am I even in this server?');
-//         return;
-//     }
-
-//     if (!member.hasPermission('BAN_MEMBERS')) {
-//         msg.reply('You do not have permission to ban members.');
-//         return;
-//     }
-
-//     if (!guildClient.hasPermission('BAN_MEMBERS')) {
-//         msg.reply('I do not have permission to ban members.');
-//         return;
-//     }
-
-//     const mentions: Collection<string, GuildMember> | null = msg.mentions.members;
-//     if (mentions === null) {
-//         msg.reply('please mention a user to ban.');
-//         return;
-//     }
-
-//     let bannedMember: GuildMember | undefined = mentions.first();
-//     if (bannedMember === undefined) return;
-
-//     if (!bannedMember.bannable) {
-//         msg.reply('I can not ban this member.');
-//         return;
-//     }
-
-//     bannedMember.ban({ days: 3, reason: args.join(' ') }).then((member) => {
-//         const embed = new MessageEmbed();
-//         embed.setColor(EmbedColors.WHITE);
-//         embed.setTitle(member.user.username + ' has been banned!');
-//         embed.setThumbnail('https://i.imgur.com/NG469Iv.png');
-//         embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
-//         msg.channel.send(embed);
-//     });
-
-//     const timeGiven = admin.firestore.Timestamp.now();
-
-//     const docData = {
-//         guild: guild.id,
-//         channel: msg.channel.id,
-//         completed: false,
-//         desc: args.join(' '),
-//         type: 'ban',
-//         timeGiven: timeGiven,
-//         author: member.id,
-//     };
-
-//     const document = firestore
-//         .collection('guilds')
-//         .doc(guild.id)
-//         .collection('punishments')
-//         .doc(bannedMember.id);
-
-//     document.set(docData);
-// };
