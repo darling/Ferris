@@ -39,7 +39,7 @@ client.commands.set('mute', {
     ],
     userGuildPerms: ['MANAGE_ROLES'],
     botGuildPerms: ['MANAGE_ROLES'],
-    permissionLevels: [PermissionLevels.MODERATOR, PermissionLevels.ADMIN],
+    permissionLevels: [PermissionLevels.BOT_DEV],
     run: (msg, args: PunishArgs, guild) => {
         if (!guild) return;
 
