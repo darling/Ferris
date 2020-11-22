@@ -10,8 +10,8 @@ client.on('ready', () => {
 
     console.log(`Logged in as ${user.tag}`);
 
-    user.setActivity('commands', {
-        type: 'LISTENING',
+    user.setActivity(';help | ferris.gg', {
+        type: 'PLAYING',
         url: 'https://github.com/darling/Ferris',
     });
 
