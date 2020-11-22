@@ -73,7 +73,7 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
     updateLogChannel(guild.id, {
         channel: channel.id,
         enabled: true,
-        subs: 0,
+        subs: 8388607,
         webhook_id: webhook.id,
     });
 
