@@ -27,9 +27,8 @@ client.commands.set('help', {
             embed.setDescription(
                 "If you'd like information on the bot, please check out our websites."
             );
-            embed.addField('Documentation', 'https://ferris.gg/docs', false);
+            embed.addField('Commands', 'https://ferris.gg/docs/commands', false);
             embed.addField('Website', 'https://ferris.gg/', false);
-            embed.addField('Patreon', 'https://www.patreon.com/FerrisBot', false);
             embed.addField(
                 'Join our Discord Support Server!',
                 'Our server offers personalized help from the developers on advice for your discord and working with the bot. \n[Discord Invite Here](https://ferris.gg/discord)',
