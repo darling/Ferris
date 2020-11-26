@@ -20,7 +20,7 @@ client.commands.set('autorole', {
         if (!guild) return;
         if (!args.role) {
             updateProperty(guild.id, {
-                auto_role: undefined,
+                auto_role: '',
             });
             return;
         }
