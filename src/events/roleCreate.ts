@@ -4,9 +4,12 @@ import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { serverConfigs } from '../util/serverInfo';
 import { isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
+import { updateRole } from '../util/db/roles';
 
 client.on('roleCreate', async (role: Role) => {
     const guild: Guild = role.guild;
+
+    updateRole(guild.id, role);
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (!isLoggable('ROLE_CREATED', guild.id) || !loggingProps) return;

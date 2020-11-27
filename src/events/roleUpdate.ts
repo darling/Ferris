@@ -4,11 +4,14 @@ import { ILoggingProps } from '../util/databaseFunctions';
 import { isLoggable, newLog } from '../util/webhookLogging';
 import { isDeepStrictEqual } from 'util';
 import { getLoggingProps } from '../util/db/config';
+import { updateRole } from '../util/db/roles';
 
 client.on('roleUpdate', async (role: Role, newRole: Role) => {
-    if (role.rawPosition !== newRole.rawPosition) return;
-
     const guild: Guild = role.guild;
+
+    updateRole(guild.id, newRole);
+
+    if (role.rawPosition !== newRole.rawPosition) return;
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (isLoggable('ROLE_UPDATED', guild.id) || !loggingProps) return;

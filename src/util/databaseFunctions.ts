@@ -1,10 +1,25 @@
-import { Channel, Guild, GuildChannel, Role, Webhook } from 'discord.js';
+import { Channel, Guild, GuildAuditLogs, GuildChannel, Role, Webhook } from 'discord.js';
+import { stringify } from 'querystring';
 import { client, db } from '../app';
 import { getLoggingProps, IConfigSchema } from './db/config';
 import { loggingHooks, serverConfigs } from './serverInfo';
 
 // Each database entry needs to contain an optional config and the warnings/notes for each member.
 interface IDatabaseSchema {
+    roles?: {
+        [id: string]: {
+            name: string;
+            position: string;
+            permissions: string;
+        };
+    };
+    channels?: {
+        [id: string]: {
+            name: string;
+            position: string;
+            type: string;
+        };
+    };
     config?: IConfigSchema;
     member_count: number;
     name?: string;
@@ -64,10 +79,34 @@ function newGuild(guild: Guild) {
     // TODO: Minimize sent data
     let reference = db.ref(`guilds/${guild.id}`);
 
+    let channels: any = {};
+
+    guild.channels.cache.forEach((channel) => {
+        channels[channel.id] = {
+            name: channel.name,
+            position: channel.position,
+            type: channel.type,
+        };
+    });
+
+    let roles: any = {};
+
+    guild.roles.cache.forEach((role) => {
+        roles[role.id] = {
+            name: role.name,
+            position: role.position,
+            permissions: role.permissions,
+        };
+    });
+
+    db.ref(`guilds/${guild.id}/roles`).update({ ...channels });
+
     const guildEntry: IDatabaseSchema = {
         member_count: guild.memberCount,
         icon: guild.icon || undefined,
         name: guild.name,
+        roles: roles,
+        channels: channels,
     };
 
     reference.update(guildEntry);
