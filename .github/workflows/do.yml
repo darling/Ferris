@@ -21,4 +21,5 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           KEY: ${{ secrets.KEY }}
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
           script: ls
