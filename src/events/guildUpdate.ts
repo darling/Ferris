@@ -1,7 +1,7 @@
 import { client } from '../app';
 import { Guild } from 'discord.js';
-import { newGuild as DBNewGuild } from '../util/databaseFunctions';
+import {newGuild} from './../util/db/guild'
 
-client.on('guildUpdate', (guild: Guild, newGuild: Guild) => {
-    DBNewGuild(newGuild);
+client.on('guildUpdate', (_guild: Guild, guild: Guild) => {
+    newGuild(guild);
 });

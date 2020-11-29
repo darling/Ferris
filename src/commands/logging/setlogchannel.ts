@@ -1,10 +1,9 @@
 import { Guild, MessageEmbed, TextChannel } from 'discord.js';
-import { db } from '../../app';
 import { loggingHooks, serverConfigs } from '../../util/serverInfo';
-import { IDatabaseSchema, ILoggingProps } from '../../util/databaseFunctions';
 
 import { client } from '../../app';
-import { getConfig, getLoggingProps, updateLogChannel } from '../../util/db/config';
+import { getConfig, getLoggingProps, updateLogChannelProperty } from '../../util/db/config';
+import { ILoggingProps } from '../../util/webhookLogging';
 
 client.commands.set('setlogchannel', {
     name: 'setlogchannel',
@@ -26,7 +25,7 @@ client.commands.set('setlogchannel', {
     run: (msg, args: LogArgs, guild) => {
         if (!guild) return;
 
-        if (getConfig(guild.id)?.log_channel === undefined) {
+        if (getConfig(guild.id)?.logging === undefined) {
             newWebhookLog(args.newLogChannel, guild);
         } else {
             changeWebhookLogChannel(args.newLogChannel, guild);
@@ -61,7 +60,7 @@ async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
 
     loggingProps.channel = channel.id;
 
-    updateLogChannel(guild.id, loggingProps);
+    updateLogChannelProperty(guild.id, loggingProps);
 }
 
 async function newWebhookLog(channel: TextChannel, guild: Guild) {
@@ -70,7 +69,7 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
         reason: 'To log items in this discord server.',
     });
 
-    updateLogChannel(guild.id, {
+    updateLogChannelProperty(guild.id, {
         channel: channel.id,
         enabled: true,
         subs: 8388607,

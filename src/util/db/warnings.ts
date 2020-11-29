@@ -1,9 +1,13 @@
-import { db } from '../../app';
+import { userInfo } from 'os';
+import { admin, client, firestore } from '../../app';
 
 export interface IWarnings {
     [timeStamp: string]: {
-        by: string;
-        reason: string | undefined;
+        by: {
+            name: string,
+            id: string
+        };
+        reason?: string;
     };
 }
 
@@ -11,23 +15,34 @@ export async function getWarningsForUser(
     guildId: string,
     userId: string
 ): Promise<IWarnings | undefined> {
-    const ref = db.ref(`guilds/${guildId}/warns/${userId}`);
-    const warnings = await ref.once('value');
-    return warnings.exportVal() || undefined;
+    const doc = firestore.collection('guilds').doc(guildId).collection('warnings').doc(userId)
+    const warnings = await doc.get();
+    return warnings.data();
 }
 
-export async function addWarn(guild_id: string, warnedID: string, byId: string, reason?: string) {
+export async function addWarn(guildId: string, warnedID: string, byId: string, reason?: string) {
     const timeGiven = Date.now();
-    const refrence = db.ref(`guilds/${guild_id}/warns/${warnedID}/${timeGiven}`);
+    const doc = firestore.collection('guilds').doc(guildId).collection('warnings').doc(warnedID);
 
-    refrence.update({
-        reason: reason + '',
-        by: byId,
-    });
+    const byUser = await client.users.fetch(byId);
+
+    let uwu: any = {};
+
+    uwu[timeGiven] = {
+        by: {
+            name: byUser.username,
+            id: byUser.id
+        },
+        reason: reason
+    }
+
+    await doc.set(uwu, { merge: true })
 }
 
 export async function deleteWarn(guildId: string, warnedId: string, timestamp: string) {
-    const refrence = db.ref(`guilds/${guildId}/warns/${warnedId}/${timestamp}`);
+    const doc = firestore.collection('guilds').doc(guildId).collection('warnings').doc(warnedId)
 
-    refrence.remove();
+    doc.update({
+        [timestamp]: admin.firestore.FieldValue.delete()
+    })
 }

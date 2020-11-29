@@ -26,7 +26,7 @@ client.commands.set('setprefix', {
 
         const embed = new MessageEmbed();
 
-        embed.setDescription(`The prefix is ${args.newPrefix ? 'now ' : ''}${prefix}`);
+        embed.setDescription(`The prefix is ${args.newPrefix ? 'now ' : ''}\`${args.newPrefix}\``);
 
         msg.channel.send(embed);
     },

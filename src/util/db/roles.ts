@@ -1,17 +1,7 @@
 import { GuildChannel, Role } from 'discord.js';
-import { db } from '../../app';
+import { client, firestore } from '../../app';
+import { newGuild } from './guild';
 
-export function updateRole(guild_id: string, role: Role) {
-    const ref = db.ref(`guilds/${guild_id}/roles/${role.id}`);
-
-    if (role.deleted) {
-        ref.remove();
-        return;
-    }
-
-    ref.update({
-        name: role.name,
-        position: role.position,
-        permissions: role.permissions,
-    });
+export async function updateRole(guildId: string, role: Role) {
+    newGuild(await client.guilds.fetch(guildId));
 }

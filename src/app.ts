@@ -31,7 +31,6 @@ admin.initializeApp({
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
-const db = admin.database();
 const firestore = admin.firestore();
 
 // Extending Client to hold some extra data
@@ -64,7 +63,7 @@ require(__dirname + '/commands');
 
 // Schedule Handler (I.e unbans, unmute)
 
-export { client, FerrisClient, db, firestore, admin };
+export { client, FerrisClient, firestore, admin };
 
 // Let's start!
 client.login(process.env.BOT_TOKEN);

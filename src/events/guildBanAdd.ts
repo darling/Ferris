@@ -1,8 +1,6 @@
 import { client } from '../app';
-import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import { serverConfigs } from '../util/serverInfo';
-import { newLog } from '../util/webhookLogging';
+import { ILoggingProps, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 
 client.on('guildBanAdd', async (guild, member) => {

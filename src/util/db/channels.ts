@@ -1,17 +1,7 @@
 import { GuildChannel } from 'discord.js';
-import { db } from '../../app';
+import { client } from '../../app';
+import { newGuild, updateGuildProperty } from './guild';
 
-export function updateChannel(guild_id: string, channel: GuildChannel) {
-    const ref = db.ref(`guilds/${guild_id}/channels/${channel.id}`);
-
-    if (channel.deleted) {
-        ref.remove();
-        return;
-    }
-
-    ref.update({
-        name: channel.name,
-        position: channel.position,
-        type: channel.type,
-    });
+export async function updateChannel(guildId: string, channel: GuildChannel) {
+    newGuild(await client.guilds.fetch(guildId));
 }

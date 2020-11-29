@@ -1,7 +1,8 @@
 import { client } from '../app';
 import { serverConfigs } from '../util/serverInfo';
-import { watchGuild } from '../util/databaseFunctions';
 import runSchedule from '../util/scheduleHandler';
+import { subscribeConfig } from '../util/db/config';
+import { newGuild } from '../util/db/guild';
 
 client.on('ready', () => {
     const user = client.user;
@@ -18,8 +19,10 @@ client.on('ready', () => {
     runSchedule();
 
     client.guilds.cache.forEach(async (guild) => {
+        newGuild(guild);
+        
         if (!serverConfigs.has(guild.id)) {
-            await watchGuild(guild);
+            subscribeConfig(guild.id);
         }
     });
 });

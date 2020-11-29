@@ -1,9 +1,7 @@
 import { client } from '../app';
 
 import { Guild, MessageEmbed } from 'discord.js';
-import { isLoggable, newLog } from '../util/webhookLogging';
-import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
-import { serverConfigs } from '../util/serverInfo';
+import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 
 client.on('messageDelete', async (msg) => {

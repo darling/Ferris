@@ -1,12 +1,11 @@
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { client } from '../app';
-import { IDatabaseSchema, ILoggingProps, updateUserCount } from '../util/databaseFunctions';
 import { getLoggingProps } from '../util/db/config';
-import { serverConfigs } from '../util/serverInfo';
-import { isLoggable, newLog } from '../util/webhookLogging';
+import { updateGuildMemberCount } from '../util/db/guild';
+import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('guildMemberRemove', async (member) => {
-    updateUserCount(member.guild);
+    updateGuildMemberCount(member.guild);
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(member.guild.id);
     if (!loggingProps) return;

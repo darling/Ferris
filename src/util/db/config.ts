@@ -1,6 +1,6 @@
-import { db } from '../../app';
-import { ILoggingProps } from '../databaseFunctions';
+import { firestore } from '../../app';
 import { serverConfigs } from '../serverInfo';
+import { ILoggingProps } from '../webhookLogging';
 
 export interface IConfigSchema {
     prefix?: string;
@@ -10,31 +10,33 @@ export interface IConfigSchema {
     // Same with mods
     mods?: string[];
     members_can_use_bot?: boolean;
-    log_channel?: ILoggingProps;
+    logging?: ILoggingProps;
 }
 
 export function getConfig(guildId: string): IConfigSchema | undefined {
     return serverConfigs.get(guildId);
 }
 
+export async function subscribeConfig(guildId: string) {
+    const doc = firestore.collection('configs').doc(guildId)
+
+    doc.onSnapshot(snapshot => {
+        serverConfigs.set(guildId, (snapshot.data() || {}) as IConfigSchema)
+    })
+}
+
 export function getLoggingProps(guildId: string): ILoggingProps | undefined {
-    return serverConfigs.get(guildId)?.log_channel;
+    return serverConfigs.get(guildId)?.logging;
 }
 
-export function updateProperty(guildId: string, data: IConfigSchema) {
-    const ref = db.ref(`guilds/${guildId}/config`);
+export async function updateProperty(guildId: string, data: IConfigSchema) {
+    const doc = firestore.collection('configs').doc(guildId)
 
-    ref.update(data);
+    await doc.set(data, { merge: true });
 }
 
-export function updateLogChannelProperty(guildId: string, data: Partial<ILoggingProps>) {
-    const ref = db.ref(`guilds/${guildId}/config/log_channel`);
+export async function updateLogChannelProperty(guildId: string, data: Partial<ILoggingProps>) {
+    const doc = firestore.collection('configs').doc(guildId)
 
-    ref.update(data);
-}
-
-export function updateLogChannel(guildId: string, data: ILoggingProps) {
-    updateProperty(guildId, {
-        log_channel: data,
-    });
+    await doc.set({ logging: data }, { merge: true });
 }

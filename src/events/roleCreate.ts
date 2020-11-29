@@ -1,8 +1,6 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role } from 'discord.js';
-import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
-import { serverConfigs } from '../util/serverInfo';
-import { isLoggable, newLog } from '../util/webhookLogging';
+import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 import { updateRole } from '../util/db/roles';
 

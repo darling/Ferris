@@ -1,10 +1,8 @@
 import { Guild, GuildChannel, MessageEmbed } from 'discord.js';
 import { client } from '../app';
-import { IDatabaseSchema, ILoggingProps } from '../util/databaseFunctions';
 import { updateChannel } from '../util/db/channels';
 import { getLoggingProps } from '../util/db/config';
-import { serverConfigs } from '../util/serverInfo';
-import { isLoggable, newLog } from '../util/webhookLogging';
+import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('channelDelete', async (channel) => {
     if (channel.type === 'dm' || channel.type === 'unknown') return;

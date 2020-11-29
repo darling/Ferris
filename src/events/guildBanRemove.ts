@@ -1,8 +1,7 @@
 import { client } from '../app';
-import { ILoggingProps } from '../util/databaseFunctions';
 import { MessageEmbed } from 'discord.js';
 import { serverConfigs } from '../util/serverInfo';
-import { isLoggable, newLog } from '../util/webhookLogging';
+import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 
 client.on('guildBanRemove', async (guild, member) => {

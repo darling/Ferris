@@ -1,7 +1,7 @@
 import { client } from '../app';
 import { Guild } from 'discord.js';
-import { watchGuild } from '../util/databaseFunctions';
+import { subscribeConfig } from '../util/db/config';
 
 client.on('guildCreate', (guild: Guild) => {
-    watchGuild(guild);
+    subscribeConfig(guild.id);
 });

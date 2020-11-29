@@ -3,6 +3,13 @@ import { loggingHooks, serverConfigs } from './serverInfo';
 import { LoggingTypes } from '../types/log';
 import { getLoggingProps } from './db/config';
 
+export interface ILoggingProps {
+    channel: string;
+    enabled: boolean;
+    subs: number;
+    webhook_id: string;
+}
+
 // Will return if a certian part of LoggingTypes is not listed in the config, Will also return false if there's no config at all.
 export function isLoggable(type: LoggingTypes, guildID: string): boolean {
     const logConfig = getLogSubs(guildID);
@@ -15,7 +22,7 @@ export function isLoggable(type: LoggingTypes, guildID: string): boolean {
 }
 
 export function getLogSubs(guildID: string): number | undefined {
-    return serverConfigs.get(guildID)?.log_channel?.subs;
+    return serverConfigs.get(guildID)?.logging?.subs;
 }
 
 export const typesAsArray: LoggingTypes[] = [
