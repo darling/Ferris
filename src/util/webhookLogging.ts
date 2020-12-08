@@ -1,7 +1,7 @@
 import { APIMessage, StringResolvable, Webhook } from 'discord.js';
 import { serverConfigs } from './serverInfo';
 import { LoggingTypes } from '../types/log';
-import { getLoggingProps } from './db/config';
+import { getLoggingProps, updateLogChannelProperty } from './db/config';
 import { client } from '../app';
 
 export interface ILoggingProps {
@@ -23,6 +23,10 @@ export function isLoggable(type: LoggingTypes, guildID: string): boolean {
 
 // This will return empty for no subscription at all
 export function getLogSubs(guildID: string): LoggingTypes[] {
+    if(typeof serverConfigs.get(guildID)?.logging?.subs !== typeof []) {
+        updateLogChannelProperty(guildID, { subs: typesAsArray })
+        return typesAsArray;
+    }
     return serverConfigs.get(guildID)?.logging?.subs || [];
 }
 
@@ -52,13 +56,18 @@ export const typesAsArray: LoggingTypes[] = [
     'ROLE_REMOVED',
 ];
 
-export async function getWebhook(guildId: string): Promise<Webhook | undefined> {
+export async function getWebhook(guildId: string) {
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guildId);
     if (!loggingProps) {
         return;
     };
 
-    return await client.fetchWebhook(loggingProps.webhook_id)
+    try {
+        const webhook = await client.fetchWebhook(loggingProps.webhook_id)
+        return webhook;
+    } catch {
+        return;
+    }
 }
 
 export async function newLog(type: LoggingTypes, guildId: string, content: StringResolvable | APIMessage) {

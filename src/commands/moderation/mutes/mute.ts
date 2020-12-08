@@ -1,11 +1,13 @@
-import { GuildMember } from 'discord.js';
+import { GuildMember, MessageEmbed } from 'discord.js';
 
 import { admin, client, firestore } from '../../../app';
 import { PermissionLevels } from '../../../types/commands';
 import { getConfig } from '../../../util/db/config';
 import { getPrefix } from '../../../util/db/prefix';
+import { EmbedColors } from '../../../util/embed';
 import { getErrorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
 import { muteDialog } from '../../../util/muteFunctions';
+import { newLog } from '../../../util/webhookLogging';
 
 client.commands.set('mute', {
     name: 'mute',
@@ -79,7 +81,17 @@ client.commands.set('mute', {
             .collection('punishments')
             .doc(args.user.id);
 
-        document.set(docData);
+        document.set(docData).then(() => {
+            const embed = new MessageEmbed();
+
+            embed.setTitle('Mute Added')
+            embed.setDescription(`<@${args.user.id}> has been muted.`)
+            embed.setFooter('ID: ' + args.user.id);
+            embed.setColor(EmbedColors.RED)
+            embed.setTimestamp();
+
+            newLog('MUTE_ADDED', guild.id, embed);
+        });
     },
 });
 

@@ -2,6 +2,7 @@ import { GuildMember, MessageEmbed } from 'discord.js';
 import { client } from '../app';
 import { getLoggingProps } from '../util/db/config';
 import { updateGuildMemberCount } from '../util/db/guild';
+import { EmbedColors } from '../util/embed';
 import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 
 client.on('guildMemberRemove', async (member) => {
@@ -31,7 +32,7 @@ client.on('guildMemberRemove', async (member) => {
         const avURL = (member as GuildMember).user.avatarURL();
         if (avURL) embed.setThumbnail(avURL);
         embed.setFooter(`ID: ${member.id}`);
-        embed.setColor(16548225);
+        embed.setColor(EmbedColors.RED)
         embed.setTitle('Member Left');
 
         await newLog('MEMBER_LEFT', member.guild.id, embed);
@@ -47,7 +48,7 @@ client.on('guildMemberRemove', async (member) => {
     const avURL = (member as GuildMember).user.avatarURL();
     if (avURL) embed.setThumbnail(avURL);
     embed.setFooter(`ID: ${member.id}`);
-    embed.setColor(16548225);
+    embed.setColor(EmbedColors.RED)
     embed.setTitle('Member Kicked');
 
     await newLog('MEMBER_KICKED', member.guild.id, embed);

@@ -2,6 +2,7 @@ import { GuildMember, MessageEmbed } from 'discord.js';
 import { client } from '../app';
 import { getConfig, getLoggingProps } from '../util/db/config';
 import { updateGuildMemberCount } from '../util/db/guild';
+import { EmbedColors } from '../util/embed';
 import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 
 type MemberUpdate = 'profile' | 'role';
@@ -22,6 +23,10 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 
         const given = !oldMember.roles.cache.has(roles.first()?.id || '');
 
+        if (roles.has(getConfig(guild.id)?.muted_role || 'null')) {
+            return;
+        }
+
         roles.forEach((role) => {
             if (role.deleted) return;
             description += `\n${given ? '+' : '-'} <@&${role.id}>`;
@@ -30,7 +35,7 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
         embed.setDescription(description);
         embed.setTimestamp();
         embed.setFooter(`ID: ${newMember.id}`);
-        embed.setColor(6869905);
+        embed.setColor(given ? EmbedColors.GREEN300 : EmbedColors.RED);
         embed.setTitle(`Role ${given ? 'Given' : 'Removed'}`);
 
         await newLog(given ? 'ROLE_GIVEN' : 'ROLE_REMOVED', guild.id, embed);

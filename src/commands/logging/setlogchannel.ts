@@ -51,11 +51,17 @@ async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
     if (!loggingProps) return;
 
-    const webhook = await client.fetchWebhook(loggingProps.webhook_id);
+    try {
+        const webhook = await client.fetchWebhook(loggingProps.webhook_id);
 
-    await webhook.edit({ channel: channel }).then((webhook) => {
-        webhook.send(getNewChannelEmbeds());
-    });
+        webhook.edit({ channel: channel }).then((webhook) => {
+            webhook.send(getNewChannelEmbeds());
+        });
+    } catch (e) {
+        newWebhookLog(channel, guild)
+        return;
+    }
+    
 
     loggingProps.channel = channel.id;
 
