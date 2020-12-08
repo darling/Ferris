@@ -7,20 +7,17 @@ import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 client.on('guildMemberAdd', async (member) => {
     updateGuildMemberCount(member.guild);
 
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(member.guild.id);
-    if (!isLoggable('MEMBER_JOINED', member.guild.id) && loggingProps) {
-        const embed = new MessageEmbed();
+    const embed = new MessageEmbed();
 
-        embed.setDescription(`<@${member.id}> has joined.`);
-        embed.setTimestamp();
-        const avURL = (member as GuildMember).user.avatarURL();
-        if (avURL) embed.setThumbnail(avURL);
-        embed.setFooter(`ID: ${member.id}`);
-        embed.setColor(6869905);
-        embed.setTitle('Member Joined');
+    embed.setDescription(`<@${member.id}> has joined.`);
+    embed.setTimestamp();
+    const avURL = (member as GuildMember).user.avatarURL();
+    if (avURL) embed.setThumbnail(avURL);
+    embed.setFooter(`ID: ${member.id}`);
+    embed.setColor(6869905);
+    embed.setTitle('Member Joined');
 
-        await newLog(member.guild.id, embed);
-    }
+    await newLog('MEMBER_JOINED', member.guild.id, embed);
 
     const config = getConfig(member.guild.id);
     if (config?.auto_role) {

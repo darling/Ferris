@@ -12,10 +12,7 @@ client.on('messageUpdate', async (msg, newMsg) => {
     if (msg.channel.type === 'dm' || msg.channel.type === 'news') return;
 
     const guild: Guild | null = msg.guild;
-    if (guild === null) return;
-
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('MESSAGE_UPDATED', guild.id) || !loggingProps) return;
+    if (guild === null || msg.content === newMsg.content) return;
 
     const embed = new MessageEmbed({
         author: { name: `${msg.author?.tag} ID: ${msg.author?.id}` },
@@ -23,5 +20,5 @@ client.on('messageUpdate', async (msg, newMsg) => {
         description: `${msg.content}\n**to:**\n${newMsg.content}`,
     });
 
-    await newLog(guild.id, embed);
+    await newLog('MESSAGE_UPDATED', guild.id, embed);
 });

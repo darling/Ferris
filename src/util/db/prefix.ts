@@ -1,4 +1,4 @@
-import { updateProperty } from './config';
+import { getConfig, updateProperty } from './config';
 
 export function changePrefix(guildId: string, prefix: string): boolean {
     updateProperty(guildId, { prefix: prefix });
@@ -6,6 +6,5 @@ export function changePrefix(guildId: string, prefix: string): boolean {
 }
 
 export function getPrefix(guildId: string): string {
-    // TODO: Add database fetching
-    return ';';
+    return getConfig(guildId)?.prefix || ';';
 }

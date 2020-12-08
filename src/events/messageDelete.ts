@@ -1,8 +1,7 @@
 import { client } from '../app';
 
 import { Guild, MessageEmbed } from 'discord.js';
-import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
-import { getLoggingProps } from '../util/db/config';
+import { newLog } from '../util/webhookLogging';
 
 client.on('messageDelete', async (msg) => {
     if (!msg.author || msg.author.bot) return;
@@ -12,10 +11,8 @@ client.on('messageDelete', async (msg) => {
     const guild: Guild | null = msg.guild;
     if (guild === null) return;
 
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('MESSAGE_DELETED', guild.id) || !loggingProps) return;
-
     await newLog(
+        'MESSAGE_DELETED',
         guild.id,
         new MessageEmbed({
             author: { name: `${msg.author.tag} ID: ${msg.author.id}` },

@@ -8,10 +8,7 @@ client.on('roleDelete', async (role: Role) => {
     const guild: Guild = role.guild;
 
     updateRole(guild.id, role);
-
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('ROLE_DELETED', guild.id) || !loggingProps) return;
-
+    
     const embed = new MessageEmbed();
 
     embed.setDescription(`<@&${role.id}> has been deleted.`);
@@ -20,5 +17,5 @@ client.on('roleDelete', async (role: Role) => {
     embed.setColor(16548225);
     embed.setTitle('Role Deleted');
 
-    await newLog(guild.id, embed);
+    await newLog('ROLE_DELETED', guild.id, embed);
 });

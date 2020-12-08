@@ -47,9 +47,10 @@ function getFirestoreData(): () => void {
 
                                 case 'mute':
                                     console.log(`Unmute ${doc.id} from ${data.guild}`);
-                                    unmuteUserFromGuild(data.guild, doc.id, data.roles);
+                                    unmuteUserFromGuild(data.guild, doc.id);
                                     break;
                             }
+
                             pendingUnpunishments.delete(doc.id);
                             doc.ref.delete();
                         }, data.time.toDate() - Date.now());

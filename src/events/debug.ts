@@ -1,6 +1,6 @@
 import { client } from '../app';
 
-const isDebug = true;
+const isDebug = false;
 
 if (isDebug) {
     client.on('debug', (info) => {

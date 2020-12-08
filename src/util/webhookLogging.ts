@@ -1,28 +1,29 @@
 import { APIMessage, StringResolvable, Webhook } from 'discord.js';
-import { loggingHooks, serverConfigs } from './serverInfo';
+import { serverConfigs } from './serverInfo';
 import { LoggingTypes } from '../types/log';
 import { getLoggingProps } from './db/config';
+import { client } from '../app';
 
 export interface ILoggingProps {
     channel: string;
     enabled: boolean;
-    subs: number;
+    subs: LoggingTypes[];
     webhook_id: string;
 }
 
 // Will return if a certian part of LoggingTypes is not listed in the config, Will also return false if there's no config at all.
 export function isLoggable(type: LoggingTypes, guildID: string): boolean {
     const logConfig = getLogSubs(guildID);
-    if (!logConfig) return true;
+    if (!logConfig) return false;
 
-    const { enabled } = getLoggingProps(guildID)!;
-    if (!enabled) return true;
+    const { enabled } = getLoggingProps(guildID) || { enabled: false };
 
-    return 0 === (logConfig & logTypeToBit(type));
+    return enabled ? (logConfig.includes(type)) : false;
 }
 
-export function getLogSubs(guildID: string): number | undefined {
-    return serverConfigs.get(guildID)?.logging?.subs;
+// This will return empty for no subscription at all
+export function getLogSubs(guildID: string): LoggingTypes[] {
+    return serverConfigs.get(guildID)?.logging?.subs || [];
 }
 
 export const typesAsArray: LoggingTypes[] = [
@@ -47,30 +48,26 @@ export const typesAsArray: LoggingTypes[] = [
     'MUTE_DELETED',
     'CHANNEL_CREATED',
     'CHANNEL_DELETED',
+    'ROLE_GIVEN',
+    'ROLE_REMOVED',
 ];
 
-function logTypeToBit(type: LoggingTypes): number {
-    const bit = 1 << typesAsArray.indexOf(type);
-    return bit;
+export async function getWebhook(guildId: string): Promise<Webhook | undefined> {
+    let loggingProps: ILoggingProps | undefined = getLoggingProps(guildId);
+    if (!loggingProps) {
+        return;
+    };
+
+    return await client.fetchWebhook(loggingProps.webhook_id)
 }
 
-function bitToLogType(bit: number): LoggingTypes | undefined {
-    return typesAsArray[Math.sqrt(bit)] || undefined;
-}
+export async function newLog(type: LoggingTypes, guildId: string, content: StringResolvable | APIMessage) {
 
-export function logSubsToLogTypes(subs: number): LoggingTypes[] | undefined {
-    const subArray = subs
-        .toString(2)
-        .split('')
-        .map((x) => x === '1');
-    const logTypesArray = typesAsArray.filter((t, i) => {
-        return subArray[i];
-    });
-    return logTypesArray || undefined;
-}
+    if (!getLogSubs(guildId).includes(type)) {
+        return;
+    }
 
-export async function newLog(guildID: string, content: StringResolvable | APIMessage) {
-    const webhook: Webhook | undefined = loggingHooks.get(guildID);
+    const webhook = await getWebhook(guildId);
 
     if (webhook === undefined) {
         return;

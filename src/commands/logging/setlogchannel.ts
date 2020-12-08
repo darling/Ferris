@@ -1,9 +1,9 @@
 import { Guild, MessageEmbed, TextChannel } from 'discord.js';
-import { loggingHooks, serverConfigs } from '../../util/serverInfo';
+import { serverConfigs } from '../../util/serverInfo';
 
 import { client } from '../../app';
 import { getConfig, getLoggingProps, updateLogChannelProperty } from '../../util/db/config';
-import { ILoggingProps } from '../../util/webhookLogging';
+import { ILoggingProps, typesAsArray } from '../../util/webhookLogging';
 
 client.commands.set('setlogchannel', {
     name: 'setlogchannel',
@@ -55,7 +55,6 @@ async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
 
     await webhook.edit({ channel: channel }).then((webhook) => {
         webhook.send(getNewChannelEmbeds());
-        loggingHooks.set(guild.id, webhook);
     });
 
     loggingProps.channel = channel.id;
@@ -72,11 +71,9 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
     updateLogChannelProperty(guild.id, {
         channel: channel.id,
         enabled: true,
-        subs: 8388607,
+        subs: typesAsArray,
         webhook_id: webhook.id,
     });
-
-    loggingHooks.set(guild.id, webhook);
 
     await webhook.send(getNewChannelEmbeds());
 }

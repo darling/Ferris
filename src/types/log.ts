@@ -20,4 +20,6 @@ export type LoggingTypes =
     | 'MUTE_UPDATED'
     | 'MUTE_DELETED'
     | 'CHANNEL_CREATED'
-    | 'CHANNEL_DELETED';
+    | 'CHANNEL_DELETED'
+    | 'ROLE_GIVEN'
+    | 'ROLE_REMOVED';

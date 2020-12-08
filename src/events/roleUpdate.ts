@@ -1,8 +1,7 @@
 import { client } from '../app';
 import { Guild, MessageEmbed, Role } from 'discord.js';
-import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
+import { newLog } from '../util/webhookLogging';
 import { isDeepStrictEqual } from 'util';
-import { getLoggingProps } from '../util/db/config';
 import { updateRole } from '../util/db/roles';
 
 client.on('roleUpdate', async (role: Role, newRole: Role) => {
@@ -11,9 +10,6 @@ client.on('roleUpdate', async (role: Role, newRole: Role) => {
     updateRole(guild.id, newRole);
 
     if (role.rawPosition !== newRole.rawPosition) return;
-
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('ROLE_UPDATED', guild.id) || !loggingProps) return;
 
     const embed = new MessageEmbed();
 
@@ -35,7 +31,7 @@ client.on('roleUpdate', async (role: Role, newRole: Role) => {
     embed.setColor(6869905);
     embed.setTitle('Role Updates');
 
-    await newLog(guild.id, embed);
+    await newLog('ROLE_UPDATED', guild.id, embed);
 });
 
 function deepDif(first: Role, second: Role) {

@@ -5,9 +5,6 @@ import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 
 client.on('guildBanRemove', async (guild, member) => {
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (isLoggable('BAN_REMOVED', guild.id) || !loggingProps) return;
-
     const embed = new MessageEmbed();
 
     embed.setDescription(
@@ -20,5 +17,5 @@ client.on('guildBanRemove', async (guild, member) => {
     embed.setColor(6869905);
     embed.setTitle('Member Unbanned');
 
-    await newLog(guild.id, embed);
+    await newLog('BAN_REMOVED', guild.id, embed);
 });

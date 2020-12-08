@@ -7,6 +7,7 @@ export interface IConfigSchema {
     // Admins need to be a list of ids
     admins?: string[];
     auto_role?: string;
+    muted_role?: string;
     // Same with mods
     mods?: string[];
     members_can_use_bot?: boolean;

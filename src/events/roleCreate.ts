@@ -9,9 +9,6 @@ client.on('roleCreate', async (role: Role) => {
 
     updateRole(guild.id, role);
 
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (!isLoggable('ROLE_CREATED', guild.id) || !loggingProps) return;
-
     const embed = new MessageEmbed();
 
     embed.setDescription(`<@&${role.id}> has been created.`);
@@ -20,5 +17,5 @@ client.on('roleCreate', async (role: Role) => {
     embed.setColor(6869905);
     embed.setTitle('Role Created');
 
-    await newLog(guild.id, embed);
+    await newLog('ROLE_CREATED', guild.id, embed);
 });

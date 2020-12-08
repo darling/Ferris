@@ -1,7 +1,7 @@
 import { Guild } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
-import { getLogSubs, logSubsToLogTypes, typesAsArray } from '../../util/webhookLogging';
+import { getLogSubs } from '../../util/webhookLogging';
 
 client.commands.set('loginfo', {
     name: 'loginfo',
@@ -11,9 +11,7 @@ client.commands.set('loginfo', {
         if (!guild) return;
         const loggingProperties = getLogSubs(guild.id);
 
-        const answer = logSubsToLogTypes(loggingProperties || 0);
-
-        msg.channel.send(`\`\`\`JSON\n${JSON.stringify(answer, null, 2)}\`\`\``);
+        msg.channel.send(`\`\`\`JSON\n${JSON.stringify(loggingProperties, null, 2)}\`\`\``);
     },
 });
 

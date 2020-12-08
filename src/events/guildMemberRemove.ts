@@ -34,7 +34,7 @@ client.on('guildMemberRemove', async (member) => {
         embed.setColor(16548225);
         embed.setTitle('Member Left');
 
-        await newLog(member.guild.id, embed);
+        await newLog('MEMBER_LEFT', member.guild.id, embed);
         return;
     }
 
@@ -50,5 +50,5 @@ client.on('guildMemberRemove', async (member) => {
     embed.setColor(16548225);
     embed.setTitle('Member Kicked');
 
-    await newLog(member.guild.id, embed);
+    await newLog('MEMBER_KICKED', member.guild.id, embed);
 });

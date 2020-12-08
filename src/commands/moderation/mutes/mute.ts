@@ -2,7 +2,9 @@ import { GuildMember } from 'discord.js';
 
 import { admin, client, firestore } from '../../../app';
 import { PermissionLevels } from '../../../types/commands';
-import { missingParamEmbed } from '../../../util/embedTemplates';
+import { getConfig } from '../../../util/db/config';
+import { getPrefix } from '../../../util/db/prefix';
+import { getErrorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
 import { muteDialog } from '../../../util/muteFunctions';
 
 client.commands.set('mute', {
@@ -39,19 +41,21 @@ client.commands.set('mute', {
     ],
     userGuildPerms: ['MANAGE_ROLES'],
     botGuildPerms: ['MANAGE_ROLES'],
-    permissionLevels: [PermissionLevels.BOT_DEV],
     run: (msg, args: PunishArgs, guild) => {
-        if (!guild) return;
+        if (!guild || !args.user.manageable) return;
 
-        const muteRole = guild.roles.cache.find((role) => role.name === 'muted');
-        if (!muteRole) return;
+        const muteRole = getConfig(guild.id)?.muted_role;
+        if (!muteRole) {
+            const embed = getErrorEmbed();
 
-        let currentRoles = args.user.roles.cache
-            .array()
-            .map((role) => role.id)
-            .toString();
+            embed.setTitle('Uh oh!')
+            embed.setDescription('Please make sure to set your mute role by doing `' + getPrefix(guild.id) + 'muterole @role`. That way Ferris knows which role should be assigned on mute!');
 
-        args.user.roles.set([muteRole]).then((mutedMember) => {
+            msg.channel.send(embed);
+            return;
+        };
+
+        args.user.roles.add([muteRole]).then((mutedMember) => {
             muteDialog(mutedMember, args.time, msg);
         });
 
@@ -64,7 +68,6 @@ client.commands.set('mute', {
             completed: false,
             desc: args.reason || 'No reason provided',
             type: 'mute',
-            roles: currentRoles,
             timeGiven: timeGiven,
             author: msg.author.id,
             time: time,
@@ -76,7 +79,6 @@ client.commands.set('mute', {
             .collection('punishments')
             .doc(args.user.id);
 
-        msg.channel.send(`\`\`\`json\n${JSON.stringify(docData, null, 2)}\`\`\``);
         document.set(docData);
     },
 });

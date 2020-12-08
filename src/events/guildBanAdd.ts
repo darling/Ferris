@@ -1,16 +1,8 @@
 import { client } from '../app';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { ILoggingProps, newLog } from '../util/webhookLogging';
-import { getLoggingProps } from '../util/db/config';
+import { MessageEmbed } from 'discord.js';
+import { newLog } from '../util/webhookLogging';
 
 client.on('guildBanAdd', async (guild, member) => {
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (!loggingProps) return;
-
-    if (loggingProps.subs & 3) {
-        console.log('CONFIG', loggingProps.subs);
-    }
-
     const embed = new MessageEmbed();
 
     embed.setDescription(
@@ -23,5 +15,5 @@ client.on('guildBanAdd', async (guild, member) => {
     embed.setColor(16548225);
     embed.setTitle('Member Banned');
 
-    await newLog(guild.id, embed);
+    await newLog('BAN_ADDED', guild.id, embed);
 });
