@@ -22,6 +22,9 @@ client.commands.set('setlogchannel', {
         },
     ],
     guildOnly: true,
+    botGuildPerms: ['MANAGE_WEBHOOKS'],
+    botChannelPerms: ['MANAGE_WEBHOOKS'],
+    userGuildPerms: ['MANAGE_GUILD'],
     run: (msg, args: LogArgs, guild) => {
         if (!guild) return;
 
@@ -69,17 +72,21 @@ async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
 }
 
 async function newWebhookLog(channel: TextChannel, guild: Guild) {
-    const webhook = await channel.createWebhook('Ferris Logging', {
-        avatar: 'https://i.imgur.com/KLCVmAA.png',
-        reason: 'To log items in this discord server.',
-    });
-
-    updateLogChannelProperty(guild.id, {
-        channel: channel.id,
-        enabled: true,
-        subs: typesAsArray,
-        webhook_id: webhook.id,
-    });
-
-    await webhook.send(getNewChannelEmbeds());
+    try {
+        const webhook = await channel.createWebhook('Ferris Logging', {
+            avatar: 'https://i.imgur.com/KLCVmAA.png',
+            reason: 'To log items in this discord server.',
+        });
+    
+        updateLogChannelProperty(guild.id, {
+            channel: channel.id,
+            enabled: true,
+            subs: typesAsArray,
+            webhook_id: webhook.id,
+        });
+    
+        await webhook.send(getNewChannelEmbeds());
+    } catch (error) {
+        console.log(error)
+    }
 }

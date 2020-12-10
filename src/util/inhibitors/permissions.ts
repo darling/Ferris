@@ -1,25 +1,23 @@
 import { Message } from 'discord.js';
 import { messaging } from 'firebase-admin';
 import { client } from '../../app';
-import { Permissions } from '../../types/commands';
+import { Permission, Permissions } from '../../types/commands';
+import { getErrorEmbed } from '../embedTemplates';
 import { inhibitors } from '../inhibitor';
 
-function missingCommandPerms(isBot: boolean, msg: Message, statement: string, type: string) {
-    if (isBot) {
-        msg.reply(
-            'I do not have the permission to do this in this ' +
-                type +
-                '. Missing permission: ' +
-                statement
-        );
-    } else {
-        msg.reply(
-            'You do not have permission to do this in this ' +
-                type +
-                '. Missing permissions: ' +
-                statement
-        );
-    }
+function missingCommandPerms(isBot: boolean, msg: Message, permissions: Permission[], type: string) {
+    const embed = getErrorEmbed();
+
+    embed.setThumbnail('')
+    embed.setTitle("We've reached a roadblock.");
+    embed.setDescription('Funny description goes here.');
+    embed.setTimestamp();
+
+    embed.setFooter(`${isBot ? 'Ferris' : 'The user'} is missing ${permissions.toString()} permission${(permissions.length > 1) ? 's' : ''} in this ${type}`, client.user?.avatarURL() || undefined)
+
+    msg.channel.send(embed).catch((reason) => {
+        console.error(reason);
+    })
 }
 
 inhibitors.set('permissions', async (msg, command, guild) => {
@@ -41,7 +39,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
             return !msg.member?.permissionsIn(msg.channel).has(Permissions[perm], true);
         });
         if (!!missingPermissions.length) {
-            missingCommandPerms(false, msg, JSON.stringify(command.userChannelPerms), 'channel');
+            missingCommandPerms(false, msg, command.userChannelPerms, 'channel');
             // Missing reply goes here
             return true;
         }
@@ -55,7 +53,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
             });
         });
         if (!!missingPermissions.length) {
-            missingCommandPerms(false, msg, JSON.stringify(command.userGuildPerms), 'guild');
+            missingCommandPerms(false, msg, command.userGuildPerms, 'guild');
             // Missing reply goes here
             return true;
         }
@@ -69,7 +67,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
             return !bot.permissionsIn(msg.channel).has(Permissions[perm], true);
         });
         if (!!missingPermissions.length) {
-            missingCommandPerms(true, msg, JSON.stringify(command.botChannelPerms), 'channel');
+            missingCommandPerms(true, msg, command.botChannelPerms, 'channel');
             // Missing reply goes here
             return true;
         }
@@ -80,7 +78,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
             return !bot.hasPermission(Permissions[perm], { checkAdmin: true });
         });
         if (!!missingPermissions.length) {
-            missingCommandPerms(true, msg, JSON.stringify(command.botGuildPerms), 'guild');
+            missingCommandPerms(true, msg, command.botGuildPerms, 'guild');
             // Missing reply goes here
             return true;
         }

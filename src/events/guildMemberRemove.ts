@@ -17,39 +17,37 @@ client.on('guildMemberRemove', async (member) => {
     });
 
     const lastAudit = auditKick.entries.first();
-    if (!lastAudit) return;
 
-    if (
-        isLoggable('MEMBER_KICKED', member.guild.id) ||
-        loggingProps ||
-        Date.now() - lastAudit.createdAt.getTime() > 5000
+    if ( lastAudit &&
+        (Date.now() - lastAudit.createdAt.getTime()) < 5000
     ) {
-        if (isLoggable('MEMBER_LEFT', member.guild.id)) return;
         const embed = new MessageEmbed();
 
-        embed.setDescription(`<@${member.id}> has left.`);
+        embed.setDescription(
+            `<@${member.id}> was kicked!\nCheck the Audit Logs for more details on who kicked.`
+        );
         embed.setTimestamp();
         const avURL = (member as GuildMember).user.avatarURL();
         if (avURL) embed.setThumbnail(avURL);
         embed.setFooter(`ID: ${member.id}`);
         embed.setColor(EmbedColors.RED)
-        embed.setTitle('Member Left');
+        embed.setTitle('Member Kicked');
 
-        await newLog('MEMBER_LEFT', member.guild.id, embed);
+        await newLog('MEMBER_KICKED', member.guild.id, embed);
         return;
     }
 
+    // if (isLoggable('MEMBER_LEFT', member.guild.id)) return;
     const embed = new MessageEmbed();
 
-    embed.setDescription(
-        `<@${member.id}> was kicked!\nCheck the Audit Logs for more details on who kicked.`
-    );
+    embed.setDescription(`<@${member.id}> has left.`);
     embed.setTimestamp();
     const avURL = (member as GuildMember).user.avatarURL();
     if (avURL) embed.setThumbnail(avURL);
     embed.setFooter(`ID: ${member.id}`);
     embed.setColor(EmbedColors.RED)
-    embed.setTitle('Member Kicked');
+    embed.setTitle('Member Left');
 
-    await newLog('MEMBER_KICKED', member.guild.id, embed);
+    await newLog('MEMBER_LEFT', member.guild.id, embed);
+    return;
 });

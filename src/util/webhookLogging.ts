@@ -82,5 +82,5 @@ export async function newLog(type: LoggingTypes, guildId: string, content: Strin
         return;
     }
 
-    await webhook.send(content);
+    webhook.send(content).catch();
 }
