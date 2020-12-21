@@ -13,7 +13,9 @@ client.commands.set('purge', {
             type: 'number',
             required: true,
             missing: (msg) => {
-                msg.reply('You r missing shit');
+                msg.reply(
+                    'You are missing the amount of messages to delete, please enter a number'
+                );
             },
         },
     ],

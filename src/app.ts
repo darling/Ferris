@@ -45,7 +45,6 @@ const client = new Client() as FerrisClient;
 readdir(__dirname + '/events', (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
-        // if (!file.endsWith('.js')) return;
         import(`./events/${file}`);
     });
 });
