@@ -1,7 +1,7 @@
 import { GuildMember, Role } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
-import { getErrorEmbed, getSuccessEmbed } from '../../util/embedTemplates';
+import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
 
 client.commands.set('setrole', {
     name: 'setrole',
@@ -14,7 +14,10 @@ client.commands.set('setrole', {
             type: 'member',
             required: true,
             missing: (msg) => {
-                msg.reply('Dont forget to mention who you cant to give a role to');
+                missingParamEmbed(
+                    msg.channel,
+                    'Please mention or put the ID of the member you would like to give a role!'
+                );
             },
         },
         {
@@ -22,7 +25,10 @@ client.commands.set('setrole', {
             type: 'role',
             required: true,
             missing: (msg) => {
-                msg.reply('Dont forget to add what role you want to give');
+                missingParamEmbed(
+                    msg.channel,
+                    'Please mention or put the ID of the role you would like to assign!'
+                );
             },
         },
     ],
@@ -30,26 +36,17 @@ client.commands.set('setrole', {
     run: (msg, args: SetroleArgs, guild) => {
         if (!msg.member || !guild) return;
         if (!args.role.editable) {
-            const embed = getErrorEmbed();
-
-            embed.setDescription('Please make sure that I can edit this role!');
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
+            errorEmbed(msg.channel, 'Please make sure that I can edit this role!');
             return;
         }
         if (
             msg.member.roles.highest.comparePositionTo(args.role) <= 0 &&
             guild.ownerID !== msg.member.id
         ) {
-            const embed = getErrorEmbed();
-
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 'Please make sure you have permissions to edit this specific role!'
             );
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
             return;
         }
         args.member.roles
@@ -63,7 +60,7 @@ client.commands.set('setrole', {
                 msg.channel.send(embed);
             })
             .catch((e) => {
-                msg.reply('This failed!');
+                errorEmbed(msg.channel, 'Error, please contact the Ferris Staff!');
             });
     },
 });

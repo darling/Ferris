@@ -1,6 +1,7 @@
 import { TextChannel } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
+import { missingParamEmbed } from '../../util/embedTemplates';
 
 client.commands.set('purge', {
     name: 'purge',
@@ -13,8 +14,9 @@ client.commands.set('purge', {
             type: 'number',
             required: true,
             missing: (msg) => {
-                msg.reply(
-                    'You are missing the amount of messages to delete, please enter a number'
+                missingParamEmbed(
+                    msg.channel,
+                    'Please make sure to include the number of messages you would like to delete.'
                 );
             },
         },

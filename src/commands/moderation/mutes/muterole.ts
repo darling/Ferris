@@ -1,7 +1,7 @@
 import { Role } from 'discord.js';
 import { client } from '../../../app';
 import { updateProperty } from '../../../util/db/config';
-import { getErrorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
+import { errorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('muterole', {
     name: 'muterole',
@@ -34,10 +34,8 @@ client.commands.set('muterole', {
             );
             msg.channel.send(embed);
         } else {
-            const embed = getErrorEmbed();
-
-            embed.setTitle('Uh oh!');
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 'Unable to manage this role, how will I be able to use this for the mute role? Please check my permissions.'
             );
         }

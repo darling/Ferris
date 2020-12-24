@@ -2,7 +2,8 @@ import { Role, TextChannel } from 'discord.js';
 import { client } from '../../../app';
 import { PermissionLevels } from '../../../types/commands';
 import { updateProperty } from '../../../util/db/config';
-import { getErrorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
+import { errorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
+import { messageReply } from '../../../util/interactions/message';
 
 client.commands.set('autorole', {
     name: 'autorole',
@@ -33,12 +34,11 @@ client.commands.set('autorole', {
             embed.setDescription(
                 'Any new members will be assigned the <@&' + args.role + '> role from now on.'
             );
-            msg.channel.send(embed);
-        } else {
-            const embed = getErrorEmbed();
 
-            embed.setTitle('Uh oh!');
-            embed.setDescription(
+            messageReply(msg.channel, embed);
+        } else {
+            errorEmbed(
+                msg.channel,
                 'Unable to manage this role, how will I be able to use this for the auto-member role? Please check my permissions.'
             );
         }

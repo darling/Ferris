@@ -1,13 +1,9 @@
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 
-import { admin, client, firestore } from '../../../app';
-import { PermissionLevels } from '../../../types/commands';
+import { client, firestore } from '../../../app';
 import { getConfig } from '../../../util/db/config';
 import { getPrefix } from '../../../util/db/prefix';
-import { EmbedColors } from '../../../util/embed';
-import { getErrorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
-import { muteDialog } from '../../../util/muteFunctions';
-import { newLog } from '../../../util/webhookLogging';
+import { errorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('unmute', {
     name: 'unmute',
@@ -18,12 +14,12 @@ client.commands.set('unmute', {
             type: 'member',
             required: true,
             missing: (msg) => {
-                const embed = missingParamEmbed(
+                missingParamEmbed(
+                    msg.channel,
                     'Please mention or put the ID of any member in this Guild.'
                 );
-                msg.channel.send(embed);
             },
-        }
+        },
     ],
     userGuildPerms: ['MANAGE_ROLES'],
     botGuildPerms: ['MANAGE_ROLES'],
@@ -32,17 +28,21 @@ client.commands.set('unmute', {
 
         const muteRole = getConfig(guild.id)?.muted_role;
         if (!muteRole) {
-            const embed = getErrorEmbed();
-
-            embed.setTitle('Uh oh!')
-            embed.setDescription('Please make sure to set your mute role by doing `' + getPrefix(guild.id) + 'muterole @role`. That way Ferris knows which role should be assigned on mute!');
-
-            msg.channel.send(embed);
+            errorEmbed(
+                msg.channel,
+                'Please make sure to set your mute role by doing `' +
+                    getPrefix(guild.id) +
+                    'muterole @role`. That way Ferris knows which role should be assigned on mute!'
+            );
             return;
-        };
+        }
 
         if (args.user.roles.cache.has(muteRole)) {
-            const doc = firestore.collection('guilds').doc(guild.id).collection('punishments').doc(args.user.id)
+            const doc = firestore
+                .collection('guilds')
+                .doc(guild.id)
+                .collection('punishments')
+                .doc(args.user.id);
 
             doc.delete();
         }

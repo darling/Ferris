@@ -1,7 +1,8 @@
 import { Role } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
-import { getErrorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
+import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
+import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('deleterole', {
     name: 'deleterole',
@@ -11,10 +12,10 @@ client.commands.set('deleterole', {
             name: 'role',
             type: 'role',
             missing: (msg) => {
-                const embed = missingParamEmbed(
+                missingParamEmbed(
+                    msg.channel,
                     'Please make sure to mention or put the id of any role.'
                 );
-                msg.channel.send(embed);
             },
         },
     ],
@@ -24,26 +25,18 @@ client.commands.set('deleterole', {
     run: (msg, args: CreateRoleArgs, guild) => {
         if (!guild || !msg.member) return;
         if (!args.role.editable) {
-            const embed = getErrorEmbed();
+            errorEmbed(msg.channel, 'Please make sure that I can edit this role!');
 
-            embed.setDescription('Please make sure that I can edit this role!');
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
             return;
         }
         if (
             msg.member.roles.highest.comparePositionTo(args.role) <= 0 &&
             guild.ownerID !== msg.member.id
         ) {
-            const embed = getErrorEmbed();
-
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 'Please make sure you have permissions to edit this specific role!'
             );
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
             return;
         }
         args.role
@@ -54,7 +47,7 @@ client.commands.set('deleterole', {
                 embed.setTitle('Success!');
                 embed.setDescription('Deleted <@&' + role + '>! (' + role.name + ');');
 
-                msg.channel.send(embed);
+                messageReply(msg.channel, embed);
             })
             .catch((reason) => {
                 console.error(reason);

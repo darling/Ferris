@@ -1,6 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { client } from '../../app';
 import { ICommand } from '../../types/commands';
+import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('help', {
     name: 'help',
@@ -37,9 +38,7 @@ client.commands.set('help', {
         }
         embed.setThumbnail(`https://i.imgur.com/owBJxsP.png`);
         embed.setAuthor(msg.author.tag, msg.author.avatarURL()!).setTimestamp();
-        msg.channel.send(embed).catch((err: Error) => {
-            console.error(err);
-        });
+        messageReply(msg.channel, embed);
     },
 });
 

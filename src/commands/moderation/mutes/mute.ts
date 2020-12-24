@@ -5,7 +5,7 @@ import { PermissionLevels } from '../../../types/commands';
 import { getConfig } from '../../../util/db/config';
 import { getPrefix } from '../../../util/db/prefix';
 import { EmbedColors } from '../../../util/embed';
-import { getErrorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
+import { errorEmbed, missingParamEmbed } from '../../../util/embedTemplates';
 import { muteDialog } from '../../../util/muteFunctions';
 import { newLog } from '../../../util/webhookLogging';
 
@@ -18,10 +18,10 @@ client.commands.set('mute', {
             type: 'member',
             required: true,
             missing: (msg) => {
-                const embed = missingParamEmbed(
+                missingParamEmbed(
+                    msg.channel,
                     'Please mention or put the ID of any member in this Guild.'
                 );
-                msg.channel.send(embed);
             },
         },
         {
@@ -29,10 +29,10 @@ client.commands.set('mute', {
             type: 'duration',
             required: true,
             missing: (msg) => {
-                const embed = missingParamEmbed(
+                missingParamEmbed(
+                    msg.channel,
                     'Please make sure to put a duration. Examples of durations inlcude `2w`, `3h`.'
                 );
-                msg.channel.send(embed);
             },
         },
         {
@@ -48,14 +48,14 @@ client.commands.set('mute', {
 
         const muteRole = getConfig(guild.id)?.muted_role;
         if (!muteRole) {
-            const embed = getErrorEmbed();
-
-            embed.setTitle('Uh oh!')
-            embed.setDescription('Please make sure to set your mute role by doing `' + getPrefix(guild.id) + 'muterole @role`. That way Ferris knows which role should be assigned on mute!');
-
-            msg.channel.send(embed);
+            errorEmbed(
+                msg.channel,
+                'Please make sure to set your mute role by doing `' +
+                    getPrefix(guild.id) +
+                    'muterole @role`. That way Ferris knows which role should be assigned on mute!'
+            );
             return;
-        };
+        }
 
         args.user.roles.add([muteRole]).then((mutedMember) => {
             muteDialog(mutedMember, args.time, msg);
@@ -84,10 +84,10 @@ client.commands.set('mute', {
         document.set(docData).then(() => {
             const embed = new MessageEmbed();
 
-            embed.setTitle('Mute Added')
-            embed.setDescription(`<@${args.user.id}> has been muted.`)
+            embed.setTitle('Mute Added');
+            embed.setDescription(`<@${args.user.id}> has been muted.`);
             embed.setFooter('ID: ' + args.user.id);
-            embed.setColor(EmbedColors.RED)
+            embed.setColor(EmbedColors.RED);
             embed.setTimestamp();
 
             newLog('MUTE_ADDED', guild.id, embed);

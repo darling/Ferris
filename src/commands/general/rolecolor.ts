@@ -1,7 +1,7 @@
 import { GuildMember, Role } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
-import { getErrorEmbed } from '../../util/embedTemplates';
+import { errorEmbed, missingParamEmbed } from '../../util/embedTemplates';
 
 client.commands.set('rolecolor', {
     name: 'rolecolor',
@@ -14,7 +14,10 @@ client.commands.set('rolecolor', {
             type: 'role',
             required: true,
             missing: (msg) => {
-                msg.reply('Dont forget to add what role you want to take');
+                missingParamEmbed(
+                    msg.channel,
+                    'Please mention or put the ID of the role you would like to edit.'
+                );
             },
         },
         {
@@ -22,7 +25,10 @@ client.commands.set('rolecolor', {
             type: 'string',
             required: true,
             missing: (msg) => {
-                msg.reply('Please make sure to add the color in hex value, ie `FFFFFF`');
+                missingParamEmbed(
+                    msg.channel,
+                    'Please put the hex code of the color you would like to change the color to.'
+                );
             },
         },
     ],
@@ -30,26 +36,17 @@ client.commands.set('rolecolor', {
     run: (msg, args: RemoveroleArgs, guild) => {
         if (!msg.member || !guild) return;
         if (!args.role.editable) {
-            const embed = getErrorEmbed();
-
-            embed.setDescription('Please make sure that I can edit this role!');
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
+            errorEmbed(msg.channel, 'Please make sure that I can edit this role!');
             return;
         }
         if (
             msg.member.roles.highest.comparePositionTo(args.role) <= 0 &&
             guild.ownerID !== msg.member.id
         ) {
-            const embed = getErrorEmbed();
-
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 'Please make sure you have permissions to edit this specific role!'
             );
-            embed.setTitle('Error!');
-
-            msg.channel.send(embed);
             return;
         }
         args.role

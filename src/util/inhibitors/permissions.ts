@@ -1,23 +1,34 @@
-import { Message } from 'discord.js';
-import { messaging } from 'firebase-admin';
+import { Message, MessageEmbed } from 'discord.js';
+
 import { client } from '../../app';
 import { Permission, Permissions } from '../../types/commands';
-import { getErrorEmbed } from '../embedTemplates';
+import { EmbedColors } from '../embed';
 import { inhibitors } from '../inhibitor';
 
-function missingCommandPerms(isBot: boolean, msg: Message, permissions: Permission[], type: string) {
-    const embed = getErrorEmbed();
+function missingCommandPerms(
+    isBot: boolean,
+    msg: Message,
+    permissions: Permission[],
+    type: string
+) {
+    const embed = new MessageEmbed();
 
-    embed.setThumbnail('')
+    embed.setThumbnail('');
+    embed.setColor(EmbedColors.RED);
     embed.setTitle("We've reached a roadblock.");
     embed.setDescription('Funny description goes here.');
     embed.setTimestamp();
 
-    embed.setFooter(`${isBot ? 'Ferris' : 'The user'} is missing ${permissions.toString()} permission${(permissions.length > 1) ? 's' : ''} in this ${type}`, client.user?.avatarURL() || undefined)
+    embed.setFooter(
+        `${isBot ? 'Ferris' : 'The user'} is missing ${permissions.toString()} permission${
+            permissions.length > 1 ? 's' : ''
+        } in this ${type}`,
+        client.user?.avatarURL() || undefined
+    );
 
     msg.channel.send(embed).catch((reason) => {
         console.error(reason);
-    })
+    });
 }
 
 inhibitors.set('permissions', async (msg, command, guild) => {

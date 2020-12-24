@@ -1,6 +1,6 @@
 import { GuildMember } from 'discord.js';
 import { client } from '../../app';
-import { getErrorEmbed, getSuccessEmbed } from '../../util/embedTemplates';
+import { errorEmbed, getSuccessEmbed } from '../../util/embedTemplates';
 
 client.commands.set('ban', {
     name: 'ban',
@@ -10,12 +10,7 @@ client.commands.set('ban', {
             type: 'member',
             required: true,
             missing: (msg) => {
-                const embed = getErrorEmbed();
-
-                embed.setTitle('Uh oh!');
-                embed.setDescription('Please make sure to mention or put the ID of any user.');
-
-                msg.channel.send(embed);
+                errorEmbed(msg.channel, 'Please make sure to mention or put the ID of any user.');
             },
         },
         // {
@@ -34,14 +29,10 @@ client.commands.set('ban', {
     userGuildPerms: ['BAN_MEMBERS'],
     run: (msg, args: BanArgs) => {
         if (!(msg.member!.roles.highest.comparePositionTo(args.member.roles.highest) > 0)) {
-            const embed = getErrorEmbed();
-
-            embed.setTitle('Uh oh!');
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 "Please make sure to check the permissions between you and the user you're trying to ban. It seems like they have a higher role than you."
             );
-
-            msg.channel.send(embed);
             return;
         }
         if (args.member.bannable) {
@@ -64,14 +55,10 @@ client.commands.set('ban', {
                     console.error(e);
                 });
         } else {
-            const embed = getErrorEmbed();
-
-            embed.setTitle('Uh oh!');
-            embed.setDescription(
+            errorEmbed(
+                msg.channel,
                 "Please make sure to check the permissions between me and the user, it seems like I don't have permission to ban them."
             );
-
-            msg.channel.send(embed);
             return;
         }
     },

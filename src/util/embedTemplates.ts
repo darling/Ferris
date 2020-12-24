@@ -1,5 +1,6 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { DMChannel, Message, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
 import { EmbedColors } from './embed';
+import { messageReply } from './interactions/message';
 
 const embedErrorImages: string[] = [
     'https://i.imgur.com/u9thkve.png',
@@ -7,15 +8,20 @@ const embedErrorImages: string[] = [
     'https://i.imgur.com/Cnr4nmS.png',
 ];
 
-export function getErrorEmbed(): MessageEmbed {
+export function errorEmbed(
+    channel: TextChannel | DMChannel | NewsChannel,
+    description: string,
+    title?: string
+): void {
     const embed = new MessageEmbed();
 
     embed.setColor(EmbedColors.RED);
     embed.setTimestamp();
-
     embed.setThumbnail(embedErrorImages[Math.floor(Math.random() * embedErrorImages.length)]);
+    embed.setDescription(description);
+    embed.setTitle(title || 'Uh Oh!');
 
-    return embed;
+    messageReply(channel, embed);
 }
 
 export function getSuccessEmbed() {
@@ -27,6 +33,18 @@ export function getSuccessEmbed() {
     return embed;
 }
 
-export function missingParamEmbed(description: string): MessageEmbed {
-    return getErrorEmbed().setTitle('Missing Parameter!').setDescription(description);
+export function missingParamEmbed(
+    channel: TextChannel | DMChannel | NewsChannel,
+    description: string,
+    title?: string
+): void {
+    const embed = new MessageEmbed();
+
+    embed.setColor(EmbedColors.RED);
+    embed.setTimestamp();
+    embed.setThumbnail(embedErrorImages[Math.floor(Math.random() * embedErrorImages.length)]);
+    embed.setDescription(description);
+    embed.setTitle(title || 'Missing Parameter!');
+
+    messageReply(channel, embed);
 }

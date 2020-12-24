@@ -1,6 +1,7 @@
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
 import { getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
+import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('createrole', {
     name: 'createrole',
@@ -10,8 +11,7 @@ client.commands.set('createrole', {
             name: 'roleName',
             type: 'string',
             missing: (msg) => {
-                const embed = missingParamEmbed('Please make sure to input a name for the role.');
-                msg.channel.send(embed);
+                missingParamEmbed(msg.channel, 'Please make sure to input a name for the role.');
             },
         },
         {
@@ -41,7 +41,7 @@ client.commands.set('createrole', {
                     embed.setTitle('Success!');
                     embed.setDescription('Created <@&' + role + '>!');
 
-                    msg.channel.send(embed);
+                    messageReply(msg.channel, embed);
                 });
         } catch (e) {
             console.error(e);
