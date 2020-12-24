@@ -1,6 +1,6 @@
 import { GuildMember } from 'discord.js';
 import { client } from '../../app';
-import { errorEmbed, getSuccessEmbed } from '../../util/embedTemplates';
+import { errorEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('kick', {
     name: 'kick',
@@ -34,12 +34,7 @@ client.commands.set('kick', {
             args.member
                 .kick(msg.author.id + ' kicked ' + (args.reason || 'Kicked by the kick command'))
                 .then((member) => {
-                    const embed = getSuccessEmbed();
-
-                    embed.setTitle('Success!');
-                    embed.setDescription(member.user.username + ' has been kicked.');
-
-                    msg.channel.send(embed);
+                    successEmbed(msg.channel, member.user.username + ' has been kicked.');
                     return;
                 })
                 .catch((e) => {

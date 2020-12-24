@@ -1,11 +1,10 @@
-import { serverConfigs } from '../../../util/serverInfo';
 import { GuildMember, MessageEmbed } from 'discord.js';
-import { getAvatar } from '../../../util/users';
 import moment from 'moment';
 import { client } from '../../../app';
-import { EmbedColors } from '../../../util/embed';
-import { getWarningsForUser, IWarnings } from '../../../util/db/warnings';
 import { PermissionLevels } from '../../../types/commands';
+import { getWarningsForUser, IWarnings } from '../../../util/db/warnings';
+import { EmbedColors } from '../../../util/embed';
+import { getAvatar } from '../../../util/users';
 
 client.commands.set('listwarns', {
     name: 'listwarns',
@@ -47,7 +46,7 @@ client.commands.set('listwarns', {
             const time = moment(+timeGiven).format('MMMM Do YYYY, h:mm a [PST]');
             embed.addField(
                 'Warn # ' + (count + 1),
-                `**Time: **${time}\n**By: **<@${warn.by}>\n**Reason:\n**${warn.reason}`,
+                `**Time: **${time}\n**By: **<@${warn.by.id}> (${warn.by.name})\n**Reason:\n**${warn.reason}`,
                 false
             );
         });

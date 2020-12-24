@@ -1,8 +1,6 @@
 import { Role } from 'discord.js';
 import { client } from '../../app';
-import { PermissionLevels } from '../../types/commands';
-import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
-import { messageReply } from '../../util/interactions/message';
+import { errorEmbed, missingParamEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('deleterole', {
     name: 'deleterole',
@@ -42,15 +40,11 @@ client.commands.set('deleterole', {
         args.role
             .delete('Requested through removerole')
             .then((role) => {
-                const embed = getSuccessEmbed();
-
-                embed.setTitle('Success!');
-                embed.setDescription('Deleted <@&' + role + '>! (' + role.name + ');');
-
-                messageReply(msg.channel, embed);
+                successEmbed(msg.channel, 'Deleted <@&' + role + '>! (' + role.name + ');');
             })
-            .catch((reason) => {
-                console.error(reason);
+            .catch((e) => {
+                errorEmbed(msg.channel, 'Error. Please contact the Ferris Staff.');
+                console.error(e);
             });
     },
 });

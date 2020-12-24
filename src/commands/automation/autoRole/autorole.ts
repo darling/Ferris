@@ -1,9 +1,7 @@
-import { Role, TextChannel } from 'discord.js';
+import { Role } from 'discord.js';
 import { client } from '../../../app';
-import { PermissionLevels } from '../../../types/commands';
 import { updateProperty } from '../../../util/db/config';
-import { errorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
-import { messageReply } from '../../../util/interactions/message';
+import { errorEmbed, successEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('autorole', {
     name: 'autorole',
@@ -30,12 +28,10 @@ client.commands.set('autorole', {
                 auto_role: args.role.id,
             });
 
-            const embed = getSuccessEmbed();
-            embed.setDescription(
+            successEmbed(
+                msg.channel,
                 'Any new members will be assigned the <@&' + args.role + '> role from now on.'
             );
-
-            messageReply(msg.channel, embed);
         } else {
             errorEmbed(
                 msg.channel,

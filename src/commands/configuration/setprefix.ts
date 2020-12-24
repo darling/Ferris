@@ -1,8 +1,6 @@
-import { MessageEmbed } from 'discord.js';
 import { client } from '../../app';
-import { getConfig } from '../../util/db/config';
 import { changePrefix } from '../../util/db/prefix';
-import { messageReply } from '../../util/interactions/message';
+import { successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('setprefix', {
     name: 'setprefix',
@@ -23,11 +21,10 @@ client.commands.set('setprefix', {
             changePrefix(guild.id, args.newPrefix);
         }
 
-        const embed = new MessageEmbed();
-
-        embed.setDescription(`The prefix is ${args.newPrefix ? 'now ' : ''}\`${args.newPrefix}\``);
-
-        messageReply(msg.channel, embed);
+        successEmbed(
+            msg.channel,
+            `The prefix is ${args.newPrefix ? 'now ' : ''}\`${args.newPrefix}\``
+        );
     },
 });
 

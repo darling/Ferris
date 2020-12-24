@@ -1,8 +1,7 @@
 import { Role } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
-import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
-import { messageReply } from '../../util/interactions/message';
+import { errorEmbed, missingParamEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('hoistrole', {
     name: 'hoistrole',
@@ -35,14 +34,10 @@ client.commands.set('hoistrole', {
         args.role
             .setHoist(!args.role.hoist, 'Triggered through ;hoistrole command')
             .then((role) => {
-                const embed = getSuccessEmbed();
-
-                embed.setTitle('Success!');
-                embed.setDescription(
+                successEmbed(
+                    msg.channel,
                     'Successfully set the hoist property for <@&' + role.id + '>.'
                 );
-
-                messageReply(msg.channel, embed);
                 return;
             })
             .catch((e) => {

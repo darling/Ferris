@@ -1,4 +1,5 @@
-import { DMChannel, Message, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
+import { DMChannel, MessageEmbed, NewsChannel, TextChannel } from 'discord.js';
+
 import { EmbedColors } from './embed';
 import { messageReply } from './interactions/message';
 
@@ -24,13 +25,19 @@ export function errorEmbed(
     messageReply(channel, embed);
 }
 
-export function getSuccessEmbed() {
+export function successEmbed(
+    channel: TextChannel | DMChannel | NewsChannel,
+    description: string,
+    title?: string
+): void {
     const embed = new MessageEmbed();
 
     embed.setColor(EmbedColors.GREEN100);
     embed.setTimestamp();
+    embed.setDescription(description);
+    embed.setTitle(title || 'Success!');
 
-    return embed;
+    messageReply(channel, embed);
 }
 
 export function missingParamEmbed(

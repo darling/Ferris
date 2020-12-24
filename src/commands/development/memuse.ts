@@ -27,5 +27,6 @@ client.commands.set('memuse', {
 interface MemArgs {}
 
 function bytesToMb(bytes: number) {
-    return `${Math.round((bytes / 1024 / 1024) * 100) / 100} MB`;
+    const MB = Math.round((bytes / 1024 / 1024) * 100) / 100;
+    return MB < 1000 ? `${MB} MB` : `${Math.round((MB / 1000) * 100) / 100} GB`;
 }

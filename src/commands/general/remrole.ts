@@ -1,7 +1,6 @@
 import { GuildMember, Role } from 'discord.js';
 import { client } from '../../app';
-import { PermissionLevels } from '../../types/commands';
-import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
+import { errorEmbed, missingParamEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('removerole', {
     name: 'removerole',
@@ -52,12 +51,7 @@ client.commands.set('removerole', {
         args.member.roles
             .remove(args.role)
             .then((member) => {
-                const embed = getSuccessEmbed();
-
-                embed.setTitle('Success!');
-                embed.setDescription('Was able to take the role to the user.');
-
-                msg.channel.send(embed);
+                successEmbed(msg.channel, 'Was able to take the role to the user.');
             })
             .catch((e) => {
                 errorEmbed(

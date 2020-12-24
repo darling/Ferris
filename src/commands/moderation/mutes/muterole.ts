@@ -1,7 +1,7 @@
 import { Role } from 'discord.js';
 import { client } from '../../../app';
 import { updateProperty } from '../../../util/db/config';
-import { errorEmbed, getSuccessEmbed } from '../../../util/embedTemplates';
+import { errorEmbed, successEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('muterole', {
     name: 'muterole',
@@ -28,11 +28,10 @@ client.commands.set('muterole', {
                 muted_role: args.role.id,
             });
 
-            const embed = getSuccessEmbed();
-            embed.setDescription(
+            successEmbed(
+                msg.channel,
                 'Any muted members will be assigned the <@&' + args.role + '> role from now on.'
             );
-            msg.channel.send(embed);
         } else {
             errorEmbed(
                 msg.channel,

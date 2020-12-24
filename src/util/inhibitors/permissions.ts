@@ -13,7 +13,6 @@ function missingCommandPerms(
 ) {
     const embed = new MessageEmbed();
 
-    embed.setThumbnail('');
     embed.setColor(EmbedColors.RED);
     embed.setTitle("We've reached a roadblock.");
     embed.setDescription('Funny description goes here.');

@@ -1,11 +1,10 @@
 import { GuildMember, Role } from 'discord.js';
 import { client } from '../../app';
-import { PermissionLevels } from '../../types/commands';
-import { errorEmbed, getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
+import { errorEmbed, missingParamEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('setrole', {
     name: 'setrole',
-    aliases: ['setr'],
+    aliases: ['sr'],
     userGuildPerms: ['MANAGE_MESSAGES'],
     botGuildPerms: ['MANAGE_MESSAGES'],
     arguments: [
@@ -52,12 +51,7 @@ client.commands.set('setrole', {
         args.member.roles
             .add(args.role)
             .then((member) => {
-                const embed = getSuccessEmbed();
-
-                embed.setTitle('Success!');
-                embed.setDescription('Was able to give the role to the user.');
-
-                msg.channel.send(embed);
+                successEmbed(msg.channel, 'Was able to give the role to the user.');
             })
             .catch((e) => {
                 errorEmbed(msg.channel, 'Error, please contact the Ferris Staff!');

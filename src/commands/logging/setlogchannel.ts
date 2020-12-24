@@ -4,6 +4,8 @@ import { serverConfigs } from '../../util/serverInfo';
 import { client } from '../../app';
 import { getConfig, getLoggingProps, updateLogChannelProperty } from '../../util/db/config';
 import { ILoggingProps, typesAsArray } from '../../util/webhookLogging';
+import { missingParamEmbed } from '../../util/embedTemplates';
+import { EmbedColors } from '../../util/embed';
 
 client.commands.set('setlogchannel', {
     name: 'setlogchannel',
@@ -13,11 +15,7 @@ client.commands.set('setlogchannel', {
             type: 'textchannel',
             required: true,
             missing: (msg) => {
-                const embed = new MessageEmbed();
-
-                embed.setDescription('Please mention a channel or channel id');
-
-                msg.channel.send(embed);
+                missingParamEmbed(msg.channel, 'Please mention a channel or channel id');
             },
         },
     ],
@@ -42,7 +40,10 @@ interface LogArgs {
 
 function getNewChannelEmbeds() {
     const embed = new MessageEmbed();
+
     embed.setTitle('New Logging Channel!');
+    embed.setColor(EmbedColors.GREEN100);
+    embed.setTimestamp();
     embed.setDescription(
         'All logging including website updates, user updates, and such that are enabled will be logged here.'
     );
@@ -61,10 +62,9 @@ async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
             webhook.send(getNewChannelEmbeds());
         });
     } catch (e) {
-        newWebhookLog(channel, guild)
+        newWebhookLog(channel, guild);
         return;
     }
-    
 
     loggingProps.channel = channel.id;
 
@@ -77,16 +77,16 @@ async function newWebhookLog(channel: TextChannel, guild: Guild) {
             avatar: 'https://i.imgur.com/KLCVmAA.png',
             reason: 'To log items in this discord server.',
         });
-    
+
         updateLogChannelProperty(guild.id, {
             channel: channel.id,
             enabled: true,
             subs: typesAsArray,
             webhook_id: webhook.id,
         });
-    
+
         await webhook.send(getNewChannelEmbeds());
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }

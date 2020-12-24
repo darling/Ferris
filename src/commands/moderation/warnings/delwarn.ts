@@ -1,9 +1,9 @@
-import { TextChannel } from 'discord.js';
-import { deleteWarn, getWarningsForUser, IWarnings } from '../../../util/db/warnings';
-import { GuildMember } from 'discord.js';
+import { GuildMember, TextChannel } from 'discord.js';
 import { client } from '../../../app';
-import { sendSimpleEmbed } from '../../../util/embed';
 import { PermissionLevels } from '../../../types/commands';
+import { deleteWarn, getWarningsForUser, IWarnings } from '../../../util/db/warnings';
+import { sendSimpleEmbed } from '../../../util/embed';
+import { errorEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('delwarn', {
     name: 'delwarn',
@@ -39,9 +39,10 @@ client.commands.set('delwarn', {
         if (args.warning <= timestamp.length && args.warning >= 1) {
             deleteWarn(guild.id, args.member.id, timestamp[args.warning - 1]);
         } else {
-            sendSimpleEmbed(
+            errorEmbed(
+                msg.channel,
                 'Please list a valid warn number. You can find them in the `listwarns` command.',
-                msg.channel as TextChannel
+                'Invalid Warning Number!'
             );
         }
     },

@@ -1,7 +1,5 @@
 import { client } from '../../app';
-import { PermissionLevels } from '../../types/commands';
-import { getSuccessEmbed, missingParamEmbed } from '../../util/embedTemplates';
-import { messageReply } from '../../util/interactions/message';
+import { missingParamEmbed, successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('createrole', {
     name: 'createrole',
@@ -36,12 +34,7 @@ client.commands.set('createrole', {
                     reason: 'Created role using createrole command',
                 })
                 .then((role) => {
-                    const embed = getSuccessEmbed();
-
-                    embed.setTitle('Success!');
-                    embed.setDescription('Created <@&' + role + '>!');
-
-                    messageReply(msg.channel, embed);
+                    successEmbed(msg.channel, 'Created <@&' + role + '>!');
                 });
         } catch (e) {
             console.error(e);
