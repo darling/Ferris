@@ -1,11 +1,11 @@
-import { client } from '../app';
+import { client, firestore } from '../app';
 import { serverConfigs } from '../util/serverInfo';
 import runSchedule from '../util/scheduleHandler';
-import { subscribeConfig } from '../util/db/config';
 import { newGuild } from '../util/db/guild';
+import { IConfigSchema } from '../util/db/config';
 
 client.on('ready', () => {
-    const user = client.user;
+    const { user, guilds } = client;
 
     if (!user) throw Error('User is undefined but bot is ready?');
 
@@ -18,11 +18,16 @@ client.on('ready', () => {
 
     runSchedule();
 
-    client.guilds.cache.forEach(async (guild) => {
-        newGuild(guild);
-        
-        if (!serverConfigs.has(guild.id)) {
-            subscribeConfig(guild.id);
-        }
+    guilds.cache.forEach(async (guild) => {
+        await newGuild(guild);
+    });
+
+    const collection = firestore.collection('configs');
+
+    collection.onSnapshot((snapshots) => {
+        snapshots.docChanges().forEach(({ doc, type }) => {
+            console.log(doc.id, doc.updateTime);
+            serverConfigs.set(doc.id, (doc.data() || {}) as IConfigSchema);
+        });
     });
 });
