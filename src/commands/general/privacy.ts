@@ -10,7 +10,7 @@ client.commands.set('privacy', {
         embed.setColor(16646143);
         embed.setTitle('Privacy');
         embed.setDescription(
-            'If you have any questions, comments, concerns abour your data and Ferris, please inquire either through our support server, or through email.\n\nPlease contact the respective email for specific concerns.'
+            'If you have any questions, comments, concerns about your data and Ferris, please inquire either through our support server, or through email.\n\nPlease contact the respective email for specific concerns.'
         );
         embed.addField('Privacy', 'privacy@ey.lc', false);
         embed.addField('Security', 'security@ey.lc', false);
