@@ -1,11 +1,13 @@
 import { client } from '../app';
-import { Guild, Message } from 'discord.js';
+import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
 
 // Instead of grabbing the prefix each time, we can store the current prefix of any server this shard looks at, and update it when the database updates.
 import { ICommand } from '../types/commands';
 import { argumentList } from '../util/arguments';
 import { inhibitors } from '../util/inhibitor';
 import { getConfig } from '../util/db/config';
+import { messageReply } from '../util/interactions/message';
+import { intersection } from 'lodash';
 
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
@@ -21,7 +23,40 @@ client.on('message', async (msg: Message) => {
     const [commandName, ...parameters] = msg.content.substring(prefix.length).split(/ +/g);
 
     const cmd = await parseCommand(commandName);
-    if (!cmd) return;
+    if (!cmd) {
+        // Custom commands go here in a side handler
+        const config = getConfig(guild.id);
+
+        let customCmd = config?.custom?.[commandName];
+
+        if (customCmd) {
+            console.log(customCmd);
+            if (customCmd.channel_list) {
+                const isRightChannel = customCmd.channel_list.includes(msg.channel.id);
+
+                if (!isRightChannel) {
+                    return;
+                }
+            }
+            if (customCmd.role_list && msg.member) {
+                const memberRoleArray = msg.member.roles.cache.array().map((role) => role.id);
+                const roleList = customCmd.role_list;
+
+                const intersectedRoles = intersection(memberRoleArray, roleList);
+
+                if (!intersectedRoles.length) {
+                    return;
+                }
+            }
+
+            const embed = new MessageEmbed(customCmd.embed);
+
+            if (embed.description) embed.setDescription(embed.description.replace(/\\n/g, '\n'));
+
+            messageReply(msg.channel, embed);
+        }
+        return;
+    }
 
     const tests = inhibitors.map((fn) => {
         return fn(msg, cmd, guild);

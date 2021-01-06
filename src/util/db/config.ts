@@ -1,3 +1,13 @@
+import {
+    EmbedFieldData,
+    MessageAttachment,
+    FileOptions,
+    MessageEmbedAuthor,
+    MessageEmbedThumbnail,
+    MessageEmbedImage,
+    MessageEmbedVideo,
+    MessageEmbedFooter,
+} from 'discord.js';
 import { firestore } from '../../app';
 import { serverConfigs } from '../serverInfo';
 import { ILoggingProps } from '../webhookLogging';
@@ -12,6 +22,27 @@ export interface IConfigSchema {
     mods?: string[];
     members_can_use_bot?: boolean;
     logging?: ILoggingProps;
+    custom?: ICustomCommands;
+}
+
+export interface ICustomCommands {
+    [key: string]: {
+        channel_list?: string[];
+        role_list?: string[];
+        whitelist?: boolean;
+        embed?: {
+            title?: string;
+            description?: string;
+            url?: string;
+            timestamp?: Date | number;
+            color?: string;
+            fields?: EmbedFieldData[];
+            author?: Partial<MessageEmbedAuthor> & { icon_url?: string; proxy_icon_url?: string };
+            thumbnail?: Partial<MessageEmbedThumbnail> & { proxy_url?: string };
+            image?: Partial<MessageEmbedImage> & { proxy_url?: string };
+            footer?: Partial<MessageEmbedFooter> & { icon_url?: string; proxy_icon_url?: string };
+        };
+    };
 }
 
 export function getConfig(guildId: string): IConfigSchema | undefined {
