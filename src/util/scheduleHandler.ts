@@ -14,9 +14,6 @@ const config = {
 };
 
 function getFirestoreData(): () => void {
-    console.log(
-        'Gathering punishment data for next window of ' + config.windowMs / 1000 + ' seconds.'
-    );
     return firestore
         .collectionGroup('punishments')
         .where('time', '<=', admin.firestore.Timestamp.fromMillis(Date.now() + config.windowMs))
@@ -30,8 +27,6 @@ function getFirestoreData(): () => void {
                 let doc = update.doc;
                 let data = doc.data();
 
-                console.log('Update for new punishment', doc.id);
-
                 switch (update.type) {
                     case 'added':
                         if (data.completed || data.time.toDate() <= Date.now()) {
@@ -41,12 +36,10 @@ function getFirestoreData(): () => void {
                         const event = setTimeout(() => {
                             switch (data.type) {
                                 case 'ban':
-                                    console.log(`Unbanning ${doc.id} from ${data.guild}`);
                                     unbanUserFromGuild(data.guild, doc.id);
                                     break;
 
                                 case 'mute':
-                                    console.log(`Unmute ${doc.id} from ${data.guild}`);
                                     break;
                             }
 
@@ -68,7 +61,6 @@ function getFirestoreData(): () => void {
 
                         break;
                     case 'removed':
-
                         unmuteUserFromGuild(data.guild, doc.id);
 
                         if (pendingUnpunishments.has(doc.id)) {

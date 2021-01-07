@@ -30,7 +30,6 @@ client.on('message', async (msg: Message) => {
         let customCmd = config?.custom?.[commandName];
 
         if (customCmd) {
-            console.log(customCmd);
             if (customCmd.channel_list) {
                 const isRightChannel = customCmd.channel_list.includes(msg.channel.id);
 
@@ -63,7 +62,6 @@ client.on('message', async (msg: Message) => {
     });
 
     const testResults = await Promise.all(tests);
-    console.log(testResults);
     if (testResults.includes(true)) return;
 
     executeCommand(msg, cmd, parameters, guild);
@@ -89,7 +87,6 @@ async function executeCommand(msg: Message, cmd: ICommand, parameters: string[],
         const args = (await parseArgs(msg, cmd, parameters)) as argsType;
 
         if (!args) {
-            console.log('no args found');
             return;
         }
 
