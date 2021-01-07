@@ -6,6 +6,7 @@ import { Guild, MessageEmbed } from 'discord.js';
 import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 import { getLoggingProps } from '../util/db/config';
 import { EmbedColors } from '../util/embed';
+import { truncate } from 'lodash';
 
 client.on('messageUpdate', async (msg, newMsg) => {
     if (!msg.author || msg.author.bot) return;
@@ -22,10 +23,9 @@ client.on('messageUpdate', async (msg, newMsg) => {
     embed.setFooter(`ID: ${msg.author.id}`);
     embed.setColor(EmbedColors.RED);
     embed.setDescription(
-        `\`\`\`${msg.content?.replace(/\`/g, "'")}\`\`\`\n**to:**\n\`\`\`${newMsg.content?.replace(
-            /\`/g,
-            "'"
-        )}\`\`\``
+        `\`\`\`${truncate(msg.content?.replace(/\`/g, "'"), {
+            length: 1900,
+        })}\`\`\`\n**to:**\nMessage url of current: [link](${newMsg.url})`
     );
 
     if (newMsg.attachments.size) {
