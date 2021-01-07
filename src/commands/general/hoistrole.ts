@@ -15,6 +15,8 @@ client.commands.set('hoistrole', {
         },
     ],
     permissionLevels: [PermissionLevels.BOT_DEV],
+    userGuildPerms: ['MANAGE_ROLES'],
+    botGuildPerms: ['MANAGE_ROLES'],
     run: (msg, args: Args, guild) => {
         if (!guild || !msg.member) return;
         if (!args.role.editable) {

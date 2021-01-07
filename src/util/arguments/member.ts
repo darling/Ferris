@@ -9,9 +9,7 @@ argumentList.set('member', {
         const guild = message.guild;
         if (!guild) return;
 
-        const startingPrefix = id.startsWith('<@');
-
-        const userId = startingPrefix ? id.substring(startingPrefix ? 3 : 2, id.length - 1) : id;
+        const userId = id.replace(/<@(!)?/g, '').replace('>', '');
 
         const member = await guild.members.fetch(userId);
         if (member) return member;
