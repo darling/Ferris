@@ -18,13 +18,13 @@ export function isLoggable(type: LoggingTypes, guildID: string): boolean {
 
     const { enabled } = getLoggingProps(guildID) || { enabled: false };
 
-    return enabled ? (logConfig.includes(type)) : false;
+    return enabled ? logConfig.includes(type) : false;
 }
 
 // This will return empty for no subscription at all
 export function getLogSubs(guildID: string): LoggingTypes[] {
-    if(typeof serverConfigs.get(guildID)?.logging?.subs !== typeof []) {
-        updateLogChannelProperty(guildID, { subs: typesAsArray })
+    if (typeof serverConfigs.get(guildID)?.logging?.subs !== typeof []) {
+        updateLogChannelProperty(guildID, { subs: typesAsArray });
         return typesAsArray;
     }
     return serverConfigs.get(guildID)?.logging?.subs || [];
@@ -60,18 +60,21 @@ export async function getWebhook(guildId: string) {
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guildId);
     if (!loggingProps) {
         return;
-    };
+    }
 
     try {
-        const webhook = await client.fetchWebhook(loggingProps.webhook_id)
+        const webhook = await client.fetchWebhook(loggingProps.webhook_id);
         return webhook;
     } catch {
         return;
     }
 }
 
-export async function newLog(type: LoggingTypes, guildId: string, content: StringResolvable | APIMessage) {
-
+export async function newLog(
+    type: LoggingTypes,
+    guildId: string,
+    content: StringResolvable | APIMessage | (StringResolvable | APIMessage)[]
+) {
     if (!getLogSubs(guildId).includes(type)) {
         return;
     }
