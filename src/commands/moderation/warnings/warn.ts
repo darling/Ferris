@@ -6,7 +6,7 @@ import { PermissionLevels } from '../../../types/commands';
 client.commands.set('warn', {
     name: 'warn',
     guildOnly: true,
-    permissionLevels: [PermissionLevels.MODERATOR, PermissionLevels.ADMIN],
+    permissionLevels: [PermissionLevels.MODERATOR],
     arguments: [
         {
             name: 'user',

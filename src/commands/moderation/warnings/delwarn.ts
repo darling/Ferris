@@ -20,7 +20,7 @@ client.commands.set('delwarn', {
             required: true,
         },
     ],
-    permissionLevels: [PermissionLevels.MODERATOR, PermissionLevels.ADMIN],
+    permissionLevels: [PermissionLevels.MODERATOR],
     run: async (msg, args: PunishArgs, guild) => {
         if (!guild) return;
 
