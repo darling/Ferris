@@ -25,9 +25,9 @@ export async function addWarn(guildId: string, warnedID: string, byId: string, r
 
     const byUser = await client.users.fetch(byId);
 
-    let uwu: any = {};
+    let warning: any = {};
 
-    uwu[timeGiven] = {
+    warning[timeGiven] = {
         by: {
             name: byUser.username,
             id: byUser.id,
@@ -35,7 +35,7 @@ export async function addWarn(guildId: string, warnedID: string, byId: string, r
         reason: reason,
     };
 
-    await doc.set(uwu, { merge: true });
+    await doc.set(warning, { merge: true });
 }
 
 export async function deleteWarn(guildId: string, warnedId: string, timestamp: string) {
