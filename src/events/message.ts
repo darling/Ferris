@@ -13,7 +13,7 @@ client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
     const guild: Guild = msg.guild;
 
-    let prefix = getConfig(guild.id)?.prefix || ';';
+    let prefix = (await getConfig(guild.id))?.prefix || ';';
 
     const botMention = `<@!${client.user.id}>`;
 
@@ -25,7 +25,7 @@ client.on('message', async (msg: Message) => {
     const cmd = await parseCommand(commandName);
     if (!cmd) {
         // Custom commands go here in a side handler
-        const config = getConfig(guild.id);
+        const config = await getConfig(guild.id);
 
         let customCmd = config?.custom?.[commandName];
 

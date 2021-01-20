@@ -45,7 +45,7 @@ export interface ICustomCommands {
     };
 }
 
-export function getConfig(guildId: string): IConfigSchema | undefined {
+export async function getConfig(guildId: string): Promise<IConfigSchema | undefined> {
     return serverConfigs.get(guildId);
 }
 

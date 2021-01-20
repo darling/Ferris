@@ -13,24 +13,24 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
     updateGuildMemberCount(newMember.guild);
 
     let loggingProps: ILoggingProps | undefined = getLoggingProps(oldMember.guild.id);
-    
+
     if (oldMember.roles.cache.size != newMember.roles.cache.size) {
         const embed = new MessageEmbed();
 
         let description = `<@${newMember.id}> roles have been updated.\n`;
 
-        const roles = oldMember.roles.cache.difference(newMember.roles.cache)
+        const roles = oldMember.roles.cache.difference(newMember.roles.cache);
 
         const given = !oldMember.roles.cache.has(roles.first()?.id || '');
 
-        if (roles.has(getConfig(guild.id)?.muted_role || 'null')) {
+        if (roles.has((await getConfig(guild.id))?.muted_role || 'null')) {
             return;
         }
 
         roles.forEach((role) => {
             if (role.deleted) return;
             description += `\n${given ? '+' : '-'} <@&${role.id}>`;
-        })
+        });
 
         embed.setDescription(description);
         embed.setTimestamp();

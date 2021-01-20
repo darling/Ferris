@@ -19,7 +19,7 @@ client.on('guildMemberAdd', async (member) => {
 
     await newLog('MEMBER_JOINED', member.guild.id, embed);
 
-    const config = getConfig(member.guild.id);
+    const config = await getConfig(member.guild.id);
     if (config?.auto_role) {
         const roleId = config.auto_role;
         member.roles.add(roleId);

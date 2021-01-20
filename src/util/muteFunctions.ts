@@ -12,20 +12,20 @@ async function unmuteUserFromGuild(guild: string, user_id: string) {
     const member: GuildMember | null = resolvedGuild.member(user_id);
     if (member === null) return;
 
-    const mutedRoleId = getConfig(guild)?.muted_role;
+    const mutedRoleId = (await getConfig(guild))?.muted_role;
     if (!mutedRoleId) return;
 
     member.roles.remove([mutedRoleId]).then((member) => {
         const embed = new MessageEmbed();
 
-        embed.setTitle('Mute Removed')
-        embed.setDescription(`<@${member.id}> has been unmuted.`)
+        embed.setTitle('Mute Removed');
+        embed.setDescription(`<@${member.id}> has been unmuted.`);
         embed.setFooter('ID: ' + member.id);
-        embed.setColor(EmbedColors.GREEN300)
+        embed.setColor(EmbedColors.GREEN300);
         embed.setTimestamp();
 
         newLog('MUTE_DELETED', member.guild.id, embed);
-    })
+    });
 }
 
 function muteDialog(muteMember: GuildMember, time: number, msg: Message) {
@@ -37,7 +37,7 @@ function muteDialog(muteMember: GuildMember, time: number, msg: Message) {
     );
     embed.setThumbnail('https://i.imgur.com/HhpcCSo.png');
     embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
-    embed.setFooter(`ID: ${muteMember.id}`).setTimestamp()
+    embed.setFooter(`ID: ${muteMember.id}`).setTimestamp();
     msg.channel.send(embed);
 }
 

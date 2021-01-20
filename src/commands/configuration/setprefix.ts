@@ -1,5 +1,5 @@
 import { client } from '../../app';
-import { changePrefix } from '../../util/db/prefix';
+import { changePrefix, getPrefix } from '../../util/db/prefix';
 import { successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('setprefix', {
@@ -14,16 +14,18 @@ client.commands.set('setprefix', {
         },
     ],
     userGuildPerms: ['MANAGE_GUILD'],
-    run: (msg, args: EchoArgs, guild) => {
+    run: async (msg, args: EchoArgs, guild) => {
         if (!guild) return;
 
         if (args.newPrefix) {
-            changePrefix(guild.id, args.newPrefix);
+            await changePrefix(guild.id, args.newPrefix);
         }
 
         successEmbed(
             msg.channel,
-            `The prefix is ${args.newPrefix ? 'now ' : ''}\`${args.newPrefix}\``
+            `The prefix is ${args.newPrefix ? 'now ' : ''}\`${
+                args.newPrefix || (await getPrefix(guild.id)) || ';'
+            }\``
         );
     },
 });

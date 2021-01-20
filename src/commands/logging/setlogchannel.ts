@@ -23,10 +23,10 @@ client.commands.set('setlogchannel', {
     botGuildPerms: ['MANAGE_WEBHOOKS'],
     botChannelPerms: ['MANAGE_WEBHOOKS'],
     userGuildPerms: ['MANAGE_GUILD'],
-    run: (msg, args: LogArgs, guild) => {
+    run: async (_msg, args: LogArgs, guild) => {
         if (!guild) return;
 
-        if (getConfig(guild.id)?.logging === undefined) {
+        if ((await getConfig(guild.id))?.logging === undefined) {
             newWebhookLog(args.newLogChannel, guild);
         } else {
             changeWebhookLogChannel(args.newLogChannel, guild);

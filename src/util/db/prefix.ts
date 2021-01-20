@@ -1,10 +1,10 @@
 import { getConfig, updateProperty } from './config';
 
-export function changePrefix(guildId: string, prefix: string): boolean {
-    updateProperty(guildId, { prefix: prefix });
+export async function changePrefix(guildId: string, prefix: string): Promise<boolean> {
+    await updateProperty(guildId, { prefix: prefix });
     return true;
 }
 
-export function getPrefix(guildId: string): string {
-    return getConfig(guildId)?.prefix || ';';
+export async function getPrefix(guildId: string): Promise<string> {
+    return (await getConfig(guildId))?.prefix || ';';
 }

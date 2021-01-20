@@ -43,15 +43,15 @@ client.commands.set('mute', {
     ],
     userGuildPerms: ['MANAGE_ROLES'],
     botGuildPerms: ['MANAGE_ROLES'],
-    run: (msg, args: PunishArgs, guild) => {
+    run: async (msg, args: PunishArgs, guild) => {
         if (!guild || !args.user.manageable) return;
 
-        const muteRole = getConfig(guild.id)?.muted_role;
+        const muteRole = (await getConfig(guild.id))?.muted_role;
         if (!muteRole) {
             errorEmbed(
                 msg.channel,
                 'Please make sure to set your mute role by doing `' +
-                    getPrefix(guild.id) +
+                    (await getPrefix(guild.id)) +
                     'muterole @role`. That way Ferris knows which role should be assigned on mute!'
             );
             return;
