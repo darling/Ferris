@@ -1,3 +1,4 @@
+import { random, sample } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('member', {
@@ -13,5 +14,16 @@ argumentList.set('member', {
 
         const member = await guild.members.fetch(userId);
         if (member) return member;
+    },
+    example: () => {
+        const userId =
+            sample([
+                '141075183271280641',
+                '556577211784757253',
+                '739581088413909012',
+                '637804742935838751',
+            ]) || '141075183271280641';
+        const isMention = !!random(1, false);
+        return isMention ? `<@${userId}>` : userId;
     },
 });

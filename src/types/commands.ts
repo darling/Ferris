@@ -114,5 +114,6 @@ export enum PermissionLevels {
     MODERATOR,
     ADMIN,
     SERVER_OWNER,
+    FERRIS_STAFF,
     BOT_DEV,
 }

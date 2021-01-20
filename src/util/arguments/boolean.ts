@@ -1,3 +1,4 @@
+import { sample } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('boolean', {
@@ -7,5 +8,8 @@ argumentList.set('boolean', {
 
         const valid = ['true', 'false', 'on', 'off'].includes(boolean);
         if (valid) return ['true', 'on'].includes(boolean);
+    },
+    example: () => {
+        return sample(['true', 'false', 'on', 'off']) || 'true';
     },
 });

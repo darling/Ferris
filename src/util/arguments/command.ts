@@ -1,3 +1,4 @@
+import { sample } from 'lodash';
 import { client } from '../../app';
 import { argumentList } from '../arguments';
 
@@ -14,5 +15,8 @@ argumentList.set('command', {
         return client.commands.find((cmd) => {
             return Boolean(cmd.aliases?.includes(commandName));
         });
+    },
+    example: () => {
+        return sample(client.commands.keyArray()) || 'help';
     },
 });

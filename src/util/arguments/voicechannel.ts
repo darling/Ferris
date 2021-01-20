@@ -1,3 +1,4 @@
+import { random, sample } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('newschannel', {
@@ -22,5 +23,12 @@ argumentList.set('newschannel', {
         if (channel?.type !== 'voice') return;
 
         return channel;
+    },
+    example: () => {
+        const userId =
+            sample(['768594233383976970', '789642891290476574', '762047707861876746']) ||
+            '768594233383976970';
+        const isMention = !!random(1, false);
+        return isMention ? `<#${userId}>` : userId;
     },
 });

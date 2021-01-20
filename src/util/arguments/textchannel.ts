@@ -1,3 +1,4 @@
+import { sample, random } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('textchannel', {
@@ -22,5 +23,12 @@ argumentList.set('textchannel', {
         if (channel?.type !== 'text') return;
 
         return channel;
+    },
+    example: () => {
+        const userId =
+            sample(['761495785778446366', '789642891290476574', '762047707861876746']) ||
+            '761495785778446366';
+        const isMention = !!random(1, false);
+        return isMention ? `<#${userId}>` : userId;
     },
 });

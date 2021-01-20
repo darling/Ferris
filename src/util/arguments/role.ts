@@ -1,3 +1,4 @@
+import { sample, random } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('role', {
@@ -19,5 +20,12 @@ argumentList.set('role', {
             });
 
         if (role) return role;
+    },
+    example: () => {
+        const userId =
+            sample(['775511247675195452', '749118494829838357', '795467897840861184']) ||
+            '775511247675195452';
+        const isMention = !!random(1, false);
+        return isMention ? `<@&${userId}>` : userId;
     },
 });

@@ -9,6 +9,7 @@ export interface Argument {
         msg: Message,
         command: ICommand
     ) => unknown;
+    example: () => string;
 }
 
 export const argumentList = new Collection<string, Argument>();

@@ -1,3 +1,4 @@
+import { sample } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('string', {
@@ -13,5 +14,8 @@ argumentList.set('string', {
                 : text;
 
         if (valid) return _argument.lowercase ? valid.toLowerCase() : valid;
+    },
+    example: () => {
+        return sample(['word', 'example', 'string', 'hello']) || 'word';
     },
 });

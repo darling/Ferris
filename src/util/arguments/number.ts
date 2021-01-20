@@ -1,3 +1,4 @@
+import { random } from 'lodash';
 import { argumentList } from '../arguments';
 
 argumentList.set('number', {
@@ -7,5 +8,9 @@ argumentList.set('number', {
 
         const valid = Number(number);
         if (valid) return valid;
+    },
+    example: () => {
+        const input = random(100, false);
+        return `${input}`;
     },
 });

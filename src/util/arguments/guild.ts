@@ -10,4 +10,7 @@ argumentList.set('guild', {
 
         return client.guilds.cache.get(id);
     },
+    example: () => {
+        return '601618014252826624';
+    },
 });

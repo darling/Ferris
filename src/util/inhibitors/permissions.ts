@@ -1,9 +1,21 @@
 import { Message, MessageEmbed } from 'discord.js';
+import { sample } from 'lodash';
 
 import { client } from '../../app';
 import { Permission, Permissions } from '../../types/commands';
 import { EmbedColors } from '../embed';
 import { inhibitors } from '../inhibitor';
+
+const funnyDescription = (): string => {
+    return (
+        sample([
+            'Task failed successfully...',
+            'If you see this, you win!',
+            'Uh oh',
+            'Is Ferris okay?',
+        ]) || 'If you see this this is a problem...'
+    );
+};
 
 function missingCommandPerms(
     isBot: boolean,
@@ -14,16 +26,16 @@ function missingCommandPerms(
     const embed = new MessageEmbed();
 
     embed.setColor(EmbedColors.RED);
-    embed.setTitle("We've reached a roadblock.");
-    embed.setDescription('Funny description goes here.');
-    embed.setTimestamp();
-
-    embed.setFooter(
-        `${isBot ? 'Ferris' : 'The user'} is missing ${permissions.toString()} permission${
+    embed.setTitle("We've found some missing permissions.");
+    embed.setDescription(
+        `${
+            isBot ? `<@${client.user?.id}>` : `<@${msg.author.id}>`
+        } is missing the \`${permissions.toString()}\` permission${
             permissions.length > 1 ? 's' : ''
-        } in this ${type}`,
-        client.user?.avatarURL() || undefined
+        } in this ${type}`
     );
+    embed.setTimestamp();
+    embed.setFooter(funnyDescription(), client.user?.avatarURL() || undefined);
 
     msg.channel.send(embed).catch((reason) => {
         console.error(reason);

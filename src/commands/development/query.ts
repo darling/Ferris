@@ -13,6 +13,8 @@ client.commands.set('query', {
         {
             name: 'prop',
             type: 'string',
+            literals: ['size', 'list'],
+            defualtValue: 'size',
             required: false,
         },
     ],
@@ -21,6 +23,15 @@ client.commands.set('query', {
         if (args.prop) {
             if (args.type === 'commands') {
                 const cache = client[args.type];
+                switch (args.prop) {
+                    case 'size':
+                        msg.channel.send(cache.size);
+                    case 'list':
+                        msg.channel.send(`\`\`\`${JSON.stringify(cache.keyArray())}\`\`\``);
+                    default:
+                        msg.channel.send('query not found');
+                        break;
+                }
                 return;
             }
             const cache = client[args.type].cache;
@@ -30,6 +41,7 @@ client.commands.set('query', {
                     break;
 
                 default:
+                    msg.channel.send('query not found');
                     break;
             }
         }
@@ -38,5 +50,5 @@ client.commands.set('query', {
 
 interface QueryArgs {
     type: 'users' | 'guilds' | 'commands';
-    prop?: 'size';
+    prop?: 'size' | 'list';
 }

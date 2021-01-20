@@ -1,3 +1,5 @@
+import { sample } from 'lodash';
+import { client } from '../../app';
 import { argumentList } from '../arguments';
 
 argumentList.set('textchannel', {
@@ -8,5 +10,8 @@ argumentList.set('textchannel', {
         return command.subcommands?.find((sub) => {
             return sub.name === subcommandName || Boolean(sub.aliases?.includes(subcommandName));
         });
+    },
+    example: () => {
+        return sample(client.commands.keyArray()) || 'help';
     },
 });
