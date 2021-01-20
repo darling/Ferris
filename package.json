@@ -7,6 +7,7 @@
         "build": "tsc",
         "compile": "tsc && node dist/app.js",
         "start": "node dist/app.js",
+        "prod:start": "pm2 start dist/app.js",
         "dev": "tsc && node dist/app.js",
         "test": "node dist/app.js"
     },

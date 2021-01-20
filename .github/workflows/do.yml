@@ -3,22 +3,23 @@ name: Digital Ocean Deploy
 env:
 
 on:
-    push:
-        branches: [master]
+		workflow_dispatch:
+				
+		push:
+				branches: [master]
 
 jobs:
-    # This workflow contains a single job called "build"
-    deploy:
-        # The type of runner that the job will run on
-        runs-on: ubuntu-latest
+		deploy:
+				# The type of runner that the job will run on
+				runs-on: ubuntu-latest
 
-        # Steps represent a sequence of tasks that will be executed as part of the job
-        steps:
-            - name: SSH Remote Commands
-              uses: appleboy/ssh-action@master
-              with:
-                  HOST: ${{ secrets.HOST }}
-                  USERNAME: ${{ secrets.USERNAME }}
-                  KEY: ${{ secrets.KEY }}
-                  PASSPHRASE: ${{ secrets.PASSPHRASE }}
-                  script: pwd
+				# Steps represent a sewquence of tasks that will be executed as part of the job
+				steps:
+						- name: SSH Remote Commands
+							uses: appleboy/ssh-action@master
+							with:
+									HOST: ${{ secrets.HOST }}
+									USERNAME: ${{ secrets.USERNAME }}
+									KEY: ${{ secrets.KEY }}
+									PASSPHRASE: ${{ secrets.PASSPHRASE }}
+									script: pwd
