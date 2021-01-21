@@ -1,4 +1,5 @@
 import { TextChannel } from 'discord.js';
+import { toInteger } from 'lodash';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
 import { missingParamEmbed } from '../../util/embedTemplates';
@@ -25,7 +26,7 @@ client.commands.set('purge', {
     run: (msg, args: PurgeArgs, guild) => {
         const channel = msg.channel as TextChannel;
 
-        channel.bulkDelete(args.amtOfMessages);
+        channel.bulkDelete(toInteger(args.amtOfMessages > 100 ? 100 : args.amtOfMessages));
     },
 });
 
