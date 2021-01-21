@@ -23,6 +23,6 @@ jobs:
         KEY: ${{ secrets.KEY }}
         PORT: 22
         script: |
-          cd /home/${{ secrets.USERNAME }}/Ferris
+          cd /${{ secrets.USERNAME }}/Ferris
           git pull
           pm2 restart all
