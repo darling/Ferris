@@ -19,8 +19,9 @@ jobs:
       with:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
+        # PASSPHRASE: ${{ secrets.PASSPHRASE }}
         KEY: ${{ secrets.KEY }}
         script: |
-          cd /root/Ferris
+          cd /home/${{ secrets.USERNAME }}/Ferris
           git pull
           pm2 restart all
