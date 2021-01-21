@@ -14,7 +14,7 @@ client.on('messageDelete', async (msg) => {
 
     const embed = new MessageEmbed();
 
-    embed.setTitle(`<@${msg.author.id}> has deleted a message.`);
+    embed.setTitle(`${msg.author.username} has deleted a message.`);
     embed.setTimestamp();
     embed.setFooter(`ID: ${msg.author.id}`);
     embed.setColor(EmbedColors.RED);
