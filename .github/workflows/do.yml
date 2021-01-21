@@ -3,8 +3,6 @@ name: Digital Ocean Deploy
 env:
 
 on:
-		workflow_dispatch:
-				
 		push:
 				branches: [master]
 
