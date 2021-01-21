@@ -21,6 +21,7 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         # PASSPHRASE: ${{ secrets.PASSPHRASE }}
         KEY: ${{ secrets.KEY }}
+        PORT: 22
         script: |
           cd /home/${{ secrets.USERNAME }}/Ferris
           git pull
