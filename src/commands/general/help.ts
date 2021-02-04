@@ -18,10 +18,10 @@ client.commands.set('help', {
     run: async (msg, args: HelpArgs, guild) => {
         if (!guild) return;
         let embed = new MessageEmbed();
+        const prefix = await getPrefix(guild.id);
         embed.setColor(16646143);
-        embed.setTitle('Help');
+        embed.setTitle('> **Need help using Ferris?** <:Ferris:766800169420324915>');
         if (args.command) {
-            const prefix = await getPrefix(guild.id);
             embed.setTitle(`Command \`${prefix}${args.command.name}\` documentation:`);
             let argumentNamesFormatted = '';
             let exampleArgs = `${prefix}${args.command.name}`;
@@ -55,13 +55,17 @@ client.commands.set('help', {
             );
         } else {
             embed.setDescription(
-                "If you'd like information on the bot, please check out our websites."
+                `Ferris is a high-caliber moderation bot used to improve Discord servers and help communities stay safe. \n\nThis server's prefix is \`${prefix}\`. \n\nPlease make sure to check out our links in order to learn more about Ferris!`
             );
-            embed.addField('Commands', 'https://ferris.gg/docs/commands', false);
-            embed.addField('Website', 'https://ferris.gg/', false);
+            embed.addField(
+                'Get help with Ferris',
+                'https://ferris.gg/docs/commands\nhttps://ferris.gg/\n',
+                false
+            );
+            embed.addField('Use Ferris in your own server', 'https://ferris.gg/add\n', false);
             embed.addField(
                 'Join our Discord Support Server!',
-                'Our server offers personalized help from the developers on advice for your discord and working with the bot. \n[Discord Invite Here](https://ferris.gg/discord)',
+                'Our server offers personalized help from the developers on advice for your discord and working with the bot. \n\nhttps://discord.gg/ferris',
                 false
             );
         }
