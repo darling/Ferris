@@ -26,7 +26,6 @@ client.commands.set('help', {
             let argumentNamesFormatted = '';
             let exampleArgs = `${prefix}${args.command.name}`;
             let description = '';
-            let permissions = '';
             if (args.command.aliases) {
                 description += `Aliases:\nThis command can also be run with the alias:`;
                 args.command.aliases.forEach((alias) => {
@@ -55,7 +54,7 @@ client.commands.set('help', {
             );
         } else {
             embed.setDescription(
-                `Ferris is a high-caliber moderation bot used to improve Discord servers and help communities stay safe. \n\nThis server's prefix is \`${prefix}\`. \n\nPlease make sure to check out our links in order to learn more about Ferris!`
+                `Ferris is a high-caliber moderation bot used to improve Discord servers and help communities stay safe.\n\nThis server's prefix is \`${prefix}\`. \n\nPlease make sure to check out our links in order to learn more about Ferris!`
             );
             embed.addField(
                 'Get help with Ferris',

@@ -23,7 +23,7 @@ client.commands.set('whois', {
 
         embed.setTitle(`${member.user.tag}${member.user.bot ? ' **BOT**' : ''}`);
         if (member?.nickname) embed.setDescription(`Nickname: ${member?.nickname}`);
-        embed.setThumbnail(getAvatar(member.user.id, member.user.avatar!));
+        embed.setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
 
         let roles = member?.roles.cache.array().filter((role) => role.id !== guild.id);
 
