@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import { client } from '../../app';
 import { messageReply } from '../../util/interactions/message';
-import { getAvatar } from '../../util/users';
 
 client.commands.set('avatar', {
     name: 'avatar',

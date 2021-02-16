@@ -1,3 +1,4 @@
+import { User } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
 
@@ -16,5 +17,5 @@ client.commands.set('has-premium', {
 });
 
 interface StaffArgs {
-    member: string;
+    member: User;
 }
