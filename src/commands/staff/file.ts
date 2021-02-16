@@ -1,5 +1,5 @@
 import { User } from 'discord.js';
-import { client } from '../../app';
+import { admin, client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
 import { messageReply } from '../../util/interactions/message';
 
@@ -12,8 +12,10 @@ client.commands.set('has-premium', {
         },
     ],
     permissionLevels: [PermissionLevels.FERRIS_STAFF],
-    run: (msg, args: StaffArgs) => {
-        messageReply(msg.channel, JSON.stringify({ message: 'This is under construction' }));
+    run: async (msg, args: StaffArgs) => {
+        const user = await admin.auth().getUser(args.member.id);
+
+        messageReply(msg.channel, JSON.stringify(user.metadata));
     },
 });
 
