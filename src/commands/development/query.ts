@@ -1,5 +1,6 @@
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
+import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('query', {
     name: 'query',
@@ -25,11 +26,14 @@ client.commands.set('query', {
                 const cache = client[args.type];
                 switch (args.prop) {
                     case 'size':
-                        msg.channel.send(cache.size);
+                        messageReply(msg.channel, cache.size);
                     case 'list':
-                        msg.channel.send(`\`\`\`${JSON.stringify(cache.keyArray())}\`\`\``);
+                        messageReply(
+                            msg.channel,
+                            `\`\`\`${JSON.stringify(cache.keyArray())}\`\`\``
+                        );
                     default:
-                        msg.channel.send('query not found');
+                        messageReply(msg.channel, 'query not found');
                         break;
                 }
                 return;
@@ -37,11 +41,11 @@ client.commands.set('query', {
             const cache = client[args.type].cache;
             switch (args.prop) {
                 case 'size':
-                    msg.channel.send(cache.size);
+                    messageReply(msg.channel, cache.size);
                     break;
 
                 default:
-                    msg.channel.send('query not found');
+                    messageReply(msg.channel, 'query not found');
                     break;
             }
         }

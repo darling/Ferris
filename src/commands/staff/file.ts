@@ -1,6 +1,7 @@
 import { User } from 'discord.js';
 import { client } from '../../app';
 import { PermissionLevels } from '../../types/commands';
+import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('has-premium', {
     name: 'has-premium',
@@ -12,7 +13,7 @@ client.commands.set('has-premium', {
     ],
     permissionLevels: [PermissionLevels.FERRIS_STAFF],
     run: (msg, args: StaffArgs) => {
-        msg.channel.send(JSON.stringify({ message: 'This is under construction' }));
+        messageReply(msg.channel, JSON.stringify({ message: 'This is under construction' }));
     },
 });
 

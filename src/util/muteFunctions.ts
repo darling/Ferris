@@ -4,6 +4,7 @@ import moment from 'moment';
 import { getConfig } from './db/config';
 import { newLog } from './webhookLogging';
 import { EmbedColors } from './embed';
+import { messageReply } from './interactions/message';
 
 async function unmuteUserFromGuild(guild: string, user_id: string) {
     const resolvedGuild: Guild | null = client.guilds.resolve(guild);
@@ -38,7 +39,8 @@ function muteDialog(muteMember: GuildMember, time: number, msg: Message) {
     embed.setThumbnail('https://i.imgur.com/HhpcCSo.png');
     embed.setAuthor(msg.author.tag, msg.author.avatarURL()!);
     embed.setFooter(`ID: ${muteMember.id}`).setTimestamp();
-    msg.channel.send(embed);
+
+    messageReply(msg.channel, embed);
 }
 
 export { unmuteUserFromGuild, muteDialog };

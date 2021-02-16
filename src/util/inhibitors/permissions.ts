@@ -5,6 +5,7 @@ import { client } from '../../app';
 import { Permission, Permissions } from '../../types/commands';
 import { EmbedColors } from '../embed';
 import { inhibitors } from '../inhibitor';
+import { messageReply } from '../interactions/message';
 
 const funnyDescription = (): string => {
     return (
@@ -37,9 +38,7 @@ function missingCommandPerms(
     embed.setTimestamp();
     embed.setFooter(funnyDescription(), client.user?.avatarURL() || undefined);
 
-    msg.channel.send(embed).catch((reason) => {
-        console.error(reason);
-    });
+    messageReply(msg.channel, embed);
 }
 
 inhibitors.set('permissions', async (msg, command, guild) => {
