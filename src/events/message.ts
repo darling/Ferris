@@ -11,34 +11,43 @@ import { intersection } from 'lodash';
 
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
-    const guild: Guild = msg.guild;
 
-    let prefix = (await getConfig(guild.id))?.prefix || ';';
+    const { guild, content, channel, member } = msg;
+    const config = await getConfig(guild.id);
 
+    let prefix = config?.prefix || ';';
+
+    // If the mention of the bot is used instead of the prefix, it will pretend like the prefix is the mention.
     const botMention = `<@!${client.user.id}>`;
+    if (content.startsWith(botMention)) prefix = botMention + ' ';
 
-    if (msg.content === botMention || msg.content.startsWith(botMention)) prefix = botMention + ' ';
-    if (!msg.content.startsWith(prefix)) return;
+    // Anything below this is considered a "Command" and will be processed as such.
+    if (!content.startsWith(prefix)) {
+        // Handle messages that aren't "commands", such as xp, auto mod, etc.
 
-    const [commandName, ...parameters] = msg.content.substring(prefix.length).split(/ +/g);
+        return;
+    }
 
-    const cmd = await parseCommand(commandName);
+    const [commandName, ...parameters] = content.substring(prefix.length).split(/ +/g);
+
+    const cmd = parseCommand(commandName);
+
     if (!cmd) {
         // Custom commands go here in a side handler
-        const config = await getConfig(guild.id);
 
-        let customCmd = config?.custom?.[commandName];
+        const customCmd = config?.custom?.[commandName];
 
         if (customCmd) {
             if (customCmd.channel_list) {
-                const isRightChannel = customCmd.channel_list.includes(msg.channel.id);
+                const isRightChannel = customCmd.channel_list.includes(channel.id);
 
                 if (!isRightChannel) {
                     return;
                 }
             }
-            if (customCmd.role_list && msg.member) {
-                const memberRoleArray = msg.member.roles.cache.array().map((role) => role.id);
+
+            if (customCmd.role_list && member) {
+                const memberRoleArray = member.roles.cache.array().map((role) => role.id);
                 const roleList = customCmd.role_list;
 
                 const intersectedRoles = intersection(memberRoleArray, roleList);
@@ -52,8 +61,11 @@ client.on('message', async (msg: Message) => {
 
             if (embed.description) embed.setDescription(embed.description.replace(/\\n/g, '\n'));
 
-            messageReply(msg.channel, embed);
+            messageReply(channel, embed);
+        } else {
+            // Auto-mod and malicious checks can also go here as to not let users use the server's prefix to bypass the spam filter.
         }
+
         return;
     }
 
@@ -67,7 +79,7 @@ client.on('message', async (msg: Message) => {
     executeCommand(msg, cmd, parameters, guild);
 });
 
-const parseCommand = async (commandName: string) => {
+const parseCommand = (commandName: string) => {
     const command = client.commands.get(commandName);
     if (command) return command;
 
@@ -82,7 +94,7 @@ type argsType =
       }
     | false;
 
-async function executeCommand(msg: Message, cmd: ICommand, parameters: string[], guild?: Guild) {
+const executeCommand = async (msg: Message, cmd: ICommand, parameters: string[], guild?: Guild) => {
     try {
         const args = (await parseArgs(msg, cmd, parameters)) as argsType;
 
@@ -111,9 +123,9 @@ async function executeCommand(msg: Message, cmd: ICommand, parameters: string[],
     } catch (error) {
         console.error(error);
     }
-}
+};
 
-async function parseArgs(msg: Message, cmd: ICommand, params: string[]) {
+const parseArgs = async (msg: Message, cmd: ICommand, params: string[]) => {
     const args: { [key: string]: unknown } = {};
     if (!cmd.arguments) return args;
 
@@ -147,4 +159,4 @@ async function parseArgs(msg: Message, cmd: ICommand, params: string[]) {
     }
 
     return missingRequiredArg ? false : args;
-}
+};
