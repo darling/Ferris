@@ -21,10 +21,10 @@ client.commands.set('whois', {
         embed.setColor(16646143);
 
         embed.setTitle(`${member.user.tag}${member.user.bot ? ' **BOT**' : ''}`);
-        if (member?.nickname) embed.setDescription(`Nickname: ${member?.nickname}`);
+        if (member?.nickname) embed.setDescription(`Nickname: ${member.nickname}`);
         embed.setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
 
-        let roles = member?.roles.cache.array().filter((role) => role.id !== guild.id);
+        let roles = member.roles.cache.array();
 
         embed.addField('Roles', roles ? roles : 'No  roles', true);
 
