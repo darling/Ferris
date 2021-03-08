@@ -6,7 +6,7 @@ import { messageReply } from '../../util/interactions/message';
 
 client.commands.set('avatar', {
     name: 'avatar',
-    aliases: ['pp', 'a', 'profilepicture'],
+    aliases: ['pp', 'a', 'profilepicture', 'av'],
     arguments: [
         {
             name: 'user',
