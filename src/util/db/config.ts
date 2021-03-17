@@ -23,6 +23,23 @@ export interface IConfigSchema {
     members_can_use_bot?: boolean;
     logging?: ILoggingProps;
     custom?: ICustomCommands;
+    automod?: IAutoModSettings;
+}
+
+export interface IAutoModSettings {
+    channels?: string[];
+    roles?: string[];
+    enabled?: boolean;
+    word_filter?: {
+        banned_words?: IBannedWord[];
+        enabled?: boolean;
+    };
+}
+
+export interface IBannedWord {
+    tag: string;
+    strict: boolean;
+    case_sensitive: boolean;
 }
 
 export interface ICustomCommands {

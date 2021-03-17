@@ -8,6 +8,8 @@ import { inhibitors } from '../util/inhibitor';
 import { getConfig } from '../util/db/config';
 import { messageReply } from '../util/interactions/message';
 import { intersection } from 'lodash';
+import { getPrefix } from '../util/db/prefix';
+import { passiveTests } from '../util/passiveTest';
 
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
@@ -15,7 +17,7 @@ client.on('message', async (msg: Message) => {
     const { guild, content, channel, member } = msg;
     const config = await getConfig(guild.id);
 
-    let prefix = config?.prefix || ';';
+    let prefix = await getPrefix(guild.id);
 
     // If the mention of the bot is used instead of the prefix, it will pretend like the prefix is the mention.
     const botMention = `<@!${client.user.id}>`;
@@ -24,6 +26,21 @@ client.on('message', async (msg: Message) => {
     // Anything below this is considered a "Command" and will be processed as such.
     if (!content.startsWith(prefix)) {
         // Handle messages that aren't "commands", such as xp, auto mod, etc.
+
+        return;
+
+        // Currently this feature is disabled and won't be enabled until release.
+
+        const tests = passiveTests.map((fn) => {
+            return fn(msg);
+        }); // Tests will return undefined or an infraction if punishment=true.
+
+        const results = await Promise.all(tests);
+        const hits = results.filter((value) => {
+            return value;
+        });
+
+        console.log(hits); // < this is where the infractions can be sent to another handler to sort out what the bot should do.
 
         return;
     }

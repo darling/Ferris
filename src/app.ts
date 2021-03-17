@@ -49,9 +49,8 @@ readdir(__dirname + '/events', (err, files) => {
     });
 });
 
-// Todo: CLEAN THIS UP
-
-['arguments', 'inhibitors', 'permissionLevels'].forEach((name) => {
+// inhibitors is an auto-mod thing
+['arguments', /* 'inhibitors', */ 'permissionLevels', 'passive'].forEach((name) => {
     readdirSync(`${__dirname}/util/${name}`).forEach((file) => {
         require(`./util/${name}/${file}`);
     });
