@@ -64,7 +64,7 @@ client.commands.set('help', {
             embed.addField('Use Ferris in your own server', 'https://ferris.gg/add\n', false);
             embed.addField(
                 'Join our Discord Support Server!',
-                'Our server offers personalized help from the developers on advice for your discord and working with the bot. \n\nhttps://discord.gg/ferris',
+                'Our server offers personalized help from the developers on advice for your discord and working with the bot. \n\nhttps://ferris.gg/discord',
                 false
             );
         }
