@@ -1,14 +1,14 @@
-import { APIMessage, StringResolvable, Webhook } from 'discord.js';
+import { APIMessage, StringResolvable, TextChannel } from 'discord.js';
 import { serverConfigs } from './serverInfo';
 import { LoggingTypes } from '../types/log';
 import { getLoggingProps, updateLogChannelProperty } from './db/config';
 import { client } from '../app';
+import { messageReply } from './interactions/message';
 
 export interface ILoggingProps {
     channel: string;
     enabled: boolean;
     subs: LoggingTypes[];
-    webhook_id: string;
 }
 
 // Will return if a certian part of LoggingTypes is not listed in the config, Will also return false if there's no config at all.
@@ -56,17 +56,17 @@ export const typesAsArray: LoggingTypes[] = [
     'ROLE_REMOVED',
 ];
 
-export async function getWebhook(guildId: string) {
+export async function getLogChannel(guildId: string) {
     let loggingProps: ILoggingProps | undefined = getLoggingProps(guildId);
     if (!loggingProps) {
         return;
     }
 
     try {
-        const webhook = await client.fetchWebhook(loggingProps.webhook_id);
-        return webhook;
-    } catch {
-        return;
+        return client.channels.cache.get(loggingProps.channel) as TextChannel;
+    } catch (error) {
+        console.error(error);
+        return undefined;
     }
 }
 
@@ -79,11 +79,11 @@ export async function newLog(
         return;
     }
 
-    const webhook = await getWebhook(guildId);
+    const channel = await getLogChannel(guildId);
 
-    if (webhook === undefined) {
+    if (channel === undefined) {
         return;
     }
 
-    webhook.send(content).catch();
+    messageReply(channel, content);
 }

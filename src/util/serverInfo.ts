@@ -1,4 +1,4 @@
-import { Collection, Webhook } from 'discord.js';
+import { Collection } from 'discord.js';
 import { IConfigSchema } from './db/config';
 
 export const pendingUnpunishments = new Map();

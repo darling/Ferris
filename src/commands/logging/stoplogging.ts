@@ -6,7 +6,7 @@ client.commands.set('stoplogging', {
     guildOnly: true,
     arguments: [],
     userGuildPerms: ['MANAGE_GUILD'],
-    run: (msg, args: Props, guild) => {
+    run: (_msg, _args: Props, guild) => {
         if (!guild) return;
         updateLogChannelProperty(guild.id, { enabled: false });
     },

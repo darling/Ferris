@@ -26,10 +26,16 @@ client.commands.set('setlogchannel', {
     run: async (_msg, args: LogArgs, guild) => {
         if (!guild) return;
 
-        if ((await getConfig(guild.id))?.logging === undefined) {
-            newWebhookLog(args.newLogChannel, guild);
+        const config = await getConfig(guild.id);
+
+        if (config?.logging === undefined) {
+            newWebhookLog(args.newLogChannel, guild); // TODO: HERE
         } else {
-            changeWebhookLogChannel(args.newLogChannel, guild);
+            updateLogChannelProperty(guild.id, {
+                channel: args.newLogChannel.id,
+            });
+
+            await args.newLogChannel.send(getNewChannelEmbeds());
         }
     },
 });
@@ -51,41 +57,15 @@ function getNewChannelEmbeds() {
     return embed;
 }
 
-async function changeWebhookLogChannel(channel: TextChannel, guild: Guild) {
-    let loggingProps: ILoggingProps | undefined = getLoggingProps(guild.id);
-    if (!loggingProps) return;
-
-    try {
-        const webhook = await client.fetchWebhook(loggingProps.webhook_id);
-
-        webhook.edit({ channel: channel }).then((webhook) => {
-            webhook.send(getNewChannelEmbeds());
-        });
-    } catch (e) {
-        newWebhookLog(channel, guild);
-        return;
-    }
-
-    loggingProps.channel = channel.id;
-
-    updateLogChannelProperty(guild.id, loggingProps);
-}
-
 async function newWebhookLog(channel: TextChannel, guild: Guild) {
     try {
-        const webhook = await channel.createWebhook('Ferris Logging', {
-            avatar: 'https://i.imgur.com/KLCVmAA.png',
-            reason: 'To log items in this discord server.',
-        });
-
         updateLogChannelProperty(guild.id, {
             channel: channel.id,
             enabled: true,
             subs: typesAsArray,
-            webhook_id: webhook.id,
         });
 
-        await webhook.send(getNewChannelEmbeds());
+        await channel.send(getNewChannelEmbeds());
     } catch (error) {
         console.log(error);
     }
