@@ -2,8 +2,8 @@ import { sample } from 'lodash';
 import { client } from '../../app';
 import { argumentList } from '../arguments';
 
-argumentList.set('textchannel', {
-    name: 'textchannel',
+argumentList.set('subcommand', {
+    name: 'subcommand',
     execute: async function (_argument, params, msg, command) {
         const [subcommandName] = params;
 
