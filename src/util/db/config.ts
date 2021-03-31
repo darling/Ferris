@@ -9,6 +9,7 @@ import {
     MessageEmbedFooter,
 } from 'discord.js';
 import { firestore } from '../../app';
+import { firestore as firestoreLib } from 'firebase-admin';
 import { serverConfigs } from '../serverInfo';
 import { ILoggingProps } from '../webhookLogging';
 
@@ -26,20 +27,37 @@ export interface IConfigSchema {
     automod?: IAutoModSettings;
 }
 
-export interface IAutoModSettings {
+export interface IAutoModSettings extends IAutoModFilters {
     channels?: string[];
+    channels_whitelist?: boolean;
     roles?: string[];
+    roles_whitelist?: boolean;
     enabled?: boolean;
+}
+
+export interface IAutoModFilters {
     word_filter?: {
-        banned_words?: IBannedWord[];
+        tags?: IBannedWord[];
+        enabled?: boolean;
+    };
+    link_filter?: {
+        tags?: ITaggedLinks[];
         enabled?: boolean;
     };
 }
 
-export interface IBannedWord {
+export interface ITaggedLinks extends IAutomodTag {
+    // This tag is just and only just the domain ie "google.com"
+    slug?: string;
+    domainOnly?: boolean;
+}
+export interface IBannedWord extends IAutomodTag {
+    strict?: boolean;
+    case_sensitive?: boolean;
+}
+
+export interface IAutomodTag {
     tag: string;
-    strict: boolean;
-    case_sensitive: boolean;
 }
 
 export interface ICustomCommands {
@@ -74,18 +92,30 @@ export async function getConfig(guildId: string): Promise<IConfigSchema | undefi
 //     });
 // }
 
-export function getLoggingProps(guildId: string): ILoggingProps | undefined {
-    return serverConfigs.get(guildId)?.logging;
+export function getLoggingProps(guild_id: string): ILoggingProps | undefined {
+    return serverConfigs.get(guild_id)?.logging;
 }
 
-export async function updateProperty(guildId: string, data: IConfigSchema) {
-    const doc = firestore.collection('configs').doc(guildId);
+export async function updateProperty(guild_id: string, data: IConfigSchema) {
+    const doc = firestore.collection('configs').doc(guild_id);
+
+    console.log('WRITING TO DB', data);
 
     await doc.set(data, { merge: true });
 }
 
+export async function deleteProperty(guild_id: string, property: keyof IConfigSchema) {
+    const doc = firestore.collection('configs').doc(guild_id);
+
+    console.log('DELETING ON DB');
+
+    await doc.set({ [property]: firestoreLib.FieldValue.delete() }, { merge: true });
+}
+
 export async function updateLogChannelProperty(guildId: string, data: Partial<ILoggingProps>) {
     const doc = firestore.collection('configs').doc(guildId);
+
+    console.log('WRITING TO DB');
 
     await doc.set({ logging: data }, { merge: true });
 }

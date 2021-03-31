@@ -1,7 +1,7 @@
 import { Collection, Message } from 'discord.js';
-import { IInfraction } from '../types/infraction';
+import { IWarning, IWarnings } from './db/warnings';
 
 export const passiveTests = new Collection<
     string,
-    (msg: Message) => Promise<IInfraction | undefined>
+    (msg: Message) => Promise<IWarning | undefined>
 >();

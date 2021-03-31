@@ -40,7 +40,9 @@ client.on('message', async (msg: Message) => {
             return value;
         });
 
-        console.log(hits); // < this is where the infractions can be sent to another handler to sort out what the bot should do.
+        if (hits.length) {
+            // Handle punishments here, hits come in the form of warning objects
+        }
 
         return;
     }
@@ -122,13 +124,20 @@ const executeCommand = async (msg: Message, cmd: ICommand, parameters: string[],
         // If there's no subcommands, excecute the command in question
         const [argument] = cmd.arguments || [];
         // args needs to be parsed using the new system
-        const subcommand = argument ? (args[argument.name] as ICommand) : undefined;
+        const subcommand = !!argument ? (args[argument.name] as ICommand) : undefined;
 
-        if (!argument || argument.type !== 'subcommand' || !subcommand) {
+        if (
+            !argument ||
+            argument.type !== 'subcommand' ||
+            // (argument.type === 'subcommand' && !argument.required) ||
+            !subcommand
+        ) {
             // Check for subcommand permissions here
-
+            console.log('Running command', cmd.name);
             await cmd.run?.(msg, args, guild);
             return;
+        } else {
+            console.log('Running subcommand of', cmd.name);
         }
 
         if (![subcommand?.name, ...(subcommand?.aliases || [])].includes(parameters[0])) {

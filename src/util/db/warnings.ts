@@ -1,13 +1,14 @@
+import { firestore as adminfirestore } from 'firebase-admin';
 import { admin, client, firestore } from '../../app';
 
 export interface IWarnings {
-    [timeStamp: string]: {
-        by: {
-            name: string;
-            id: string;
-        };
-        reason?: string;
-    };
+    [timeStamp: string]: IWarning;
+}
+
+export interface IWarning {
+    by: string;
+    reason?: string;
+    automated: boolean;
 }
 
 export async function getWarningsForUser(
@@ -19,23 +20,20 @@ export async function getWarningsForUser(
     return warnings.data();
 }
 
-export async function addWarn(guildId: string, warnedID: string, byId: string, reason?: string) {
+export async function addWarn(guildId: string, warnedID: string, warning: IWarning) {
     const timeGiven = Date.now();
     const doc = firestore.collection('guilds').doc(guildId).collection('warnings').doc(warnedID);
 
-    const byUser = await client.users.fetch(byId);
+    const byUser = await client.users.fetch(warning.by);
 
-    let warning: any = {};
+    let newWarning: any = {};
 
-    warning[timeGiven] = {
-        by: {
-            name: byUser.username,
-            id: byUser.id,
-        },
-        reason: reason,
+    newWarning[timeGiven] = {
+        by: byUser.id,
+        reason: warning.reason,
     };
 
-    await doc.set(warning, { merge: true });
+    await doc.set(newWarning, { merge: true });
 }
 
 export async function deleteWarn(guildId: string, warnedId: string, timestamp: string) {

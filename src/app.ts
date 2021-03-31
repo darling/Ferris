@@ -40,6 +40,8 @@ interface FerrisClient extends Client {
 
 const client = new Client() as FerrisClient;
 
+export const FERRIS_ID: string = process.env.BOT_ID!;
+
 // Commands and imports setup
 
 readdir(__dirname + '/events', (err, files) => {

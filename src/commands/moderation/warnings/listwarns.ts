@@ -46,7 +46,7 @@ client.commands.set('listwarns', {
             const time = moment(+timeGiven).format('MMMM Do YYYY, h:mm a [PST]');
             embed.addField(
                 'Warn # ' + (count + 1),
-                `**Time: **${time}\n**By: **<@${warn.by.id}> (${warn.by.name})\n**Reason:\n**${warn.reason}`,
+                `**Time: **${time}\n**By: **<@${warn.by}>\n**Reason:\n**${warn.reason}`,
                 false
             );
         });

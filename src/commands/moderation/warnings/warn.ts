@@ -23,12 +23,11 @@ client.commands.set('warn', {
     run: (msg, args: PunishArgs, guild) => {
         if (!guild) return;
 
-        addWarn(
-            guild.id,
-            args.user.id,
-            msg.author.id,
-            args.reason || `<@${msg.author.id}> muted this user`
-        );
+        addWarn(guild.id, args.user.id, {
+            automated: false,
+            by: msg.author.id,
+            reason: args.reason || 'Warning given.',
+        });
 
         successEmbed(
             msg.channel,
