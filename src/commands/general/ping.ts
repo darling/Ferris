@@ -5,6 +5,6 @@ client.commands.set('ping', {
     name: 'ping',
     arguments: [],
     run: (msg) => {
-        messageReply(msg.channel, 'Pong!');
+        messageReply(msg.channel, '🏓 Pong!');
     },
 });
