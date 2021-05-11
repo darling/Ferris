@@ -18,6 +18,7 @@ client.commands.set('automod', {
         },
     ],
     userGuildPerms: ['MANAGE_MESSAGES', 'MANAGE_GUILD'],
+    permissionLevels: [PermissionLevels.BOT_DEV],
     run: (msg, _args, guild) => {
         if (!guild) return;
 
