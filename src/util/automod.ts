@@ -1,22 +1,11 @@
 import { firestore } from 'firebase-admin';
-import {
-    getConfig,
-    IAutoModFilters,
-    IAutoModSettings,
-    IAutomodTag,
-    updateProperty,
-} from './db/config';
+
+import { getConfig, IAutoModFilters, IAutomodTag, updateProperty } from './db/config';
 
 export async function automodEnabled(guild_id: string) {
     const config = await getConfig(guild_id);
 
-    const automod = config?.automod;
-
-    if (automod !== undefined && automod.enabled === undefined) {
-        return true; // basically if enabled doesn't exist, make it
-    }
-
-    return automod?.enabled || false;
+    return !!config?.automod?.enabled;
 }
 
 export async function automodToggle(guild_id: string, enabled: boolean) {

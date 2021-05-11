@@ -8,6 +8,11 @@ import { ILoggingProps, isLoggable, newLog } from '../util/webhookLogging';
 client.on('guildMemberRemove', async (member) => {
     updateGuildMemberCount(member.guild);
 
+    if (member.id === client.user?.id) {
+        // If the user is the bot...
+        return;
+    }
+
     let loggingProps: ILoggingProps | undefined = getLoggingProps(member.guild.id);
     if (!loggingProps) return;
 
@@ -18,9 +23,7 @@ client.on('guildMemberRemove', async (member) => {
 
     const lastAudit = auditKick.entries.first();
 
-    if ( lastAudit &&
-        (Date.now() - lastAudit.createdAt.getTime()) < 5000
-    ) {
+    if (lastAudit && Date.now() - lastAudit.createdAt.getTime() < 5000) {
         const embed = new MessageEmbed();
 
         embed.setDescription(
@@ -30,7 +33,7 @@ client.on('guildMemberRemove', async (member) => {
         const avURL = (member as GuildMember).user.avatarURL();
         if (avURL) embed.setThumbnail(avURL);
         embed.setFooter(`ID: ${member.id}`);
-        embed.setColor(EmbedColors.RED)
+        embed.setColor(EmbedColors.RED);
         embed.setTitle('Member Kicked');
 
         await newLog('MEMBER_KICKED', member.guild.id, embed);
@@ -45,7 +48,7 @@ client.on('guildMemberRemove', async (member) => {
     const avURL = (member as GuildMember).user.avatarURL();
     if (avURL) embed.setThumbnail(avURL);
     embed.setFooter(`ID: ${member.id}`);
-    embed.setColor(EmbedColors.RED)
+    embed.setColor(EmbedColors.RED);
     embed.setTitle('Member Left');
 
     await newLog('MEMBER_LEFT', member.guild.id, embed);

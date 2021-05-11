@@ -1,16 +1,17 @@
-import { client } from '../app';
-import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { Guild, Message, MessageEmbed } from 'discord.js';
+import _, { compact, intersection } from 'lodash';
 
-// Instead of grabbing the prefix each time, we can store the current prefix of any server this shard looks at, and update it when the database updates.
+import { client } from '../app';
 import { ICommand } from '../types/commands';
 import { argumentList } from '../util/arguments';
-import { inhibitors } from '../util/inhibitor';
 import { getConfig } from '../util/db/config';
-import { messageReply } from '../util/interactions/message';
-import { intersection } from 'lodash';
 import { getPrefix } from '../util/db/prefix';
+import { addWarn, IWarning } from '../util/db/warnings';
+import { inhibitors } from '../util/inhibitor';
+import { messageReply } from '../util/interactions/message';
 import { passiveTests } from '../util/passiveTest';
 
+// Instead of grabbing the prefix each time, we can store the current prefix of any server this shard looks at, and update it when the database updates.
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
 
@@ -27,10 +28,6 @@ client.on('message', async (msg: Message) => {
     if (!content.startsWith(prefix)) {
         // Handle messages that aren't "commands", such as xp, auto mod, etc.
 
-        return;
-
-        // Currently this feature is disabled and won't be enabled until release.
-
         const tests = passiveTests.map((fn) => {
             return fn(msg);
         }); // Tests will return undefined or an infraction if punishment=true.
@@ -40,8 +37,14 @@ client.on('message', async (msg: Message) => {
             return value;
         });
 
-        if (hits.length) {
-            // Handle punishments here, hits come in the form of warning objects
+        if (hits.length > 0) {
+            console.log(
+                `${msg.author.username} has made ${hits.length} infraction${
+                    hits.length > 1 ? 's' : ''
+                }.`
+            );
+
+            addWarn(msg.guild.id, msg.author.id, compact(hits));
         }
 
         return;

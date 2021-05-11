@@ -15,6 +15,7 @@ client.commands.set('listwarns', {
             required: false,
         },
     ],
+    aliases: ['warns'],
     permissionLevels: [PermissionLevels.MODERATOR],
     run: async (msg, args: ListWarnsArgs, guild) => {
         const member = args.user || msg.member;

@@ -20,18 +20,15 @@ export async function getWarningsForUser(
     return warnings.data();
 }
 
-export async function addWarn(guildId: string, warnedID: string, warning: IWarning) {
+export async function addWarn(guildId: string, warnedID: string, warnings: IWarning[]) {
     const timeGiven = Date.now();
     const doc = firestore.collection('guilds').doc(guildId).collection('warnings').doc(warnedID);
 
-    const byUser = await client.users.fetch(warning.by);
-
     let newWarning: any = {};
 
-    newWarning[timeGiven] = {
-        by: byUser.id,
-        reason: warning.reason,
-    };
+    warnings.forEach(async (warning) => {
+        newWarning[timeGiven] = warning;
+    });
 
     await doc.set(newWarning, { merge: true });
 }

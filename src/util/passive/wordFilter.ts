@@ -1,4 +1,5 @@
 import { Message } from 'discord.js';
+import { compact } from 'lodash';
 import { client } from '../../app';
 import { automodEnabled } from '../automod';
 import { getConfig } from '../db/config';
@@ -15,30 +16,34 @@ passiveTests.set('word-filter', async (msg: Message) => {
 
     const automod = config.automod;
 
-    if (!automod || !automod.word_filter) return; // null case for compiler
+    if (!!automod?.word_filter?.enabled === false) return; // null case for compiler
 
     // if (!automod.channels?.includes(channel.id)) return; // channel may be whitelisted
     // if (!automod.roles?.includes(channel.id)) return; // roles may be whitelisted
 
-    const hits = automod.word_filter.tags?.map((bannedWord) => {
-        const { strict, tag, case_sensitive } = bannedWord;
+    const hits = compact(
+        automod?.word_filter?.tags?.map((bannedWord) => {
+            const { strict, tag, case_sensitive } = bannedWord;
 
-        const casedTag = case_sensitive ? tag : tag.toLowerCase();
-        const casedContent = case_sensitive ? content : content.toLowerCase();
+            const casedTag = case_sensitive ? tag : tag.toLowerCase();
+            const casedContent = case_sensitive ? content : content.toLowerCase();
 
-        // Strict means strictly checking for the tag.
-        if (strict) {
-            return casedContent.split(/ +/g).includes(casedTag.trim());
-        } else {
-            return casedContent.includes(casedTag);
-        }
-    });
+            // Strict means strictly checking for the tag.
+            if (strict) {
+                return casedContent.split(/ +/g).includes(casedTag.trim());
+            } else {
+                return casedContent.includes(casedTag);
+            }
+        })
+    );
 
     if (hits?.includes(true))
         return {
             automated: true,
             by: client.user?.id || 'BOT',
-            reason: 'User said a banned word.',
+            reason: `Said${hits.length > 1 ? '' : ' a'} banned word${
+                hits.length > 1 ? 's' : ''
+            } in <#${msg.channel.id}>`,
         };
 
     return undefined;
