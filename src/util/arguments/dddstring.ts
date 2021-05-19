@@ -18,4 +18,6 @@ argumentList.set('...string', {
             ]) || 'Anything goes here'
         );
     },
+    description:
+        'This is a long string that can have many words. Type as much as you want and Ferris will record it all.',
 });

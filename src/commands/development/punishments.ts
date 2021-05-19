@@ -14,4 +14,5 @@ client.commands.set('cpunishments', {
     run: (msg, args, guild) => {
         msg.channel.send(JSON.stringify(pendingUnpunishments.get(args.user.id).data, null, 2));
     },
+    display: false,
 });

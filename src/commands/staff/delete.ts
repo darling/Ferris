@@ -23,6 +23,7 @@ client.commands.set('del', {
 
         messageReply(msg.channel, 'o7');
     },
+    display: false,
 });
 
 interface StaffArgs {

@@ -47,6 +47,7 @@ client.commands.set('deleterole', {
                 console.error(e);
             });
     },
+    iconName: 'cancel',
 });
 
 interface CreateRoleArgs {

@@ -60,6 +60,7 @@ client.commands.set('removerole', {
                 );
             });
     },
+    iconName: 'cancel',
 });
 
 interface SetroleArgs {

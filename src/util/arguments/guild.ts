@@ -13,4 +13,5 @@ argumentList.set('guild', {
     example: () => {
         return '601618014252826624';
     },
+    description: 'Guilds are servers on Discord. They have their own ID.',
 });

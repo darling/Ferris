@@ -39,6 +39,7 @@ client.commands.set('autorole', {
             );
         }
     },
+    iconName: 'role',
 });
 
 interface AutoRoleArgs {

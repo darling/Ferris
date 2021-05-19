@@ -20,6 +20,7 @@ client.commands.set('db', {
 
         msg.channel.send(`\`\`\`JSON\n${JSON.stringify(guildInfo, null, 2)}\`\`\``);
     },
+    display: false,
 });
 
 interface EchoArgs {

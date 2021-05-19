@@ -26,4 +26,6 @@ argumentList.set('member', {
         const isMention = !!random(1, false);
         return isMention ? `<@${userId}>` : userId;
     },
+    description:
+        'A member is someone who is in your guild. You can mention them (ping) or type their ID.',
 });

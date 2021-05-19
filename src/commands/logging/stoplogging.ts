@@ -10,6 +10,7 @@ client.commands.set('stoplogging', {
         if (!guild) return;
         updateLogChannelProperty(guild.id, { enabled: false });
     },
+    iconName: 'log',
 });
 
 interface Props {}

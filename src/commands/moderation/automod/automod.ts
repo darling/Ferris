@@ -28,4 +28,5 @@ client.commands.set('automod', {
         );
     },
     subcommands: automodSubCommands,
+    display: false,
 });

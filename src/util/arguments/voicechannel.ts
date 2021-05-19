@@ -31,4 +31,6 @@ argumentList.set('newschannel', {
         const isMention = !!random(1, false);
         return isMention ? `<#${userId}>` : userId;
     },
+    description:
+        'You cannot mention a voice channel while using Discord. But if you use its ID, Ferris will accept it.',
 });

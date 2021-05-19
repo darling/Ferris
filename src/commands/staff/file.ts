@@ -17,6 +17,7 @@ client.commands.set('has-premium', {
 
         messageReply(msg.channel, JSON.stringify(user.metadata));
     },
+    display: false,
 });
 
 interface StaffArgs {

@@ -31,4 +31,6 @@ argumentList.set('textchannel', {
         const isMention = !!random(1, false);
         return isMention ? `<#${userId}>` : userId;
     },
+    description:
+        'This is your standard textchannel on the Discord app. Ferris will accept mentions and ids.',
 });

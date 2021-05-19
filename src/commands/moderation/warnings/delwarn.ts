@@ -46,6 +46,7 @@ client.commands.set('delwarn', {
             );
         }
     },
+    iconName: 'warn',
 });
 
 interface PunishArgs {

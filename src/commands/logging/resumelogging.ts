@@ -10,6 +10,7 @@ client.commands.set('resumelogging', {
         if (!guild) return;
         updateLogChannelProperty(guild.id, { enabled: true });
     },
+    iconName: 'log',
 });
 
 interface Props {}

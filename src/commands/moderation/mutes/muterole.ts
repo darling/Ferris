@@ -39,6 +39,7 @@ client.commands.set('muterole', {
             );
         }
     },
+    iconName: 'mute',
 });
 
 interface MuteRoleArgs {

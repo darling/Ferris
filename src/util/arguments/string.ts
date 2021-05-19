@@ -18,4 +18,6 @@ argumentList.set('string', {
     example: () => {
         return sample(['word', 'example', 'string', 'hello']) || 'word';
     },
+    description:
+        'The string type is a single word separated by spaces. You can put anything in the string input but if you put another space, it will end. You can not ping or mention items in the string input.',
 });

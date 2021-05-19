@@ -31,4 +31,6 @@ argumentList.set('categorychannel', {
         const isMention = !!random(1, false);
         return isMention ? `<#${userId}>` : userId;
     },
+    description:
+        'A category channel is a reference to the channel categories. You can reference them using their built in ID.',
 });

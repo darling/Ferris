@@ -16,4 +16,6 @@ argumentList.set('duration', {
         const value = random(15, false);
         return `${value}${type}`;
     },
+    description:
+        'A duration is made up of two numbers. The first number is how many units of time, and the second number is how long each unit of time lasts.',
 });

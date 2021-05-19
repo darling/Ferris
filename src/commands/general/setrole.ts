@@ -57,6 +57,7 @@ client.commands.set('setrole', {
                 errorEmbed(msg.channel, 'Error, please contact the Ferris Staff!');
             });
     },
+    iconName: 'add',
 });
 
 interface SetroleArgs {

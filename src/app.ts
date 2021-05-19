@@ -58,7 +58,7 @@ readdir(__dirname + '/events', (err, files) => {
     });
 });
 
-client.commands = new Collection<string, ICommand>();
+client.commands = new Collection<string, ICommand>([]);
 require(__dirname + '/commands');
 
 // Schedule Handler (I.e unbans, unmute)

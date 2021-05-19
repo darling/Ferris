@@ -28,4 +28,5 @@ argumentList.set('role', {
         const isMention = !!random(1, false);
         return isMention ? `<@&${userId}>` : userId;
     },
+    description: 'Target a Role by mentioning the ID or the role itself (ping).',
 });

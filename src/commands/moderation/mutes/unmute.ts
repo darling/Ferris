@@ -47,6 +47,7 @@ client.commands.set('unmute', {
             doc.delete();
         }
     },
+    iconName: 'mute',
 });
 
 interface PunishArgs {

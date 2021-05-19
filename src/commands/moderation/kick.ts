@@ -48,6 +48,7 @@ client.commands.set('kick', {
             return;
         }
     },
+    iconName: 'law',
 });
 
 interface Args {

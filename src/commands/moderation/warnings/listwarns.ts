@@ -54,6 +54,7 @@ client.commands.set('listwarns', {
 
         msg.channel.send(embed);
     },
+    iconName: 'warn',
 });
 
 interface ListWarnsArgs {

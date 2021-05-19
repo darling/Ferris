@@ -12,4 +12,5 @@ argumentList.set('boolean', {
     example: () => {
         return sample(['true', 'false', 'on', 'off']) || 'true';
     },
+    description: 'Booleans are variables that can have two values: true or false.',
 });

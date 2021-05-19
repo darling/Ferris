@@ -50,6 +50,7 @@ client.commands.set('query', {
             }
         }
     },
+    display: false,
 });
 
 interface QueryArgs {

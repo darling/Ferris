@@ -13,4 +13,5 @@ argumentList.set('number', {
         const input = random(100, false);
         return `${input}`;
     },
+    description: 'A number is a mathematical object used to measure and count.',
 });

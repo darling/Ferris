@@ -31,4 +31,6 @@ argumentList.set('newschannel', {
         const isMention = !!random(1, false);
         return isMention ? `<#${userId}>` : userId;
     },
+    description:
+        'Unlike a normal text channel, Announcement channels will come with a “Follow” button. This will allow members of the server to hook it up to their own personal servers. Ferris can watch these as well by using either the ID or mention of the channel.',
 });

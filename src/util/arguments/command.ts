@@ -19,4 +19,5 @@ argumentList.set('command', {
     example: () => {
         return sample(client.commands.keyArray()) || 'help';
     },
+    description: 'A command within Ferris.',
 });

@@ -57,6 +57,7 @@ client.commands.set('ban', {
             return;
         }
     },
+    iconName: 'law',
 });
 
 interface BanArgs {

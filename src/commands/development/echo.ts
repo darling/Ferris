@@ -18,6 +18,7 @@ client.commands.set('echo', {
     run: (msg, args: EchoArgs) => {
         msg.channel.send(JSON.stringify(args));
     },
+    display: false,
 });
 
 interface EchoArgs {

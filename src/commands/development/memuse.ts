@@ -22,6 +22,7 @@ client.commands.set('memuse', {
 
         msg.channel.send(embed);
     },
+    display: false,
 });
 
 interface MemArgs {}

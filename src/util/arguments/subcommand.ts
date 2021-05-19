@@ -14,4 +14,6 @@ argumentList.set('subcommand', {
     example: () => {
         return sample(client.commands.keyArray()) || 'help';
     },
+    description:
+        "A sub-command has its own options, requirements, and logic. Ferris doesn't have built in documentation for them but they should be intuitive to use and help you use them as you go. ",
 });

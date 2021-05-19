@@ -41,6 +41,7 @@ client.commands.set('createrole', {
             return;
         }
     },
+    iconName: 'add',
 });
 
 interface CreateRoleArgs {

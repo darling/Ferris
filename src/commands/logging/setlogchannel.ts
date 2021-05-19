@@ -38,6 +38,7 @@ client.commands.set('setlogchannel', {
             await args.newLogChannel.send(getNewChannelEmbeds());
         }
     },
+    iconName: 'log',
 });
 
 interface LogArgs {

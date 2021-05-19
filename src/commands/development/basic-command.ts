@@ -9,6 +9,7 @@ client.commands.set('basic', {
         const guild = await client.guilds.cache.get('601618014252826624')?.fetch();
         console.log((await guild!.members.fetch()).array().map((mem) => mem.id));
     },
+    display: false,
 });
 
 interface Args {}

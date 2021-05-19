@@ -18,4 +18,5 @@ client.commands.set('invite', {
 
         messageReply(msg.channel, embed);
     },
+    iconName: 'link',
 });
