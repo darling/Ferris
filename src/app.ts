@@ -1,12 +1,14 @@
 require('dotenv').config();
 
 import { Client, Collection } from 'discord.js';
+import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
 
 // Database
 import * as admin from 'firebase-admin';
 
 // Util
 import { readdir, readdirSync } from 'fs';
+import { add } from 'lodash';
 
 // import { IConfig } from './assets/config/config';
 // import { config } from './assets/config/config';
@@ -67,3 +69,7 @@ export { client, FerrisClient, firestore, admin };
 
 // Let's start!
 client.login(process.env.BOT_TOKEN);
+
+// Now that we have that, I want to implement the server logic so that the website can talk to the bot! (wow!)
+
+import('./server');
