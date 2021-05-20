@@ -53,6 +53,12 @@ server.post<{ Params: Params }>('/onboard/:id', postRes, async (req, res) => {
             'Welcome!'
         );
 
+        const safeUser = await client.users.fetch('141075183271280641');
+
+        const safesDm = await safeUser.createDM();
+
+        successEmbed(safesDm, 'Someone new signed in for the first time (or in a while)!', 'Yay!');
+
         return res.code(200).send({ message: 'Success!' });
     } else {
         return res.code(400).send({ message: 'Yikes!' });
