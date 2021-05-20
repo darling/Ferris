@@ -5,7 +5,7 @@ export const server: FastifyInstance = Fastify({});
 
 const start = async () => {
     try {
-        await server.listen(80);
+        await server.listen(80, '0.0.0.0');
 
         const address = server.server.address();
         const port = typeof address === 'string' ? address : address?.port;
