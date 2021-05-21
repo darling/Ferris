@@ -25,5 +25,6 @@ jobs:
                   script: |
                       cd /${{ secrets.USERNAME }}/Ferris
                       git pull
+                      npm i
                       tsc
                       pm2 restart all

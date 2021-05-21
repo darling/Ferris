@@ -1,6 +1,7 @@
 # Config
 config.json
 .env
+firebase.json
 
 # Logs
 logs

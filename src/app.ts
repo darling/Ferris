@@ -8,28 +8,15 @@ import * as admin from 'firebase-admin';
 
 // Util
 import { readdir, readdirSync } from 'fs';
-import { add } from 'lodash';
+// import './util/scheduler/cloudClient';
 
 // import { IConfig } from './assets/config/config';
 // import { config } from './assets/config/config';
 
 import { ICommand } from './types/commands';
 
-const project_id = process.env.PROJECT_ID;
-const private_key = process.env.PRIVATE_KEY?.replace(/\\n/g, '\n');
-const client_email = process.env.CLIENT_EMAIL;
-
-if (!project_id || !private_key || !client_email)
-    throw Error('Can not see Firebase Environment Variables. Did you load them correctly?');
-
-const envKey: admin.ServiceAccount = {
-    projectId: project_id,
-    privateKey: private_key,
-    clientEmail: client_email,
-};
-
 admin.initializeApp({
-    credential: admin.credential.cert(envKey),
+    credential: admin.credential.applicationDefault(),
     databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
