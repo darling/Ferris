@@ -24,6 +24,7 @@ jobs:
                   PORT: 22
                   script: |
                       cd /${{ secrets.USERNAME }}/Ferris
+                      git reset
                       git pull
                       npm i
                       tsc
