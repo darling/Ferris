@@ -24,7 +24,8 @@ jobs:
                   PORT: 22
                   script: |
                       cd /${{ secrets.USERNAME }}/Ferris
-                      git reset
+                      echo "$USER"
+                      git reset --hard origin/master
                       git pull
                       npm i
                       tsc
