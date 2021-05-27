@@ -4,6 +4,7 @@ import { truncate } from 'lodash';
 import { client } from '../../app';
 import { ICommand } from '../../types/commands';
 import { argumentList } from '../../util/arguments';
+import { URL_DATA } from '../../util/axios';
 import { getPrefix } from '../../util/db/prefix';
 import { messageReply } from '../../util/interactions/message';
 
@@ -31,7 +32,7 @@ client.commands.set('help', {
                 guild_id: guild.id,
                 channel: msg.channel.id,
             },
-            { baseURL: 'http://localhost:3000/api' }
+            URL_DATA
         );
 
         return;
