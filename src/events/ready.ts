@@ -11,7 +11,7 @@ client.on('ready', () => {
 
     console.log(`Logged in as ${user.tag}`);
 
-    user.setActivity(';help | ferris.gg', {
+    user.setActivity('/help | ferris.gg', {
         type: 'PLAYING',
         url: 'https://github.com/darling/Ferris',
     });

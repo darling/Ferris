@@ -12,7 +12,7 @@ const postRes: RouteShorthandOptions = {
     schema: {
         response: {
             200: {
-                type: '',
+                type: 'object',
                 properties: {
                     message: {
                         type: 'string',
@@ -35,7 +35,9 @@ server.post<{ Params: Params }>('/echo', postRes, async (req, res) => {
     const channel = await client.channels.fetch('811237223432716288');
 
     if (channel.isText()) {
-        successEmbed(channel, `\`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\``, 'Welcome!');
+        channel.send({
+            content: `\`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\``,
+        });
 
         return res.code(200).send({ message: 'Success!' });
     }

@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
 import { readdirSync } from 'fs';
 
