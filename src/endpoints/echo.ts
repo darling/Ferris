@@ -40,7 +40,7 @@ server.post<{ Params: Params }>('/echo', postRes, async (req, res) => {
         if (channel.isText())
             successEmbed(
                 channel,
-                "Thank you for signing up with Ferris and we hope that this is the beginning of a great partnership. If you have any questions at all, please don't hesitate to contact us- our team loves helping out new members!\n\nWe have compiled a list of links and some extra information for you. Quick Links:\n\n[Documentation](https://ferris.gg/docs)\n[Getting Started](https://ferris.gg/docs/getting-started)\n[Control Panel](https://ferris.gg/control)\n[Our Discord Server](https://ferris.gg/discord)",
+                `\`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\``,
                 'Welcome!'
             );
 
