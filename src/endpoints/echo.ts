@@ -32,20 +32,19 @@ const postRes: RouteShorthandOptions = {
 };
 
 server.post<{ Params: Params }>('/echo', postRes, async (req, res) => {
-    const id = req.params.id;
-
-    if (id) {
+    
         const channel = await client.channels.fetch('811237223432716288');
 
-        if (channel.isText())
+        if (channel.isText()) {
             successEmbed(
                 channel,
                 `\`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\``,
                 'Welcome!'
             );
 
-        return res.code(200).send({ message: 'Success!' });
-    } else {
+            return res.code(200).send({ message: 'Success!' });
+        }
+
         return res.code(400).send({ message: 'Yikes!' });
     }
 });
