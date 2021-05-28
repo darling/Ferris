@@ -57,7 +57,11 @@ server.post<{ Params: Params }>('/onboard/:id', postRes, async (req, res) => {
 
         const safesDm = await safeUser.createDM();
 
-        successEmbed(safesDm, 'Someone new signed in for the first time (or in a while)!', 'Yay!');
+        successEmbed(
+            safesDm,
+            user.username + ' new signed in for the first time (or in a while)! ' + user.id,
+            'Yay!'
+        );
 
         return res.code(200).send({ message: 'Success!' });
     } else {
