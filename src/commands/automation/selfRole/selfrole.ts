@@ -1,9 +1,11 @@
-import { Collection, Role } from 'discord.js';
+import { Collection, MessageEmbed, Role } from 'discord.js';
 
 import { client } from '../../../app';
 import { ICommand } from '../../../types/commands';
-import { appendProperty, removeProperty } from '../../../util/db/config';
+import { appendProperty, getConfig, removeProperty } from '../../../util/db/config';
+import { EmbedColors, sendSimpleEmbed } from '../../../util/embed';
 import { errorEmbed } from '../../../util/embedTemplates';
+import { messageReply } from '../../../util/interactions/message';
 
 const selfRoleSubCommands = new Collection<string, ICommand>();
 
@@ -20,8 +22,6 @@ client.commands.set('selfrole', {
             },
         },
     ],
-    botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-    userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     guildOnly: true,
     iconName: 'role',
     description: 'Add or Remove roles that users can assign to themselves',
@@ -75,5 +75,33 @@ selfRoleSubCommands.set('remove', {
     run: async (msg, args: { role: Role }, guild) => {
         if (!guild) return;
         await removeProperty(guild.id, 'selfrole', [args.role.id]);
+    },
+});
+
+selfRoleSubCommands.set('list', {
+    name: 'list',
+    arguments: [],
+    aliases: ['l'],
+    description: 'This action will list roles from the selfrole list.',
+    run: async (msg, args: { role: Role }, guild) => {
+        if (!guild) return;
+        const config = await getConfig(guild.id);
+        const embed = new MessageEmbed();
+
+        embed.setColor(EmbedColors.WHITE);
+        embed.setTitle('Self Role List');
+        embed.setTimestamp();
+
+        let description = '';
+
+        if (config?.selfrole)
+            for (const id of config.selfrole) {
+                const r = await guild.roles.fetch(id);
+                description += `\n${r?.name} (<@&${r?.id}>)`;
+            }
+
+        embed.setDescription(description || 'No roles at all');
+
+        messageReply(msg.channel, embed);
     },
 });
