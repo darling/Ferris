@@ -108,7 +108,7 @@ selfRoleSubCommands.set('list', {
     },
 });
 
-selfRoleSubCommands.set('display', {
+const display: ICommand = {
     name: 'display',
     arguments: [
         {
@@ -123,7 +123,7 @@ selfRoleSubCommands.set('display', {
     ],
     aliases: ['d'],
     description:
-        'This action will list a role dialogue from the selfrole list that users can use to get the role without typing any commands.',
+        'This will list a role dialogue from the selfrole list that users can use to get the role without typing any commands.',
     botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     run: async (msg, args: { role: Role }, guild) => {
@@ -139,4 +139,7 @@ selfRoleSubCommands.set('display', {
             URL_DATA
         );
     },
-});
+};
+
+selfRoleSubCommands.set('display', display);
+client.commands.set('display', display);
