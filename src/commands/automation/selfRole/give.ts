@@ -24,10 +24,10 @@ client.commands.set('give', {
 
         if (config?.selfrole?.includes(args.role.id)) {
             await msg.member?.roles.add(args.role.id);
-            // await msg.react('769345876984332288');
+            await msg.react('769345876984332288');
         } else {
-            // await msg.react('769345886702141470');
-            messageReply(msg.channel, 'No');
+            await msg.react('769345886702141470');
+            // messageReply(msg.channel, 'No');
         }
     },
 });
