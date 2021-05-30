@@ -1,6 +1,6 @@
 import { Role } from 'discord.js';
 import { client } from '../../../app';
-import { updateProperty } from '../../../util/db/config';
+import { deleteProperty, updateProperty } from '../../../util/db/config';
 import { errorEmbed, successEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('muterole', {
@@ -18,9 +18,8 @@ client.commands.set('muterole', {
     run: (msg, args: MuteRoleArgs, guild) => {
         if (!guild) return;
         if (!args.role) {
-            updateProperty(guild.id, {
-                muted_role: '',
-            });
+            deleteProperty(guild.id, 'muted_role');
+            successEmbed(msg.channel, 'There is no longer a muted role :)');
             return;
         }
         if (args.role.editable) {

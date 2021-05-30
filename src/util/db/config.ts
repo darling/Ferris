@@ -25,6 +25,7 @@ export interface IConfigSchema {
     logging?: ILoggingProps;
     custom?: ICustomCommands;
     automod?: IAutoModSettings;
+    selfrole?: string[];
 }
 
 export interface IAutoModSettings extends IAutoModFilters {
@@ -102,6 +103,30 @@ export async function updateProperty(guild_id: string, data: IConfigSchema) {
     console.log('WRITING TO DB', data);
 
     await doc.set(data, { merge: true });
+}
+
+export async function appendProperty(
+    guild_id: string,
+    property: keyof IConfigSchema,
+    data: unknown[]
+) {
+    const doc = firestore.collection('configs').doc(guild_id);
+
+    console.log('APPENDING TO DB', property, data);
+
+    await doc.set({ [property]: firestoreLib.FieldValue.arrayUnion(...data) }, { merge: true });
+}
+
+export async function removeProperty(
+    guild_id: string,
+    property: keyof IConfigSchema,
+    data: unknown[]
+) {
+    const doc = firestore.collection('configs').doc(guild_id);
+
+    console.log('REMOVING FROM ARRAY IN DB', property, data);
+
+    await doc.set({ [property]: firestoreLib.FieldValue.arrayRemove(...data) }, { merge: true });
 }
 
 export async function deleteProperty(guild_id: string, property: keyof IConfigSchema) {

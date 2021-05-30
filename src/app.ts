@@ -17,7 +17,6 @@ import { ICommand } from './types/commands';
 
 admin.initializeApp({
     credential: admin.credential.applicationDefault(),
-    databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
 const firestore = admin.firestore();
@@ -41,7 +40,7 @@ readdir(__dirname + '/events', (err, files) => {
 });
 
 // inhibitors is an auto-mod thing
-['arguments', /* 'inhibitors', */ 'permissionLevels', 'passive'].forEach((name) => {
+['arguments', 'inhibitors', 'permissionLevels', 'passive'].forEach((name) => {
     readdirSync(`${__dirname}/util/${name}`).forEach((file) => {
         require(`./util/${name}/${file}`);
     });

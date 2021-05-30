@@ -61,7 +61,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
         });
         if (!!missingPermissions.length) {
             missingCommandPerms(false, msg, command.userChannelPerms, 'channel');
-            // Missing reply goes here
+
             return true;
         }
     }
@@ -75,7 +75,7 @@ inhibitors.set('permissions', async (msg, command, guild) => {
         });
         if (!!missingPermissions.length) {
             missingCommandPerms(false, msg, command.userGuildPerms, 'guild');
-            // Missing reply goes here
+
             return true;
         }
     }
@@ -89,18 +89,17 @@ inhibitors.set('permissions', async (msg, command, guild) => {
         });
         if (!!missingPermissions.length) {
             missingCommandPerms(true, msg, command.botChannelPerms, 'channel');
-            // Missing reply goes here
+
             return true;
         }
     }
 
     if (command.botGuildPerms?.length) {
         const missingPermissions = command.botGuildPerms.filter((perm) => {
-            return !bot.hasPermission(Permissions[perm], { checkAdmin: true });
+            return !bot.hasPermission(Permissions[perm]);
         });
         if (!!missingPermissions.length) {
             missingCommandPerms(true, msg, command.botGuildPerms, 'guild');
-            // Missing reply goes here
             return true;
         }
     }

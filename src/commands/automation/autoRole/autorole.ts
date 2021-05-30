@@ -1,6 +1,6 @@
 import { Role } from 'discord.js';
 import { client } from '../../../app';
-import { updateProperty } from '../../../util/db/config';
+import { deleteProperty, updateProperty } from '../../../util/db/config';
 import { errorEmbed, successEmbed } from '../../../util/embedTemplates';
 
 client.commands.set('autorole', {
@@ -18,9 +18,11 @@ client.commands.set('autorole', {
     run: (msg, args: AutoRoleArgs, guild) => {
         if (!guild) return;
         if (!args.role) {
-            updateProperty(guild.id, {
-                auto_role: '',
-            });
+            if (!args.role) {
+                deleteProperty(guild.id, 'auto_role');
+                successEmbed(msg.channel, 'There is no longer a muted role :)');
+                return;
+            }
             return;
         }
         if (args.role.editable) {
