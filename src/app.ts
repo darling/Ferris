@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+import axios from 'axios';
 import { Client, Collection } from 'discord.js';
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
 
@@ -59,3 +60,15 @@ client.login(process.env.BOT_TOKEN);
 // Now that we have that, I want to implement the server logic so that the website can talk to the bot! (wow!)
 
 import('./server');
+
+// Interval for top.gg
+
+setInterval(async () => {
+    axios.post(
+        `https://top.gg/api/bots/637804742935838751/stats`,
+        {
+            server_count: client.guilds.cache.size,
+        },
+        { headers: { Authorization: process.env.TOPGG_TOKEN } }
+    );
+}, 300000);
