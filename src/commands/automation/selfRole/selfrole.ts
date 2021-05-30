@@ -26,7 +26,8 @@ client.commands.set('selfrole', {
     ],
     guildOnly: true,
     iconName: 'role',
-    description: 'Add or Remove roles that users can assign to themselves',
+    description:
+        'Add or Remove roles that users can assign to themselves. You can use `;selfrole add | remove | list | display` to add, remove, list, and display the roles.\n\nDisplay gives a button that users can use to get the roles themselves without any commands at all.',
     subcommands: selfRoleSubCommands,
 });
 
