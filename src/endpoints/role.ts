@@ -55,6 +55,7 @@ const postRes: RouteShorthandOptions = {
 
 server.post<{ Params: Params; Body: Body }>('/role', postRes, async (req, res) => {
     const id = req.body.user_id;
+
     const guild = await client.guilds.fetch(req.body.guild_id);
 
     if (!guild || !guild.me) return res.code(400).send({ message: 'Yikes!' });
@@ -65,7 +66,7 @@ server.post<{ Params: Params; Body: Body }>('/role', postRes, async (req, res) =
 
     if (id) {
         const role = await guild.roles.fetch(req.body.role_id);
-        const member = await guild.members.fetch(user.id);
+        const member = await guild.members.fetch({ user: user.id, cache: false });
 
         if (!role) return res.code(400).send({ message: 'Yikes!' });
 

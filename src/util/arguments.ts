@@ -9,7 +9,7 @@ export interface Argument {
         msg: Message,
         command: ICommand
     ) => unknown;
-    example: () => string;
+    example?: () => string;
     description: string;
 }
 

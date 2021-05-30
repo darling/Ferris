@@ -36,7 +36,8 @@ export interface CommandArgument {
         | 'textchannel'
         | 'command'
         | 'duration'
-        | 'guild';
+        | 'guild'
+        | '...roles';
     /** Function that runs when arg is missing */
     missing?: (msg: Message) => unknown;
     required?: boolean;
