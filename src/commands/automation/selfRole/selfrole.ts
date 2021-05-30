@@ -1,7 +1,9 @@
+import axios from 'axios';
 import { Collection, MessageEmbed, Role } from 'discord.js';
 
 import { client } from '../../../app';
 import { ICommand } from '../../../types/commands';
+import { URL_DATA } from '../../../util/axios';
 import { appendProperty, getConfig, removeProperty } from '../../../util/db/config';
 import { EmbedColors, sendSimpleEmbed } from '../../../util/embed';
 import { errorEmbed } from '../../../util/embedTemplates';
@@ -36,7 +38,7 @@ selfRoleSubCommands.set('add', {
             type: 'role',
             description: 'The role that will be set that users can give to themselves.',
             missing: (msg) => {
-                errorEmbed(msg.channel, 'Please specify an action.');
+                errorEmbed(msg.channel, 'Please specify a role.');
             },
             required: true,
         },
@@ -63,16 +65,16 @@ selfRoleSubCommands.set('remove', {
             type: 'role',
             description: 'The role that will be removed from the selfrole list.',
             missing: (msg) => {
-                errorEmbed(msg.channel, 'Please specify an action.');
+                errorEmbed(msg.channel, 'Please specify a role.');
             },
             required: true,
         },
     ],
-    aliases: ['r', 'd', 'del', 'rem'],
+    aliases: ['r', 'del', 'rem'],
     description: 'This action will remove roles from the selfrole list.',
     botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-    run: async (msg, args: { role: Role }, guild) => {
+    run: async (_msg, args: { role: Role }, guild) => {
         if (!guild) return;
         await removeProperty(guild.id, 'selfrole', [args.role.id]);
     },
@@ -83,7 +85,7 @@ selfRoleSubCommands.set('list', {
     arguments: [],
     aliases: ['l'],
     description: 'This action will list roles from the selfrole list.',
-    run: async (msg, args: { role: Role }, guild) => {
+    run: async (msg, _args, guild) => {
         if (!guild) return;
         const config = await getConfig(guild.id);
         const embed = new MessageEmbed();
@@ -103,5 +105,38 @@ selfRoleSubCommands.set('list', {
         embed.setDescription(description || 'No roles at all');
 
         messageReply(msg.channel, embed);
+    },
+});
+
+selfRoleSubCommands.set('display', {
+    name: 'display',
+    arguments: [
+        {
+            name: 'role',
+            type: 'role',
+            description: 'The role that will be on display.',
+            missing: (msg) => {
+                errorEmbed(msg.channel, 'Please specify a role.');
+            },
+            required: true,
+        },
+    ],
+    aliases: ['d'],
+    description:
+        'This action will list a role dialogue from the selfrole list that users can use to get the role without typing any commands.',
+    botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
+    userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
+    run: async (msg, args: { role: Role }, guild) => {
+        if (!guild) return;
+        await axios.post(
+            '/discord/display',
+            {
+                guild_id: guild.id,
+                role_id: args.role.id,
+                role_name: args.role.name,
+                channel: msg.channel.id,
+            },
+            URL_DATA
+        );
     },
 });
