@@ -42,6 +42,7 @@ client.commands.set('autorole', {
         }
     },
     iconName: 'role',
+    description: 'Manage the role that is given to users to join the Discord.',
 });
 
 interface AutoRoleArgs {

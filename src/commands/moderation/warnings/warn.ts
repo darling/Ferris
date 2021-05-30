@@ -37,6 +37,8 @@ client.commands.set('warn', {
             'New warning added.'
         );
     },
+    description:
+        "This command **adds a warning** to a user's record. This can be used to __note minor rule infractions__ and misbehavior. ",
 });
 
 interface PunishArgs {

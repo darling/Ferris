@@ -50,14 +50,14 @@ client.commands.set('rolecolor', {
             return;
         }
         args.role
-            .setColor(args.color, 'Set using the rolecolor command')
+            .setColor(args.color.replace('#', ''), 'Set using the rolecolor command')
             .then((role) => {
                 msg.reply('New color set');
             })
-            .catch((e) => {
-                console.error(e);
-            });
+            .catch(console.error);
     },
+    description:
+        'This command allows you to **change the color** of any role in your server. Make your roles __colorful__ and not just play gray! ',
 });
 
 interface RemoveroleArgs {

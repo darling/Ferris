@@ -39,6 +39,8 @@ client.commands.set('muterole', {
         }
     },
     iconName: 'mute',
+    description:
+        'This command allows you to assign a **mute role** to the `mute` command. This role will __prevent__ them from messaging in chats, hence, muting them. ',
 });
 
 interface MuteRoleArgs {

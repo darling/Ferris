@@ -51,6 +51,7 @@ client.commands.set('query', {
         }
     },
     display: false,
+    description: 'developer only',
 });
 
 interface QueryArgs {

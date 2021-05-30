@@ -46,6 +46,8 @@ client.commands.set('hoistrole', {
                 console.error(e);
             });
     },
+    description:
+        'This command allows you to** hoist/de-hoist** any role on the __members list.__ This means that you can **control** if they display __above or with__ the regular members. ',
 });
 
 interface Args {

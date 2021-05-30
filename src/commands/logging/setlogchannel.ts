@@ -39,6 +39,8 @@ client.commands.set('setlogchannel', {
         }
     },
     iconName: 'log',
+    description:
+        'This command can be used to set your **preferred** logging channel. This channel will be used to __keep logs of day-to-day activities__ such as message deletions, joins, and mod logs.',
 });
 
 interface LogArgs {

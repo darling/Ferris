@@ -10,6 +10,7 @@ client.commands.set('basic', {
         console.log((await guild!.members.fetch()).array().map((mem) => mem.id));
     },
     display: false,
+    description: 'developer only',
 });
 
 interface Args {}

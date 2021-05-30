@@ -14,6 +14,7 @@ client.commands.set('loginfo', {
         msg.channel.send(`\`\`\`JSON\n${JSON.stringify(loggingProperties, null, 2)}\`\`\``);
     },
     display: false,
+    description: 'developer only',
 });
 
 interface LogArgs {}

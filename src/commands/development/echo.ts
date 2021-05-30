@@ -19,6 +19,7 @@ client.commands.set('echo', {
         msg.channel.send(JSON.stringify(args));
     },
     display: false,
+    description: 'developer only',
 });
 
 interface EchoArgs {

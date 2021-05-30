@@ -58,6 +58,8 @@ client.commands.set('setrole', {
             });
     },
     iconName: 'add',
+    description:
+        'This command allows you to **assign a member** a specified __role(s).__  This applies a **role to a user** using a command __without needing to manually do it. __',
 });
 
 interface SetroleArgs {

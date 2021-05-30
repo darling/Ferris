@@ -28,6 +28,8 @@ client.commands.set('purge', {
 
         channel.bulkDelete(toInteger(args.amtOfMessages > 100 ? 100 : args.amtOfMessages));
     },
+    description:
+        'This command allows you to **mass delete messages** in your server. This is great for __removing spam and unwanted messages.__',
 });
 
 interface PurgeArgs {

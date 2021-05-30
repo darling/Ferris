@@ -18,6 +18,7 @@ client.commands.set('has-premium', {
         messageReply(msg.channel, JSON.stringify(user.metadata));
     },
     display: false,
+    description: 'List members data as admin',
 });
 
 interface StaffArgs {

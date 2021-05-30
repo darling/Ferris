@@ -11,6 +11,8 @@ client.commands.set('resumelogging', {
         updateLogChannelProperty(guild.id, { enabled: true });
     },
     iconName: 'log',
+    description:
+        'This command can be used to **continue** logging after using the `stoplogging` command. This allows the bot to __continue keeping track__ of logs in your server. ',
 });
 
 interface Props {}

@@ -48,6 +48,8 @@ client.commands.set('unmute', {
         }
     },
     iconName: 'mute',
+    description:
+        'This command can be used to **remove** the mute role from a user. This is used after the `mute` command to __allow a user access__ to message in chats. ',
 });
 
 interface PunishArgs {

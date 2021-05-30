@@ -15,4 +15,5 @@ client.commands.set('cpunishments', {
         msg.channel.send(JSON.stringify(pendingUnpunishments.get(args.user.id).data, null, 2));
     },
     display: false,
+    description: 'developer only',
 });

@@ -93,6 +93,8 @@ client.commands.set('mute', {
             newLog('MUTE_ADDED', guild.id, embed);
         });
     },
+    description:
+        'The mute command can be used to **prevent a user from talking**. They will be __unable__ to message in chats until they are un-muted. ',
 });
 
 interface PunishArgs {

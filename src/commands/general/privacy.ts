@@ -26,4 +26,6 @@ client.commands.set('privacy', {
             console.error(err);
         });
     },
+    description:
+        'This command will lead you to the **Ferris privacy policy**. Stay Safe! :shield: ',
 });

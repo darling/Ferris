@@ -25,6 +25,7 @@ filterSubcommands.set('add', {
         automodAddTag(guild.id, 'word_filter', args.tag);
         messageReply(msg.channel, `\`\`\`JSON\n${JSON.stringify({ success: true })}\`\`\``);
     },
+    description: 'W',
 });
 
 filterSubcommands.set('remove', {
@@ -50,6 +51,7 @@ filterSubcommands.set('remove', {
         automodDeleteTag(guild.id, 'word_filter', tag);
         messageReply(msg.channel, `\`\`\`JSON\n${JSON.stringify({ success: true })}\`\`\``);
     },
+    description: 'W',
 });
 
 automodSubCommands.set('filter', {
@@ -78,4 +80,5 @@ automodSubCommands.set('filter', {
         messageReply(msg.channel, `EXISTING BANNED WORDS:\n\`\`\`md\n${message}\`\`\``);
     },
     subcommands: filterSubcommands,
+    description: 'W',
 });

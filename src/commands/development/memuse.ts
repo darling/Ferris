@@ -23,6 +23,7 @@ client.commands.set('memuse', {
         msg.channel.send(embed);
     },
     display: false,
+    description: 'developer only',
 });
 
 interface MemArgs {}

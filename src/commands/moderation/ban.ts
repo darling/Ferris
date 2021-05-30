@@ -58,6 +58,8 @@ client.commands.set('ban', {
         }
     },
     iconName: 'law',
+    description:
+        '*Thanos snap*. This command** permanently** removes a user from the server. They will be __unable to rejoin__ the server unless unbanned. ',
 });
 
 interface BanArgs {

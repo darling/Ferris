@@ -7,4 +7,5 @@ client.commands.set('ping', {
     run: (msg) => {
         messageReply(msg.channel, '🏓 Pong!');
     },
+    description: '**PONG!** This can also be used to see if Ferris died. ',
 });

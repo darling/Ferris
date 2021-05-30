@@ -47,6 +47,8 @@ client.commands.set('delwarn', {
         }
     },
     iconName: 'warn',
+    description:
+        "This command **removes a warn** from a user's record. If they have been previously warned and you want it to be __removed__, you can use this delete warn command to do the job! ",
 });
 
 interface PunishArgs {

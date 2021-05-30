@@ -10,6 +10,7 @@ automodSubCommands.set('enable', {
         automodToggle(guild.id, true);
         messageReply(msg.channel, 'Automod has been enabled.');
     },
+    description: 'W',
 });
 
 automodSubCommands.set('disable', {
@@ -20,4 +21,5 @@ automodSubCommands.set('disable', {
         automodToggle(guild.id, false);
         messageReply(msg.channel, 'Automod has been disabled.');
     },
+    description: 'W',
 });

@@ -48,6 +48,8 @@ client.commands.set('deleterole', {
             });
     },
     iconName: 'cancel',
+    description:
+        'This command can be used to **permanently delete** a role you __no longer__ need. It will **delete the role** and __remove that role__ from all members. ',
 });
 
 interface CreateRoleArgs {

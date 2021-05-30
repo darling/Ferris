@@ -49,6 +49,8 @@ client.commands.set('kick', {
         }
     },
     iconName: 'law',
+    description:
+        'This command** removes** a user from the server. They can simply __rejoin__ the server with another invite link. ',
 });
 
 interface Args {

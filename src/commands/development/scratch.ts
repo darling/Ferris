@@ -33,6 +33,7 @@ client.commands.set('command_export', {
         msg.channel.send('beep boop', attachment);
     },
     display: false,
+    description: 'developer only',
 });
 
 client.commands.set('type_export', {
@@ -47,6 +48,7 @@ client.commands.set('type_export', {
         msg.channel.send('beep boop', attachment);
     },
     display: false,
+    description: 'developer only',
 });
 
 client.commands.set('et', {
@@ -58,6 +60,7 @@ client.commands.set('et', {
         msg.channel.send(cache.join('\n'));
     },
     display: false,
+    description: 'developer only',
 });
 
 client.commands.set('dg', {
@@ -67,6 +70,7 @@ client.commands.set('dg', {
         msg.channel.send(`\`\`\`${JSON.stringify(args.data.replace(/\`/g, '`'))}\`\`\``);
     },
     display: false,
+    description: 'developer only',
 });
 
 client.commands.set('wht', {
@@ -85,6 +89,7 @@ client.commands.set('wht', {
         messageReply(msg.channel, `${task.name} < name`);
     },
     display: false,
+    description: 'developer only',
 });
 
 interface dgArgs {

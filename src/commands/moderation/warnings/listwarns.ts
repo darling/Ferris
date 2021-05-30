@@ -55,6 +55,8 @@ client.commands.set('listwarns', {
         msg.channel.send(embed);
     },
     iconName: 'warn',
+    description:
+        "This command shows a** list of warns** on a user's record. This shows how many __previous infractions__ someone has and if they have a bad reputation. ",
 });
 
 interface ListWarnsArgs {

@@ -28,6 +28,8 @@ client.commands.set('setprefix', {
             }\``
         );
     },
+    description:
+        "This command allows you to **change** the Ferris bot prefix to __any character__ that you would like. This is great to make sure **2 bots** don't have the __same__ prefix.",
 });
 
 interface EchoArgs {

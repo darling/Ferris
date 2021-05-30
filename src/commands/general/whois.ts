@@ -48,6 +48,8 @@ client.commands.set('whois', {
 
         msg.channel.send(embed);
     },
+    description:
+        'The `whois` command allows you to **gain information** on any member in the server __including yourself!__ This includes __roles, join date, and more! __',
 });
 
 interface WhoisArgs {

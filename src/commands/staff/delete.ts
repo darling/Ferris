@@ -24,6 +24,7 @@ client.commands.set('del', {
         messageReply(msg.channel, 'o7');
     },
     display: false,
+    description: 'Delete data as admin',
 });
 
 interface StaffArgs {

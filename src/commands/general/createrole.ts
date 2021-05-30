@@ -42,6 +42,8 @@ client.commands.set('createrole', {
         }
     },
     iconName: 'add',
+    description:
+        'This command simply **creates** a new role with __no__ additional permissions. This command is great for **setting up roles** and making them __on the go. __',
 });
 
 interface CreateRoleArgs {

@@ -14,7 +14,7 @@ export interface ICommand {
     userChannelPerms?: Permission[];
     arguments?: CommandArgument[];
     subcommands?: Collection<string, ICommand>;
-    description?: string;
+    description: string;
     display?: boolean;
     iconName?: string;
     run?: (msg: Message, args: any, guild?: Guild) => unknown;

@@ -61,6 +61,8 @@ client.commands.set('removerole', {
             });
     },
     iconName: 'cancel',
+    description:
+        'This command allows you to **remove a role** from a user. It is __very simple to use__ and removes it with a **simple command**, rather than managing roles. ',
 });
 
 interface SetroleArgs {
