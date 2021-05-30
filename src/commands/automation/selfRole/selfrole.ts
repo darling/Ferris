@@ -6,7 +6,7 @@ import { ICommand } from '../../../types/commands';
 import { URL_DATA } from '../../../util/axios';
 import { appendProperty, getConfig, removeProperty } from '../../../util/db/config';
 import { EmbedColors, sendSimpleEmbed } from '../../../util/embed';
-import { errorEmbed } from '../../../util/embedTemplates';
+import { errorEmbed, successEmbed } from '../../../util/embedTemplates';
 import { messageReply } from '../../../util/interactions/message';
 
 const selfRoleSubCommands = new Collection<string, ICommand>();
@@ -55,6 +55,7 @@ selfRoleSubCommands.set('add', {
             return;
         }
         await appendProperty(guild.id, 'selfrole', [args.role.id]);
+        successEmbed(msg.channel, `**${args.role.name}** is added to the selfrole list.`);
     },
 });
 
@@ -75,9 +76,10 @@ selfRoleSubCommands.set('remove', {
     description: 'This action will remove roles from the selfrole list.',
     botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-    run: async (_msg, args: { role: Role }, guild) => {
+    run: async (msg, args: { role: Role }, guild) => {
         if (!guild) return;
         await removeProperty(guild.id, 'selfrole', [args.role.id]);
+        successEmbed(msg.channel, `**${args.role.name}** is removed from the selfrole list.`);
     },
 });
 
