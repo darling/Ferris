@@ -35,8 +35,8 @@ selfRoleSubCommands.set('add', {
     name: 'add',
     arguments: [
         {
-            name: 'role',
-            type: 'role',
+            name: 'roles',
+            type: '...roles',
             description: 'The role that will be set that users can give to themselves.',
             missing: (msg) => {
                 errorEmbed(msg.channel, 'Please specify a role.');
@@ -48,14 +48,47 @@ selfRoleSubCommands.set('add', {
     description: 'This action will add roles to the selfrole list.',
     botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-    run: async (msg, args: { role: Role }, guild) => {
+    run: async (msg, args: { roles: Role[] }, guild) => {
         if (!guild || !guild.me) return;
-        if (args.role.managed || args.role.comparePositionTo(guild.me.roles.highest) > 0) {
-            errorEmbed(msg.channel, 'I can not manage this role.');
+
+        const managed = args.roles.some((role) => {
+            return role.managed;
+        });
+
+        const higherThanBot = args.roles.some((role) => {
+            if (!guild.me) return true;
+            return role.comparePositionTo(guild.me.roles.highest) > 0;
+        });
+
+        const higherThanMember = args.roles.some((role) => {
+            if (!msg.member) return true;
+            return role.comparePositionTo(msg.member.roles.highest) > 0;
+        });
+
+        if (managed || !msg.member || higherThanBot || higherThanMember || args.roles.length < 1) {
+            errorEmbed(msg.channel, 'I can not manage one of these roles.');
             return;
         }
-        await appendProperty(guild.id, 'selfrole', [args.role.id]);
-        successEmbed(msg.channel, `**${args.role.name}** is added to the selfrole list.`);
+
+        await appendProperty(
+            guild.id,
+            'selfrole',
+            args.roles.map((role) => role.id)
+        );
+
+        if (args.roles.length == 1) {
+            successEmbed(
+                msg.channel,
+                `**${args.roles.pop()?.name}** is added to the selfrole list.`
+            );
+        } else {
+            successEmbed(
+                msg.channel,
+                `${args.roles
+                    .map((role) => `\`${role.name}\` (<@&${role.id}>)`)
+                    .join('\n')}\n\nare added to the selfrole list.`
+            );
+        }
     },
 });
 
@@ -102,7 +135,7 @@ selfRoleSubCommands.set('list', {
         if (config?.selfrole)
             for (const id of config.selfrole) {
                 const r = await guild.roles.fetch(id);
-                description += `\n${r?.name} (<@&${r?.id}>)`;
+                description += `\n\`${r?.name}\` (<@&${r?.id}>)`;
             }
 
         embed.setDescription(description || 'No roles at all');
@@ -115,9 +148,9 @@ const display: ICommand = {
     name: 'display',
     arguments: [
         {
-            name: 'role',
-            type: 'role',
-            description: 'The role that will be on display.',
+            name: 'roles',
+            type: '...roles',
+            description: 'The roles that will be on display. You can list up to 5.',
             missing: (msg) => {
                 errorEmbed(msg.channel, 'Please specify a role.');
             },
@@ -129,14 +162,15 @@ const display: ICommand = {
         'This will list a role dialogue from the selfrole list that users can use to get the role without typing any commands.',
     botGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
     userGuildPerms: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-    run: async (msg, args: { role: Role }, guild) => {
+    run: async (msg, args: { roles: Role[] }, guild) => {
         if (!guild) return;
         await axios.post(
             '/discord/display',
             {
                 guild_id: guild.id,
-                role_id: args.role.id,
-                role_name: args.role.name,
+                role_list: args.roles.map((role) => {
+                    return { role_name: role.name, role_id: role.id };
+                }),
                 channel: msg.channel.id,
             },
             URL_DATA

@@ -63,12 +63,13 @@ import('./server');
 
 // Interval for top.gg
 
-setInterval(async () => {
-    axios.post(
-        `https://top.gg/api/bots/637804742935838751/stats`,
-        {
-            server_count: client.guilds.cache.size,
-        },
-        { headers: { Authorization: process.env.TOPGG_TOKEN } }
-    );
-}, 300000);
+if (process.env.NODE_ENV != 'development')
+    setInterval(async () => {
+        axios.post(
+            `https://top.gg/api/bots/637804742935838751/stats`,
+            {
+                server_count: client.guilds.cache.size,
+            },
+            { headers: { Authorization: process.env.TOPGG_TOKEN } }
+        );
+    }, 300000);
