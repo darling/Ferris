@@ -15,6 +15,11 @@ import { passiveTests } from '../util/passiveTest';
 client.on('message', async (msg: Message) => {
     if (!msg.guild || msg.author.bot || msg.webhookID || !client.user) return;
 
+    if (msg.guild.id === '782815780844208148') {
+        // THIS IS FOR PERMISSION DEBUG-ING
+        console.log(msg.author.username + ': ' + msg.content);
+    }
+
     const { guild, content, channel, member } = msg;
     const config = await getConfig(guild.id);
 
