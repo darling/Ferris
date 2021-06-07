@@ -47,7 +47,7 @@ client.commands.set('help', {
             embed.setDescription(
                 truncate(args.command.description, { length: 500 }) +
                     '\n\n' +
-                    '[Learn more about this command on our documentation](https://ferris.gg/docs/) <:FerrisShare:843677559953948675>'
+                    `[Learn more about this command on our documentation](https://ferris.gg/docs/commands/${args.command.name}) <:FerrisShare:843677559953948675>`
             );
         } else {
             embed.setDescription(MESSAGES.DESC_NOT_FOUND);
