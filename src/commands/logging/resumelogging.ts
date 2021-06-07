@@ -1,14 +1,16 @@
 import { client } from '../../app';
 import { updateLogChannelProperty } from '../../util/db/config';
+import { successEmbed } from '../../util/embedTemplates';
 
 client.commands.set('resumelogging', {
     name: 'resumelogging',
     guildOnly: true,
     arguments: [],
     userGuildPerms: ['MANAGE_GUILD'],
-    run: (_msg, _args: Props, guild) => {
+    run: (msg, _args: Props, guild) => {
         if (!guild) return;
         updateLogChannelProperty(guild.id, { enabled: true });
+        successEmbed(msg.channel, 'Logging enabled', 'Success!');
     },
     iconName: 'log',
     description:

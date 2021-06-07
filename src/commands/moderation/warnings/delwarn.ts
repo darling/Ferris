@@ -13,11 +13,20 @@ client.commands.set('delwarn', {
             name: 'member',
             type: 'member',
             required: true,
+            missing: (msg) => {
+                errorEmbed(msg.channel, 'Please mention a member.');
+            },
         },
         {
             name: 'warning',
             type: 'number',
             required: true,
+            missing: (msg) => {
+                errorEmbed(
+                    msg.channel,
+                    'Please mention a warning number (you can see the numbers from `listwarns`).'
+                );
+            },
         },
     ],
     permissionLevels: [PermissionLevels.MODERATOR],
