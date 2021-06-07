@@ -110,3 +110,4 @@ dist
 
 # cache
 data/
+src/scratch.ts
