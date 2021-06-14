@@ -6,7 +6,7 @@ import { missingParamEmbed } from '../../util/embedTemplates';
 
 client.commands.set('purge', {
     name: 'purge',
-    aliases: ['p'],
+    aliases: ['p', 'prune'],
     userGuildPerms: ['MANAGE_MESSAGES'],
     botGuildPerms: ['MANAGE_MESSAGES'],
     arguments: [
