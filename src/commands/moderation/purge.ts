@@ -25,8 +25,8 @@ client.commands.set('purge', {
     guildOnly: true,
     run: (msg, args: PurgeArgs, guild) => {
         const channel = msg.channel as TextChannel;
-
-        channel.bulkDelete(toInteger(args.amtOfMessages > 100 ? 100 : args.amtOfMessages));
+        
+        channel.messages.fetch({ limit: toInteger(args.amtOfMessages > 100 ? 100 : args.amtOfMessages) }).then(msgs => channel.bulkDelete(msgs))
     },
     description:
         'This command allows you to **mass delete messages** in your server. This is great for __removing spam and unwanted messages.__',
