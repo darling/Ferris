@@ -19,17 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Cleaning">
-      <change afterPath="$PROJECT_DIR$/src/types/log.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/configuration/setprefix.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/configuration/setprefix.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/serverInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/serverInfo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/webhookLogging.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/webhookLogging.ts" afterDir="false" />
-    </list>
+    <list default="true" id="63727133-c1b8-4a65-be64-cf9ee35f871f" name="Default Changelist" comment="Cleaning" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +48,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript" />
     <property name="last.edited.regexp" value="" />
@@ -70,7 +61,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="\\wsl$\Ubuntu-20.04\home\safe\Documents\Github\Ferris\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\loom4\Documents\GitHub\Ferris\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -143,6 +134,7 @@
       <workItem from="1601268683954" duration="123000" />
       <workItem from="1601497179581" duration="56000" />
       <workItem from="1602871723031" duration="2308000" />
+      <workItem from="1624999732364" duration="2875000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1599438743595</created>
