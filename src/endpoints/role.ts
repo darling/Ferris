@@ -71,7 +71,7 @@ server.post<{ Params: Params; Body: Body }>('/role', postRes, async (req, res) =
     const immutable: Role[] = [];
 
     if (id) {
-        const member = await guild.members.fetch({ user: user.id, cache: false });
+        const member = await guild.members.fetch({ user: user.id, force: true });
 
         const allowedRoles = compact(
             req.body.role_id.map((roleId) => {
