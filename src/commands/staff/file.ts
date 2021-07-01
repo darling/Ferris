@@ -3,8 +3,8 @@ import { admin, client, firestore } from '../../app';
 import { PermissionLevels } from '../../types/commands';
 import { messageReply } from '../../util/interactions/message';
 
-client.commands.set('file', {
-    name: 'file',
+client.commands.set('has-premium', {
+    name: 'has-premium',
     arguments: [
         {
             name: 'member',
@@ -30,8 +30,8 @@ client.commands.set('file', {
     description: 'List members premium as admin',
 });
 
-client.commands.set('has-premium', {
-    name: 'has-premium',
+client.commands.set('file', {
+    name: 'file',
     arguments: [
         {
             name: 'member',
