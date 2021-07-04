@@ -8,8 +8,6 @@ export interface IXPCache {
 export const xpUserCache = new Map<string, IXPCache>();
 
 export const giveXP = async (uid: string, amount: number) => {
-    console.log(uid, amount);
-
     const ref = swap.ref(`/users/${uid}`);
 
     const snapshot = await ref.once('value');
@@ -18,7 +16,7 @@ export const giveXP = async (uid: string, amount: number) => {
     let level = (data?.level as number) || 0;
     let xp = (data?.xp as number) || 0;
 
-    const xpNeededTillNextLevel = xpToNextLvl(level + 1);
+    const xpNeededTillNextLevel = xpToNextLvl(level);
 
     xp = xp + 1;
 
@@ -47,3 +45,7 @@ export const chatXP = (uid: string) => {
 export const xpToNextLvl = (level: number) => {
     return round(0.04 * (level ^ 3) + 0.8 * (level ^ 2) + 2 * level);
 };
+
+for (let index = 0; index < 20; index++) {
+    console.log(xpToNextLvl(index));
+}

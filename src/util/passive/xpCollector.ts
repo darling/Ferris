@@ -2,7 +2,7 @@ import ms from 'ms';
 import { passiveTests } from '../passiveTest';
 import { chatXP, xpUserCache } from '../xp';
 
-const cooldown = ms('2m');
+const cooldown = ms(process.env.NODE_ENV == 'development' ? '1s' : '2m');
 
 passiveTests.set('xp-collector', async (msg) => {
     const uid = msg.author.id;
