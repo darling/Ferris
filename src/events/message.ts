@@ -6,7 +6,7 @@ import { ICommand } from '../types/commands';
 import { argumentList } from '../util/arguments';
 import { getConfig } from '../util/db/config';
 import { getPrefix } from '../util/db/prefix';
-import { addWarn, IWarning } from '../util/db/warnings';
+import { addWarn } from '../util/db/warnings';
 import { inhibitors } from '../util/inhibitor';
 import { messageReply } from '../util/interactions/message';
 import { passiveTests } from '../util/passiveTest';

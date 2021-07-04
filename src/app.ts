@@ -18,9 +18,11 @@ import { ICommand } from './types/commands';
 
 admin.initializeApp({
     credential: admin.credential.applicationDefault(),
+    databaseURL: 'https://ferrisbot-6e0f1.firebaseio.com/',
 });
 
 const firestore = admin.firestore();
+const swap = admin.database();
 
 // Extending Client to hold some extra data
 interface FerrisClient extends Client {
@@ -52,7 +54,7 @@ require(__dirname + '/commands');
 
 // Schedule Handler (I.e unbans, unmute)
 
-export { client, FerrisClient, firestore, admin };
+export { client, FerrisClient, firestore, admin, swap };
 
 // Let's start!
 client.login(process.env.BOT_TOKEN);
