@@ -1,28 +1,52 @@
-import { Message } from 'discord.js';
-import { FerrisClient } from '../../app';
+import { GuildMember } from 'discord.js';
+import { client } from '../../app';
+import { errorEmbed, successEmbed } from '../../util/embedTemplates';
 
-import { pendingUnpunishments } from '../../util/serverInfo';
-import { unbanUserFromGuild } from '../../util/banFunctions';
-import { firestore } from 'firebase-admin';
+client.commands.set('unban', {
+    name: 'unban',
+    arguments: [
+        {
+            name: 'member',
+            type: 'member',
+            required: true,
+            missing: (msg) => {
+                errorEmbed(msg.channel, 'Please make sure to mention or put the ID of any user.');
+            },
+        },
+        // {
+        //     name: 'time',
+        //     type: 'duration',
+        //     required: false,
+        // },
+    ],
+    // permissionLevels: [PermissionLevels.BOT_DEV],
+    botGuildPerms: ['BAN_MEMBERS'],
+    userGuildPerms: ['BAN_MEMBERS'],
+    run: async (msg, args: BanArgs) => {
+        if (!(msg.member!.roles.highest.comparePositionTo(args.member.roles.highest) > 0)) {
+            errorEmbed(
+                msg.channel,
+                "Please make sure to check the permissions between you and the user you're trying to unban. It seems like they have a higher role than you."
+            );
+            return;
+        }
+        const bannedUsers = await msg.guild?.fetchBans();
+        const user = bannedUsers?.get(args.member.id)?.user;
+        if(user) {
+            msg.guild?.members.unban(user);
+        } else {
+            errorEmbed(
+                msg.channel,
+                "Please make sure that the user you are trying to unban is already in the ban list of the server."
+            );
+            return;
+        }
+    },
+    iconName: 'law',
+    description:
+        'Unpunish a user by unbanning him from your guild. This allows him to rejoin at anytime with or without invitation from another user.',
+});
 
-// const run: RunCommand = function (client: FerrisClient, msg: Message, args: string[]): void {
-//     const userId: string = args[0];
-//     if (userId === undefined) {
-//         return;
-//     }
-
-//     unbanUserFromGuild(msg.guild!, userId)
-//         .then(() => {
-//             msg.react('✅');
-//         })
-//         .catch(() => {});
-
-//     if (pendingUnpunishments.has(userId)) {
-//         let unban = pendingUnpunishments.get(userId);
-//         clearTimeout(unban.event);
-//         const document = unban.document;
-//         document.ref.delete();
-//         pendingUnpunishments.delete(userId);
-//     } else {
-//     }
-// };
+interface BanArgs {
+    member: GuildMember;
+}
